@@ -313,18 +313,13 @@
       </thead>
       <tbody>
         <tr>
-          <td><span class="result-zone zone-europe">Europe (RLAH)</span></td>
+          <td><span class="result-zone zone-europe">Europe</span></td>
           <td><strong>No extra charge</strong></td>
           <td>Use your UK allowance in the EU/EEA. Fair use applies.</td>
         </tr>
         <tr>
-          <td><span class="result-zone zone-inclusive">Inclusive Worldwide</span></td>
-          <td><strong>No extra charge</strong></td>
-          <td>Included with TravelFree tariffs. Use your UK allowance.</td>
-        </tr>
-        <tr>
           <td><span class="result-zone zone-wts">World Travel</span></td>
-          <td><strong>&pound;4.00 per day</strong></td>
+          <td><strong>&pound;5.00 per day</strong></td>
           <td>Charged on days you use your phone. Access your UK allowance.</td>
         </tr>
         <tr>
@@ -564,7 +559,7 @@ const COUNTRIES = [
 // ── ZONE CONFIG ──
 const ZONES = {
   EU_RLAH: {
-    label: "Europe (RLAH)",
+    label: "Europe",
     cls: "zone-europe",
     headlineCls: "headline-good",
     headline: "Good news — use your UK allowance here at no extra cost. Fair use policies apply.",
@@ -573,21 +568,21 @@ const ZONES = {
     dailyNote: "No daily charge — use your plan allowance"
   },
   TF_WORLD: {
-    label: "Inclusive Worldwide",
-    cls: "zone-inclusive",
-    headlineCls: "headline-good",
-    headline: "This destination is included with TravelFree tariffs at no extra daily charge. If your plan uses World Travel Select instead, a daily charge of £4.00 (ex VAT) applies on days you use your phone.",
-    dailyCharge: null,
-    dailyLabel: "Included / £4.00",
-    dailyNote: "Depends on your tariff — TravelFree = included, WTS = £4.00/day"
+    label: "World Travel",
+    cls: "zone-wts",
+    headlineCls: "headline-ok",
+    headline: "A daily roaming charge of £5.00 (ex VAT) applies on days you use your phone in this destination. You can then use your UK allowance as normal.",
+    dailyCharge: 5.00,
+    dailyLabel: "£5.00/day",
+    dailyNote: "Charged per day of use (calls, texts or data)"
   },
   ROW_WTS: {
     label: "World Travel",
     cls: "zone-wts",
     headlineCls: "headline-ok",
-    headline: "A daily roaming charge of £4.00 (ex VAT) applies on days you use your phone abroad. You can then use your UK allowance as normal.",
-    dailyCharge: 4.00,
-    dailyLabel: "£4.00/day",
+    headline: "A daily roaming charge of £5.00 (ex VAT) applies on days you use your phone in this destination. You can then use your UK allowance as normal.",
+    dailyCharge: 5.00,
+    dailyLabel: "£5.00/day",
     dailyNote: "Charged per day of use (calls, texts or data)"
   },
   ROW_STD: {
@@ -609,9 +604,9 @@ const BOLTONS = {
     {name:"Data Top Up 20GB", sku:"AIOATOP20GB", detail:"Best value for data-intensive travel", price:"£13.50"},
   ],
   TF_WORLD: [
-    {name:"Data Top Up 5GB", sku:"AIOATOP5GB", detail:"Top up if you exceed your plan data", price:"£5.50"},
-    {name:"Data Top Up 10GB", sku:"AIOATOP10GB", detail:"Good for mapping, streaming and social media", price:"£8.00"},
-    {name:"Roaming Minutes & Data 250", sku:"AIOA250RMD", detail:"250 mins + 250MB for WTS tariff users", price:"£60.00"},
+    {name:"Roaming Minutes & Data 250", sku:"AIOA250RMD", detail:"250 mins + 250MB — short trips, light usage", price:"£60.00"},
+    {name:"Roaming Minutes & Data 500", sku:"AIOA500RMD", detail:"500 mins + 500MB — moderate usage", price:"£90.00"},
+    {name:"Roaming Minutes & Data 1000", sku:"AIOA1000RMD", detail:"1000 mins + 1GB — heavier usage", price:"£120.00"},
   ],
   ROW_WTS: [
     {name:"Roaming Minutes & Data 250", sku:"AIOA250RMD", detail:"250 mins + 250MB — short trips, light usage", price:"£60.00"},
@@ -635,14 +630,14 @@ const TIPS = {
     "If you run low on data, add a Data Top Up rather than paying out-of-bundle rates."
   ],
   TF_WORLD: [
-    "Check whether your plan includes TravelFree or World Travel Select (WTS).",
+    "The daily charge only applies on days you make calls, send texts or use data.",
     "Enable Data Roaming and restart your device after landing if it does not connect.",
-    "On WTS tariffs, the £4.00 daily charge only applies on days you actually use your phone.",
-    "Consider a roaming bolt-on if you expect heavy data use.",
+    "Consider a Roaming Minutes & Data bolt-on for predictable spend.",
+    "Use Wi-Fi calling and messaging apps where available.",
     "Turn off background app refresh to reduce unexpected data usage."
   ],
   ROW_WTS: [
-    "The daily charge only applies on days you make calls, send texts or use data.",
+    "The £5.00/day charge only applies on days you make calls, send texts or use data.",
     "Enable Data Roaming and select a partner network manually if needed.",
     "Consider a Roaming Minutes & Data bolt-on for predictable spend.",
     "Use Wi-Fi calling and messaging apps where available.",
