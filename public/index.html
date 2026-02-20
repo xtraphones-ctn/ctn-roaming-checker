@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Using Your Phone Abroad | Compare The Networks</title>
+  <meta name="description" content="Check roaming charges for your O2 mobile when travelling abroad. Search any destination to see daily rates, recommended bolt-ons and tips to stay in control.">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --primary: #1a2b4a;
+      --accent: #0066cc;
+      --accent-light: #e8f2ff;
+      --success: #0a8a3e;
+      --success-bg: #e6f7ed;
+      --warn: #c45500;
+      --warn-bg: #fff4e6;
+      --danger: #c4001a;
+      --danger-bg: #ffeaed;
+      --grey-50: #f8f9fb;
+      --grey-100: #eef0f4;
+      --grey-200: #dde1e8;
+      --grey-400: #9ba3b2;
+      --grey-600: #5c6370;
+      --grey-800: #2d3341;
+      --radius: 12px;
+      --shadow: 0 1px 3px rgba(0,0,0,.08), 0 4px 12px rgba(0,0,0,.04);
+      --shadow-lg: 0 4px 16px rgba(0,0,0,.12);
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+      color: var(--grey-800);
+      background: var(--grey-50);
+      line-height: 1.6;
+    }
+    .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+    /* Header */
+    .header {
+      background: var(--primary);
+      color: #fff;
+      padding: 24px 0;
+    }
+    .header h1 { font-size: 1.75rem; font-weight: 700; }
+    .header p { color: rgba(255,255,255,.75); margin-top: 4px; font-size: .95rem; }
+    /* Network badge */
+    .network-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 6px;
+      padding: 4px 12px;
+      font-size: .8rem;
+      color: rgba(255,255,255,.9);
+      margin-top: 12px;
+    }
+    .network-dot { width: 8px; height: 8px; border-radius: 50%; background: #00a0e1; }
+    /* Search */
+    .search-section { padding: 32px 0 16px; }
+    .search-wrap {
+      position: relative;
+      max-width: 560px;
+    }
+    .search-wrap svg {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--grey-400);
+      pointer-events: none;
+    }
+    .search-input {
+      width: 100%;
+      padding: 14px 16px 14px 48px;
+      border: 2px solid var(--grey-200);
+      border-radius: var(--radius);
+      font-size: 1.05rem;
+      background: #fff;
+      transition: border-color .2s;
+      outline: none;
+    }
+    .search-input:focus { border-color: var(--accent); }
+    .search-input::placeholder { color: var(--grey-400); }
+    /* Autocomplete */
+    .autocomplete {
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0; right: 0;
+      background: #fff;
+      border: 1px solid var(--grey-200);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+      max-height: 280px;
+      overflow-y: auto;
+      z-index: 100;
+      display: none;
+    }
+    .autocomplete.open { display: block; }
+    .ac-item {
+      padding: 10px 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: .95rem;
+      transition: background .15s;
+    }
+    .ac-item:hover, .ac-item.active { background: var(--accent-light); }
+    .ac-item .flag { font-size: 1.25rem; }
+    .ac-item .region { color: var(--grey-400); font-size: .8rem; margin-left: auto; }
+    /* Popular */
+    .popular-section { padding: 0 0 24px; }
+    .popular-label { font-size: .85rem; color: var(--grey-600); margin-bottom: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .5px; }
+    .popular-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .popular-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      background: #fff;
+      border: 1px solid var(--grey-200);
+      border-radius: 999px;
+      font-size: .9rem;
+      cursor: pointer;
+      transition: all .2s;
+      color: var(--grey-800);
+    }
+    .popular-btn:hover { border-color: var(--accent); background: var(--accent-light); color: var(--accent); }
+    .popular-btn .flag { font-size: 1.1rem; }
+    /* Result card */
+    .result-section { padding: 0 0 32px; display: none; }
+    .result-section.visible { display: block; }
+    .result-card {
+      background: #fff;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .result-header {
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      border-bottom: 1px solid var(--grey-100);
+    }
+    .result-flag { font-size: 2.2rem; }
+    .result-country { font-size: 1.3rem; font-weight: 700; }
+    .result-zone {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: .78rem;
+      font-weight: 600;
+    }
+    .zone-europe { background: var(--success-bg); color: var(--success); }
+    .zone-inclusive { background: #e8f0fe; color: #1a56db; }
+    .zone-wts { background: var(--warn-bg); color: var(--warn); }
+    .zone-standard { background: var(--danger-bg); color: var(--danger); }
+    .result-body { padding: 24px; }
+    /* Info boxes */
+    .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+    @media (max-width: 600px) { .info-grid { grid-template-columns: 1fr; } }
+    .info-box {
+      background: var(--grey-50);
+      border: 1px solid var(--grey-100);
+      border-radius: 10px;
+      padding: 16px;
+    }
+    .info-box h4 { font-size: .8rem; text-transform: uppercase; letter-spacing: .4px; color: var(--grey-600); margin-bottom: 8px; }
+    .info-box .value { font-size: 1.4rem; font-weight: 700; color: var(--primary); }
+    .info-box .value small { font-size: .75rem; font-weight: 400; color: var(--grey-600); }
+    .info-box .note { font-size: .82rem; color: var(--grey-600); margin-top: 4px; }
+    /* Headline */
+    .result-headline {
+      padding: 14px 18px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      font-size: .92rem;
+      line-height: 1.5;
+    }
+    .headline-good { background: var(--success-bg); color: var(--success); border-left: 4px solid var(--success); }
+    .headline-ok { background: var(--warn-bg); color: var(--warn); border-left: 4px solid var(--warn); }
+    .headline-caution { background: var(--danger-bg); color: var(--danger); border-left: 4px solid var(--danger); }
+    /* Bolt-on section */
+    .boltons-title { font-size: 1rem; font-weight: 700; margin-bottom: 12px; }
+    .bolton-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      background: var(--grey-50);
+      border: 1px solid var(--grey-100);
+      border-radius: 10px;
+      margin-bottom: 8px;
+    }
+    .bolton-name { font-weight: 600; font-size: .9rem; }
+    .bolton-detail { font-size: .8rem; color: var(--grey-600); }
+    .bolton-price { font-weight: 700; color: var(--accent); white-space: nowrap; }
+    .bolton-price small { font-weight: 400; font-size: .75rem; color: var(--grey-600); }
+    /* Tips */
+    .tips-box {
+      background: var(--accent-light);
+      border: 1px solid #c5dcf5;
+      border-radius: 10px;
+      padding: 16px 18px;
+      margin-top: 20px;
+    }
+    .tips-box h4 { font-size: .9rem; font-weight: 700; color: var(--accent); margin-bottom: 8px; }
+    .tips-box ul { list-style: none; padding: 0; }
+    .tips-box li { font-size: .85rem; padding: 3px 0; padding-left: 20px; position: relative; color: var(--grey-600); }
+    .tips-box li::before { content: "→"; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+    /* Overview section */
+    .overview-section { padding: 0 0 32px; }
+    .overview-section h2 { font-size: 1.15rem; font-weight: 700; margin-bottom: 16px; }
+    .zone-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .zone-table th {
+      text-align: left;
+      padding: 12px 16px;
+      background: var(--primary);
+      color: #fff;
+      font-size: .82rem;
+      text-transform: uppercase;
+      letter-spacing: .4px;
+      font-weight: 600;
+    }
+    .zone-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--grey-100);
+      font-size: .9rem;
+    }
+    .zone-table tr:last-child td { border-bottom: none; }
+    .zone-table tr:hover td { background: var(--grey-50); }
+    /* Disclaimer */
+    .disclaimer {
+      padding: 24px 0;
+      font-size: .78rem;
+      color: var(--grey-400);
+      border-top: 1px solid var(--grey-100);
+    }
+    .disclaimer p { margin-bottom: 4px; }
+    .footer-meta { display: flex; gap: 20px; margin-top: 8px; }
+    /* Responsive */
+    @media (max-width: 600px) {
+      .header h1 { font-size: 1.35rem; }
+      .result-header { flex-wrap: wrap; }
+      .info-box .value { font-size: 1.15rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="container">
+    <h1>Using your phone abroad</h1>
+    <p>Check roaming charges and recommended add-ons before you travel</p>
+    <div class="network-badge">
+      <span class="network-dot"></span>
+      O2 Network
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="search-section">
+    <div class="search-wrap">
+      <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" class="search-input" id="searchInput" placeholder="Where are you travelling to?" autocomplete="off" aria-label="Search for a country">
+      <div class="autocomplete" id="autocomplete" role="listbox"></div>
+    </div>
+  </div>
+
+  <div class="popular-section">
+    <div class="popular-label">Popular destinations</div>
+    <div class="popular-row" id="popularRow"></div>
+  </div>
+
+  <div class="result-section" id="resultSection">
+    <div class="result-card">
+      <div class="result-header">
+        <span class="result-flag" id="rFlag"></span>
+        <div>
+          <div class="result-country" id="rCountry"></div>
+          <span class="result-zone" id="rZone"></span>
+        </div>
+      </div>
+      <div class="result-body">
+        <div class="result-headline" id="rHeadline"></div>
+        <div class="info-grid" id="rInfoGrid"></div>
+        <div id="rBoltons"></div>
+        <div class="tips-box" id="rTips"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="overview-section">
+    <h2>Roaming zones at a glance</h2>
+    <table class="zone-table">
+      <thead>
+        <tr>
+          <th>Zone</th>
+          <th>Daily charge (ex VAT)</th>
+          <th>What's included</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="result-zone zone-europe">Europe (RLAH)</span></td>
+          <td><strong>No extra charge</strong></td>
+          <td>Use your UK allowance in the EU/EEA. Fair use applies.</td>
+        </tr>
+        <tr>
+          <td><span class="result-zone zone-inclusive">Inclusive Worldwide</span></td>
+          <td><strong>No extra charge</strong></td>
+          <td>Included with TravelFree tariffs. Use your UK allowance.</td>
+        </tr>
+        <tr>
+          <td><span class="result-zone zone-wts">World Travel</span></td>
+          <td><strong>&pound;4.00 per day</strong></td>
+          <td>Charged on days you use your phone. Access your UK allowance.</td>
+        </tr>
+        <tr>
+          <td><span class="result-zone zone-standard">Standard Rates</span></td>
+          <td>Per-minute / per-MB rates</td>
+          <td>Not covered by daily services. A roaming bolt-on is recommended.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="disclaimer">
+    <p>All prices shown exclude VAT. Roaming services, destinations and charges are subject to change. Fair use policies may apply. Daily roaming charges apply on days you use your phone abroad (calls, texts or data). Incoming SMS does not trigger a daily charge.</p>
+    <p>If you are unsure which bolt-on suits your usage, contact us before you travel.</p>
+    <div class="footer-meta">
+      <span>Last updated: 17 February 2026</span>
+      <span>Version: CTN-O2-ROAM-20260217-v1</span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ============================================================
+// COUNTRY DATA — O2 Roaming (all prices ex VAT)
+// Source: Roaming Services V5 + Additional Charges O2 v6
+// ============================================================
+const COUNTRIES = [
+  // ── EUROPE ZONE 1 (RLAH — included) ──
+  {country:"Austria",iso2:"AT",flag:"🇦🇹",region:"Europe",zone:"EU_RLAH"},
+  {country:"Belgium",iso2:"BE",flag:"🇧🇪",region:"Europe",zone:"EU_RLAH"},
+  {country:"Bulgaria",iso2:"BG",flag:"🇧🇬",region:"Europe",zone:"EU_RLAH"},
+  {country:"Croatia",iso2:"HR",flag:"🇭🇷",region:"Europe",zone:"EU_RLAH"},
+  {country:"Cyprus",iso2:"CY",flag:"🇨🇾",region:"Europe",zone:"EU_RLAH"},
+  {country:"Czech Republic",iso2:"CZ",flag:"🇨🇿",region:"Europe",zone:"EU_RLAH"},
+  {country:"Denmark",iso2:"DK",flag:"🇩🇰",region:"Europe",zone:"EU_RLAH"},
+  {country:"Estonia",iso2:"EE",flag:"🇪🇪",region:"Europe",zone:"EU_RLAH"},
+  {country:"Finland",iso2:"FI",flag:"🇫🇮",region:"Europe",zone:"EU_RLAH"},
+  {country:"France",iso2:"FR",flag:"🇫🇷",region:"Europe",zone:"EU_RLAH"},
+  {country:"French Guiana",iso2:"GF",flag:"🇬🇫",region:"Europe",zone:"EU_RLAH"},
+  {country:"Guadeloupe",iso2:"GP",flag:"🇬🇵",region:"Europe",zone:"EU_RLAH"},
+  {country:"Martinique",iso2:"MQ",flag:"🇲🇶",region:"Europe",zone:"EU_RLAH"},
+  {country:"Mayotte",iso2:"YT",flag:"🇾🇹",region:"Europe",zone:"EU_RLAH"},
+  {country:"Reunion",iso2:"RE",flag:"🇷🇪",region:"Europe",zone:"EU_RLAH"},
+  {country:"Saint Martin",iso2:"MF",flag:"🇲🇫",region:"Europe",zone:"EU_RLAH"},
+  {country:"Germany",iso2:"DE",flag:"🇩🇪",region:"Europe",zone:"EU_RLAH"},
+  {country:"Gibraltar",iso2:"GI",flag:"🇬🇮",region:"Europe",zone:"EU_RLAH"},
+  {country:"Greece",iso2:"GR",flag:"🇬🇷",region:"Europe",zone:"EU_RLAH"},
+  {country:"Hungary",iso2:"HU",flag:"🇭🇺",region:"Europe",zone:"EU_RLAH"},
+  {country:"Iceland",iso2:"IS",flag:"🇮🇸",region:"Europe",zone:"EU_RLAH"},
+  {country:"Ireland",iso2:"IE",flag:"🇮🇪",region:"Europe",zone:"EU_RLAH"},
+  {country:"Italy",iso2:"IT",flag:"🇮🇹",region:"Europe",zone:"EU_RLAH"},
+  {country:"Latvia",iso2:"LV",flag:"🇱🇻",region:"Europe",zone:"EU_RLAH"},
+  {country:"Liechtenstein",iso2:"LI",flag:"🇱🇮",region:"Europe",zone:"EU_RLAH"},
+  {country:"Lithuania",iso2:"LT",flag:"🇱🇹",region:"Europe",zone:"EU_RLAH"},
+  {country:"Luxembourg",iso2:"LU",flag:"🇱🇺",region:"Europe",zone:"EU_RLAH"},
+  {country:"Malta",iso2:"MT",flag:"🇲🇹",region:"Europe",zone:"EU_RLAH"},
+  {country:"Monaco",iso2:"MC",flag:"🇲🇨",region:"Europe",zone:"EU_RLAH"},
+  {country:"Netherlands",iso2:"NL",flag:"🇳🇱",region:"Europe",zone:"EU_RLAH"},
+  {country:"Norway",iso2:"NO",flag:"🇳🇴",region:"Europe",zone:"EU_RLAH"},
+  {country:"Poland",iso2:"PL",flag:"🇵🇱",region:"Europe",zone:"EU_RLAH"},
+  {country:"Portugal",iso2:"PT",flag:"🇵🇹",region:"Europe",zone:"EU_RLAH"},
+  {country:"Romania",iso2:"RO",flag:"🇷🇴",region:"Europe",zone:"EU_RLAH"},
+  {country:"Slovakia",iso2:"SK",flag:"🇸🇰",region:"Europe",zone:"EU_RLAH"},
+  {country:"Slovenia",iso2:"SI",flag:"🇸🇮",region:"Europe",zone:"EU_RLAH"},
+  {country:"Spain",iso2:"ES",flag:"🇪🇸",region:"Europe",zone:"EU_RLAH"},
+  {country:"Sweden",iso2:"SE",flag:"🇸🇪",region:"Europe",zone:"EU_RLAH"},
+  // ── EUROPE ZONE 2 (RLAH — included) ──
+  {country:"Guernsey",iso2:"GG",flag:"🇬🇬",region:"Europe",zone:"EU_RLAH"},
+  {country:"Jersey",iso2:"JE",flag:"🇯🇪",region:"Europe",zone:"EU_RLAH"},
+  {country:"Isle of Man",iso2:"IM",flag:"🇮🇲",region:"Europe",zone:"EU_RLAH"},
+  {country:"Faroe Islands",iso2:"FO",flag:"🇫🇴",region:"Europe",zone:"EU_RLAH"},
+  {country:"San Marino",iso2:"SM",flag:"🇸🇲",region:"Europe",zone:"EU_RLAH"},
+  {country:"Switzerland",iso2:"CH",flag:"🇨🇭",region:"Europe",zone:"EU_RLAH"},
+  // ── TRAVELFREE WORLDWIDE (inclusive on TravelFree tariffs / WTS on others) ──
+  {country:"Albania",iso2:"AL",flag:"🇦🇱",region:"Europe",zone:"TF_WORLD"},
+  {country:"Anguilla",iso2:"AI",flag:"🇦🇮",region:"Caribbean",zone:"TF_WORLD"},
+  {country:"Antigua and Barbuda",iso2:"AG",flag:"🇦🇬",region:"Caribbean",zone:"TF_WORLD"},
+  {country:"Aruba",iso2:"AW",flag:"🇦🇼",region:"Caribbean",zone:"TF_WORLD"},
+  {country:"Australia",iso2:"AU",flag:"🇦🇺",region:"Oceania",zone:"TF_WORLD"},
+  {country:"Barbados",iso2:"BB",flag:"🇧🇧",region:"Caribbean",zone:"TF_WORLD"},
+  {country:"Bermuda",iso2:"BM",flag:"🇧🇲",region:"North America",zone:"TF_WORLD"},
+  {country:"Bosnia and Herzegovina",iso2:"BA",flag:"🇧🇦",region:"Europe",zone:"TF_WORLD"},
+  {country:"Canada",iso2:"CA",flag:"🇨🇦",region:"North America",zone:"TF_WORLD"},
+  {country:"Cayman Islands",iso2:"KY",flag:"🇰🇾",region:"Caribbean",zone:"TF_WORLD"},
+  {country:"Dominica",iso2:"DM",flag:"🇩🇲",region:"Caribbean",zone:"TF_WORLD"},
+  {country:"Ghana",iso2:"GH",flag:"🇬🇭",region:"Africa",zone:"TF_WORLD"},
+  {country:"Grenada",iso2:"GD",flag:"🇬🇩",region:"Caribbean",zone:"TF_WORLD"},
+  {country:"Jamaica",iso2:"JM",flag:"🇯🇲",region:"Caribbean",zone:"TF_WORLD"},
+  {country:"Kenya",iso2:"KE",flag:"🇰🇪",region:"Africa",zone:"TF_WORLD"},
+  {country:"Lesotho",iso2:"LS",flag:"🇱🇸",region:"Africa",zone:"TF_WORLD"},
+  {country:"Mexico",iso2:"MX",flag:"🇲🇽",region:"North America",zone:"TF_WORLD"},
+  {country:"Montserrat",iso2:"MS",flag:"🇲🇸",region:"Caribbean",zone:"TF_WORLD"},
+  {country:"Mozambique",iso2:"MZ",flag:"🇲🇿",region:"Africa",zone:"TF_WORLD"},
+  {country:"New Zealand",iso2:"NZ",flag:"🇳🇿",region:"Oceania",zone:"TF_WORLD"},
+  {country:"South Africa",iso2:"ZA",flag:"🇿🇦",region:"Africa",zone:"TF_WORLD"},
+  {country:"St Kitts and Nevis",iso2:"KN",flag:"🇰🇳",region:"Caribbean",zone:"TF_WORLD"},
+  {country:"St Vincent and the Grenadines",iso2:"VC",flag:"🇻🇨",region:"Caribbean",zone:"TF_WORLD"},
+  {country:"St Lucia",iso2:"LC",flag:"🇱🇨",region:"Caribbean",zone:"TF_WORLD"},
+  {country:"Trinidad and Tobago",iso2:"TT",flag:"🇹🇹",region:"Caribbean",zone:"TF_WORLD"},
+  {country:"Turkey",iso2:"TR",flag:"🇹🇷",region:"Europe / Asia",zone:"TF_WORLD"},
+  {country:"Turks and Caicos",iso2:"TC",flag:"🇹🇨",region:"Caribbean",zone:"TF_WORLD"},
+  {country:"US Virgin Islands",iso2:"VI",flag:"🇻🇮",region:"Caribbean",zone:"TF_WORLD"},
+  {country:"United States",iso2:"US",flag:"🇺🇸",region:"North America",zone:"TF_WORLD"},
+  // ── WTS ONLY (£4.00/day) ──
+  {country:"Afghanistan",iso2:"AF",flag:"🇦🇫",region:"Asia",zone:"ROW_WTS"},
+  {country:"Andorra",iso2:"AD",flag:"🇦🇩",region:"Europe",zone:"ROW_WTS"},
+  {country:"Argentina",iso2:"AR",flag:"🇦🇷",region:"South America",zone:"ROW_WTS"},
+  {country:"Armenia",iso2:"AM",flag:"🇦🇲",region:"Asia",zone:"ROW_WTS"},
+  {country:"Bahrain",iso2:"BH",flag:"🇧🇭",region:"Middle East",zone:"ROW_WTS"},
+  {country:"Bangladesh",iso2:"BD",flag:"🇧🇩",region:"Asia",zone:"ROW_WTS"},
+  {country:"Bonaire",iso2:"BQ",flag:"🇧🇶",region:"Caribbean",zone:"ROW_WTS"},
+  {country:"Brazil",iso2:"BR",flag:"🇧🇷",region:"South America",zone:"ROW_WTS"},
+  {country:"British Virgin Islands",iso2:"VG",flag:"🇻🇬",region:"Caribbean",zone:"ROW_WTS"},
+  {country:"Cambodia",iso2:"KH",flag:"🇰🇭",region:"Asia",zone:"ROW_WTS"},
+  {country:"Chile",iso2:"CL",flag:"🇨🇱",region:"South America",zone:"ROW_WTS"},
+  {country:"China",iso2:"CN",flag:"🇨🇳",region:"Asia",zone:"ROW_WTS"},
+  {country:"Colombia",iso2:"CO",flag:"🇨🇴",region:"South America",zone:"ROW_WTS"},
+  {country:"Costa Rica",iso2:"CR",flag:"🇨🇷",region:"Central America",zone:"ROW_WTS"},
+  {country:"Curacao",iso2:"CW",flag:"🇨🇼",region:"Caribbean",zone:"ROW_WTS"},
+  {country:"Democratic Republic of Congo",iso2:"CD",flag:"🇨🇩",region:"Africa",zone:"ROW_WTS"},
+  {country:"Dominican Republic",iso2:"DO",flag:"🇩🇴",region:"Caribbean",zone:"ROW_WTS"},
+  {country:"Ecuador",iso2:"EC",flag:"🇪🇨",region:"South America",zone:"ROW_WTS"},
+  {country:"Egypt",iso2:"EG",flag:"🇪🇬",region:"Africa",zone:"ROW_WTS"},
+  {country:"El Salvador",iso2:"SV",flag:"🇸🇻",region:"Central America",zone:"ROW_WTS"},
+  {country:"Fiji",iso2:"FJ",flag:"🇫🇯",region:"Oceania",zone:"ROW_WTS"},
+  {country:"Georgia",iso2:"GE",flag:"🇬🇪",region:"Europe / Asia",zone:"ROW_WTS"},
+  {country:"Guam",iso2:"GU",flag:"🇬🇺",region:"Oceania",zone:"ROW_WTS"},
+  {country:"Guatemala",iso2:"GT",flag:"🇬🇹",region:"Central America",zone:"ROW_WTS"},
+  {country:"Guyana",iso2:"GY",flag:"🇬🇾",region:"South America",zone:"ROW_WTS"},
+  {country:"Haiti",iso2:"HT",flag:"🇭🇹",region:"Caribbean",zone:"ROW_WTS"},
+  {country:"Honduras",iso2:"HN",flag:"🇭🇳",region:"Central America",zone:"ROW_WTS"},
+  {country:"Hong Kong",iso2:"HK",flag:"🇭🇰",region:"Asia",zone:"ROW_WTS"},
+  {country:"India",iso2:"IN",flag:"🇮🇳",region:"Asia",zone:"ROW_WTS"},
+  {country:"Indonesia",iso2:"ID",flag:"🇮🇩",region:"Asia",zone:"ROW_WTS"},
+  {country:"Israel",iso2:"IL",flag:"🇮🇱",region:"Middle East",zone:"ROW_WTS"},
+  {country:"Japan",iso2:"JP",flag:"🇯🇵",region:"Asia",zone:"ROW_WTS"},
+  {country:"Jordan",iso2:"JO",flag:"🇯🇴",region:"Middle East",zone:"ROW_WTS"},
+  {country:"Kazakhstan",iso2:"KZ",flag:"🇰🇿",region:"Asia",zone:"ROW_WTS"},
+  {country:"Kuwait",iso2:"KW",flag:"🇰🇼",region:"Middle East",zone:"ROW_WTS"},
+  {country:"Laos",iso2:"LA",flag:"🇱🇦",region:"Asia",zone:"ROW_WTS"},
+  {country:"Macau",iso2:"MO",flag:"🇲🇴",region:"Asia",zone:"ROW_WTS"},
+  {country:"North Macedonia",iso2:"MK",flag:"🇲🇰",region:"Europe",zone:"ROW_WTS"},
+  {country:"Malaysia",iso2:"MY",flag:"🇲🇾",region:"Asia",zone:"ROW_WTS"},
+  {country:"Moldova",iso2:"MD",flag:"🇲🇩",region:"Europe",zone:"ROW_WTS"},
+  {country:"Mongolia",iso2:"MN",flag:"🇲🇳",region:"Asia",zone:"ROW_WTS"},
+  {country:"Montenegro",iso2:"ME",flag:"🇲🇪",region:"Europe",zone:"ROW_WTS"},
+  {country:"Morocco",iso2:"MA",flag:"🇲🇦",region:"Africa",zone:"ROW_WTS"},
+  {country:"Myanmar",iso2:"MM",flag:"🇲🇲",region:"Asia",zone:"ROW_WTS"},
+  {country:"Nicaragua",iso2:"NI",flag:"🇳🇮",region:"Central America",zone:"ROW_WTS"},
+  {country:"Oman",iso2:"OM",flag:"🇴🇲",region:"Middle East",zone:"ROW_WTS"},
+  {country:"Pakistan",iso2:"PK",flag:"🇵🇰",region:"Asia",zone:"ROW_WTS"},
+  {country:"Panama",iso2:"PA",flag:"🇵🇦",region:"Central America",zone:"ROW_WTS"},
+  {country:"Papua New Guinea",iso2:"PG",flag:"🇵🇬",region:"Oceania",zone:"ROW_WTS"},
+  {country:"Paraguay",iso2:"PY",flag:"🇵🇾",region:"South America",zone:"ROW_WTS"},
+  {country:"Peru",iso2:"PE",flag:"🇵🇪",region:"South America",zone:"ROW_WTS"},
+  {country:"Philippines",iso2:"PH",flag:"🇵🇭",region:"Asia",zone:"ROW_WTS"},
+  {country:"Puerto Rico",iso2:"PR",flag:"🇵🇷",region:"Caribbean",zone:"ROW_WTS"},
+  {country:"Qatar",iso2:"QA",flag:"🇶🇦",region:"Middle East",zone:"ROW_WTS"},
+  {country:"Russia",iso2:"RU",flag:"🇷🇺",region:"Europe / Asia",zone:"ROW_WTS"},
+  {country:"Saudi Arabia",iso2:"SA",flag:"🇸🇦",region:"Middle East",zone:"ROW_WTS"},
+  {country:"Serbia",iso2:"RS",flag:"🇷🇸",region:"Europe",zone:"ROW_WTS"},
+  {country:"Singapore",iso2:"SG",flag:"🇸🇬",region:"Asia",zone:"ROW_WTS"},
+  {country:"Sint Maarten",iso2:"SX",flag:"🇸🇽",region:"Caribbean",zone:"ROW_WTS"},
+  {country:"South Korea",iso2:"KR",flag:"🇰🇷",region:"Asia",zone:"ROW_WTS"},
+  {country:"South Sudan",iso2:"SS",flag:"🇸🇸",region:"Africa",zone:"ROW_WTS"},
+  {country:"Sri Lanka",iso2:"LK",flag:"🇱🇰",region:"Asia",zone:"ROW_WTS"},
+  {country:"Suriname",iso2:"SR",flag:"🇸🇷",region:"South America",zone:"ROW_WTS"},
+  {country:"Eswatini",iso2:"SZ",flag:"🇸🇿",region:"Africa",zone:"ROW_WTS"},
+  {country:"Taiwan",iso2:"TW",flag:"🇹🇼",region:"Asia",zone:"ROW_WTS"},
+  {country:"Tanzania",iso2:"TZ",flag:"🇹🇿",region:"Africa",zone:"ROW_WTS"},
+  {country:"Thailand",iso2:"TH",flag:"🇹🇭",region:"Asia",zone:"ROW_WTS"},
+  {country:"Tonga",iso2:"TO",flag:"🇹🇴",region:"Oceania",zone:"ROW_WTS"},
+  {country:"Ukraine",iso2:"UA",flag:"🇺🇦",region:"Europe",zone:"ROW_WTS"},
+  {country:"United Arab Emirates",iso2:"AE",flag:"🇦🇪",region:"Middle East",zone:"ROW_WTS"},
+  {country:"Uruguay",iso2:"UY",flag:"🇺🇾",region:"South America",zone:"ROW_WTS"},
+  {country:"Uzbekistan",iso2:"UZ",flag:"🇺🇿",region:"Asia",zone:"ROW_WTS"},
+  {country:"Vanuatu",iso2:"VU",flag:"🇻🇺",region:"Oceania",zone:"ROW_WTS"},
+  {country:"Vietnam",iso2:"VN",flag:"🇻🇳",region:"Asia",zone:"ROW_WTS"},
+  {country:"Samoa",iso2:"WS",flag:"🇼🇸",region:"Oceania",zone:"ROW_WTS"},
+  // ── STANDARD RATES (not covered by daily services) ──
+  {country:"Cuba",iso2:"CU",flag:"🇨🇺",region:"Caribbean",zone:"ROW_STD"},
+  {country:"Iran",iso2:"IR",flag:"🇮🇷",region:"Middle East",zone:"ROW_STD"},
+  {country:"Iraq",iso2:"IQ",flag:"🇮🇶",region:"Middle East",zone:"ROW_STD"},
+  {country:"Libya",iso2:"LY",flag:"🇱🇾",region:"Africa",zone:"ROW_STD"},
+  {country:"North Korea",iso2:"KP",flag:"🇰🇵",region:"Asia",zone:"ROW_STD"},
+  {country:"Somalia",iso2:"SO",flag:"🇸🇴",region:"Africa",zone:"ROW_STD"},
+  {country:"Syria",iso2:"SY",flag:"🇸🇾",region:"Middle East",zone:"ROW_STD"},
+  {country:"Yemen",iso2:"YE",flag:"🇾🇪",region:"Middle East",zone:"ROW_STD"},
+  {country:"Benin",iso2:"BJ",flag:"🇧🇯",region:"Africa",zone:"ROW_STD"},
+  {country:"Burkina Faso",iso2:"BF",flag:"🇧🇫",region:"Africa",zone:"ROW_STD"},
+  {country:"Burundi",iso2:"BI",flag:"🇧🇮",region:"Africa",zone:"ROW_STD"},
+  {country:"Cameroon",iso2:"CM",flag:"🇨🇲",region:"Africa",zone:"ROW_STD"},
+  {country:"Central African Republic",iso2:"CF",flag:"🇨🇫",region:"Africa",zone:"ROW_STD"},
+  {country:"Chad",iso2:"TD",flag:"🇹🇩",region:"Africa",zone:"ROW_STD"},
+  {country:"Comoros",iso2:"KM",flag:"🇰🇲",region:"Africa",zone:"ROW_STD"},
+  {country:"Eritrea",iso2:"ER",flag:"🇪🇷",region:"Africa",zone:"ROW_STD"},
+  {country:"Ethiopia",iso2:"ET",flag:"🇪🇹",region:"Africa",zone:"ROW_STD"},
+  {country:"Gabon",iso2:"GA",flag:"🇬🇦",region:"Africa",zone:"ROW_STD"},
+  {country:"Gambia",iso2:"GM",flag:"🇬🇲",region:"Africa",zone:"ROW_STD"},
+  {country:"Guinea",iso2:"GN",flag:"🇬🇳",region:"Africa",zone:"ROW_STD"},
+  {country:"Ivory Coast",iso2:"CI",flag:"🇨🇮",region:"Africa",zone:"ROW_STD"},
+  {country:"Madagascar",iso2:"MG",flag:"🇲🇬",region:"Africa",zone:"ROW_STD"},
+  {country:"Malawi",iso2:"MW",flag:"🇲🇼",region:"Africa",zone:"ROW_STD"},
+  {country:"Mali",iso2:"ML",flag:"🇲🇱",region:"Africa",zone:"ROW_STD"},
+  {country:"Mauritania",iso2:"MR",flag:"🇲🇷",region:"Africa",zone:"ROW_STD"},
+  {country:"Mauritius",iso2:"MU",flag:"🇲🇺",region:"Africa",zone:"ROW_STD"},
+  {country:"Niger",iso2:"NE",flag:"🇳🇪",region:"Africa",zone:"ROW_STD"},
+  {country:"Nigeria",iso2:"NG",flag:"🇳🇬",region:"Africa",zone:"ROW_STD"},
+  {country:"Republic of the Congo",iso2:"CG",flag:"🇨🇬",region:"Africa",zone:"ROW_STD"},
+  {country:"Rwanda",iso2:"RW",flag:"🇷🇼",region:"Africa",zone:"ROW_STD"},
+  {country:"Senegal",iso2:"SN",flag:"🇸🇳",region:"Africa",zone:"ROW_STD"},
+  {country:"Sierra Leone",iso2:"SL",flag:"🇸🇱",region:"Africa",zone:"ROW_STD"},
+  {country:"Sudan",iso2:"SD",flag:"🇸🇩",region:"Africa",zone:"ROW_STD"},
+  {country:"Togo",iso2:"TG",flag:"🇹🇬",region:"Africa",zone:"ROW_STD"},
+  {country:"Tunisia",iso2:"TN",flag:"🇹🇳",region:"Africa",zone:"ROW_STD"},
+  {country:"Uganda",iso2:"UG",flag:"🇺🇬",region:"Africa",zone:"ROW_STD"},
+  {country:"Zambia",iso2:"ZM",flag:"🇿🇲",region:"Africa",zone:"ROW_STD"},
+  {country:"Zimbabwe",iso2:"ZW",flag:"🇿🇼",region:"Africa",zone:"ROW_STD"},
+  {country:"Maldives",iso2:"MV",flag:"🇲🇻",region:"Asia",zone:"ROW_STD"},
+  {country:"Nepal",iso2:"NP",flag:"🇳🇵",region:"Asia",zone:"ROW_STD"},
+  {country:"Bhutan",iso2:"BT",flag:"🇧🇹",region:"Asia",zone:"ROW_STD"},
+  {country:"Turkmenistan",iso2:"TM",flag:"🇹🇲",region:"Asia",zone:"ROW_STD"},
+  {country:"Kyrgyzstan",iso2:"KG",flag:"🇰🇬",region:"Asia",zone:"ROW_STD"},
+  {country:"Tajikistan",iso2:"TJ",flag:"🇹🇯",region:"Asia",zone:"ROW_STD"},
+  {country:"Bolivia",iso2:"BO",flag:"🇧🇴",region:"South America",zone:"ROW_STD"},
+  {country:"Venezuela",iso2:"VE",flag:"🇻🇪",region:"South America",zone:"ROW_STD"},
+  {country:"Bahamas",iso2:"BS",flag:"🇧🇸",region:"Caribbean",zone:"ROW_STD"},
+  {country:"Belize",iso2:"BZ",flag:"🇧🇿",region:"Central America",zone:"ROW_STD"},
+  {country:"Algeria",iso2:"DZ",flag:"🇩🇿",region:"Africa",zone:"ROW_STD"},
+  {country:"Angola",iso2:"AO",flag:"🇦🇴",region:"Africa",zone:"ROW_STD"},
+  {country:"Botswana",iso2:"BW",flag:"🇧🇼",region:"Africa",zone:"ROW_STD"},
+  {country:"Namibia",iso2:"NA",flag:"🇳🇦",region:"Africa",zone:"ROW_STD"},
+  {country:"Lebanon",iso2:"LB",flag:"🇱🇧",region:"Middle East",zone:"ROW_STD"},
+];
+
+// ── ZONE CONFIG ──
+const ZONES = {
+  EU_RLAH: {
+    label: "Europe (RLAH)",
+    cls: "zone-europe",
+    headlineCls: "headline-good",
+    headline: "Good news — use your UK allowance here at no extra cost. Fair use policies apply.",
+    dailyCharge: null,
+    dailyLabel: "Included",
+    dailyNote: "No daily charge — use your plan allowance"
+  },
+  TF_WORLD: {
+    label: "Inclusive Worldwide",
+    cls: "zone-inclusive",
+    headlineCls: "headline-good",
+    headline: "This destination is included with TravelFree tariffs at no extra daily charge. If your plan uses World Travel Select instead, a daily charge of £4.00 (ex VAT) applies on days you use your phone.",
+    dailyCharge: null,
+    dailyLabel: "Included / £4.00",
+    dailyNote: "Depends on your tariff — TravelFree = included, WTS = £4.00/day"
+  },
+  ROW_WTS: {
+    label: "World Travel",
+    cls: "zone-wts",
+    headlineCls: "headline-ok",
+    headline: "A daily roaming charge of £4.00 (ex VAT) applies on days you use your phone abroad. You can then use your UK allowance as normal.",
+    dailyCharge: 4.00,
+    dailyLabel: "£4.00/day",
+    dailyNote: "Charged per day of use (calls, texts or data)"
+  },
+  ROW_STD: {
+    label: "Standard Rates",
+    cls: "zone-standard",
+    headlineCls: "headline-caution",
+    headline: "This destination is not covered by our daily roaming services. Standard per-minute and per-MB rates apply, which can be expensive. We strongly recommend adding a roaming bolt-on before you travel.",
+    dailyCharge: null,
+    dailyLabel: "Not available",
+    dailyNote: "No daily service — standard rates apply"
+  }
+};
+
+// ── BOLT-ON RECOMMENDATIONS BY ZONE (prices ex VAT from v6) ──
+const BOLTONS = {
+  EU_RLAH: [
+    {name:"Data Top Up 5GB", sku:"AIOATOP5GB", detail:"Extra UK data if you run low while roaming", price:"£5.50"},
+    {name:"Data Top Up 10GB", sku:"AIOATOP10GB", detail:"More data for heavy use abroad", price:"£8.00"},
+    {name:"Data Top Up 20GB", sku:"AIOATOP20GB", detail:"Best value for data-intensive travel", price:"£13.50"},
+  ],
+  TF_WORLD: [
+    {name:"Data Top Up 5GB", sku:"AIOATOP5GB", detail:"Top up if you exceed your plan data", price:"£5.50"},
+    {name:"Data Top Up 10GB", sku:"AIOATOP10GB", detail:"Good for mapping, streaming and social media", price:"£8.00"},
+    {name:"Roaming Minutes & Data 250", sku:"AIOA250RMD", detail:"250 mins + 250MB for WTS tariff users", price:"£60.00"},
+  ],
+  ROW_WTS: [
+    {name:"Roaming Minutes & Data 250", sku:"AIOA250RMD", detail:"250 mins + 250MB — short trips, light usage", price:"£60.00"},
+    {name:"Roaming Minutes & Data 500", sku:"AIOA500RMD", detail:"500 mins + 500MB — moderate usage", price:"£90.00"},
+    {name:"Roaming Minutes & Data 1000", sku:"AIOA1000RMD", detail:"1000 mins + 1GB — heavier usage", price:"£120.00"},
+  ],
+  ROW_STD: [
+    {name:"Roaming Minutes & Data 250", sku:"AIOA250RMD", detail:"250 mins + 250MB — essential for this destination", price:"£60.00"},
+    {name:"Roaming Minutes & Data 500", sku:"AIOA500RMD", detail:"500 mins + 500MB — recommended for a week+", price:"£90.00"},
+    {name:"Roaming Minutes & Data 1000", sku:"AIOA1000RMD", detail:"1000 mins + 1GB — best coverage for longer stays", price:"£120.00"},
+  ]
+};
+
+// ── TIPS BY ZONE ──
+const TIPS = {
+  EU_RLAH: [
+    "Enable Data Roaming in your phone settings before you travel.",
+    "Your UK calls, texts and data work as normal — fair use limits may apply.",
+    "Use Wi-Fi where possible to save your data allowance.",
+    "Download maps and media offline before you go.",
+    "If you run low on data, add a Data Top Up rather than paying out-of-bundle rates."
+  ],
+  TF_WORLD: [
+    "Check whether your plan includes TravelFree or World Travel Select (WTS).",
+    "Enable Data Roaming and restart your device after landing if it does not connect.",
+    "On WTS tariffs, the £4.00 daily charge only applies on days you actually use your phone.",
+    "Consider a roaming bolt-on if you expect heavy data use.",
+    "Turn off background app refresh to reduce unexpected data usage."
+  ],
+  ROW_WTS: [
+    "The daily charge only applies on days you make calls, send texts or use data.",
+    "Enable Data Roaming and select a partner network manually if needed.",
+    "Consider a Roaming Minutes & Data bolt-on for predictable spend.",
+    "Use Wi-Fi calling and messaging apps where available.",
+    "Turn off automatic app updates and cloud sync to control data use."
+  ],
+  ROW_STD: [
+    "Standard rates can be expensive — we strongly recommend a roaming bolt-on.",
+    "Contact us before you travel so we can advise the best option for your destination.",
+    "Use Wi-Fi calling and messaging apps wherever possible.",
+    "Keep Data Roaming switched off unless you have a bolt-on applied.",
+    "Set a spend cap on your account to avoid unexpected charges."
+  ]
+};
+
+// ── POPULAR DESTINATIONS ──
+const POPULAR = ["ES","FR","US","TR","AE","GR","IT","PT","AU","TH"];
+
+// ============================================================
+// LOGIC
+// ============================================================
+const searchInput = document.getElementById("searchInput");
+const acList = document.getElementById("autocomplete");
+const resultSection = document.getElementById("resultSection");
+const popularRow = document.getElementById("popularRow");
+let activeIdx = -1;
+
+// Build popular buttons
+POPULAR.forEach(iso => {
+  const c = COUNTRIES.find(x => x.iso2 === iso);
+  if (!c) return;
+  const btn = document.createElement("button");
+  btn.className = "popular-btn";
+  btn.innerHTML = `<span class="flag">${c.flag}</span> ${c.country}`;
+  btn.addEventListener("click", () => selectCountry(c));
+  popularRow.appendChild(btn);
+});
+
+// Search
+searchInput.addEventListener("input", () => {
+  const q = searchInput.value.trim().toLowerCase();
+  activeIdx = -1;
+  if (q.length < 1) { acList.classList.remove("open"); return; }
+  const matches = COUNTRIES.filter(c =>
+    c.country.toLowerCase().includes(q) ||
+    c.iso2.toLowerCase() === q ||
+    (c.region && c.region.toLowerCase().includes(q))
+  ).slice(0, 8);
+  if (matches.length === 0) {
+    acList.innerHTML = '<div class="ac-item" style="color:var(--grey-400)">No results found</div>';
+    acList.classList.add("open");
+    return;
+  }
+  acList.innerHTML = matches.map((c, i) =>
+    `<div class="ac-item" data-idx="${i}" role="option">`+
+    `<span class="flag">${c.flag}</span>`+
+    `<span>${c.country}</span>`+
+    `<span class="region">${c.region}</span>`+
+    `</div>`
+  ).join("");
+  acList.querySelectorAll(".ac-item").forEach((el, i) => {
+    el.addEventListener("click", () => selectCountry(matches[i]));
+  });
+  acList.classList.add("open");
+});
+
+// Keyboard nav
+searchInput.addEventListener("keydown", (e) => {
+  const items = acList.querySelectorAll(".ac-item[data-idx]");
+  if (!items.length) return;
+  if (e.key === "ArrowDown") { e.preventDefault(); activeIdx = Math.min(activeIdx + 1, items.length - 1); highlightItem(items); }
+  else if (e.key === "ArrowUp") { e.preventDefault(); activeIdx = Math.max(activeIdx - 1, 0); highlightItem(items); }
+  else if (e.key === "Enter" && activeIdx >= 0) {
+    e.preventDefault();
+    items[activeIdx].click();
+  }
+});
+
+function highlightItem(items) {
+  items.forEach((el, i) => el.classList.toggle("active", i === activeIdx));
+}
+
+// Close dropdown on outside click
+document.addEventListener("click", (e) => {
+  if (!e.target.closest(".search-wrap")) acList.classList.remove("open");
+});
+
+// Select country and render result
+function selectCountry(c) {
+  searchInput.value = c.country;
+  acList.classList.remove("open");
+  const z = ZONES[c.zone];
+  const boltons = BOLTONS[c.zone] || [];
+  const tips = TIPS[c.zone] || [];
+
+  document.getElementById("rFlag").textContent = c.flag;
+  document.getElementById("rCountry").textContent = c.country;
+
+  const zoneEl = document.getElementById("rZone");
+  zoneEl.textContent = z.label;
+  zoneEl.className = "result-zone " + z.cls;
+
+  const headEl = document.getElementById("rHeadline");
+  headEl.textContent = z.headline;
+  headEl.className = "result-headline " + z.headlineCls;
+
+  // Info grid
+  const grid = document.getElementById("rInfoGrid");
+  grid.innerHTML = `
+    <div class="info-box">
+      <h4>Daily charge</h4>
+      <div class="value">${z.dailyLabel} <small>(ex VAT)</small></div>
+      <div class="note">${z.dailyNote}</div>
+    </div>
+    <div class="info-box">
+      <h4>Out-of-bundle data</h4>
+      <div class="value">£0.026/MB <small>(ex VAT)</small></div>
+      <div class="note">Approx £26.62 per GB if you exceed your allowance</div>
+    </div>
+  `;
+
+  // Bolt-ons
+  const bDiv = document.getElementById("rBoltons");
+  bDiv.innerHTML = `<div class="boltons-title">Recommended add-ons for ${c.country}</div>` +
+    boltons.map(b =>
+      `<div class="bolton-card">`+
+      `<div><div class="bolton-name">${b.name}</div><div class="bolton-detail">${b.detail}</div></div>`+
+      `<div class="bolton-price">${b.price} <small>(ex VAT)</small></div>`+
+      `</div>`
+    ).join("");
+
+  // Tips
+  const tDiv = document.getElementById("rTips");
+  tDiv.innerHTML = `<h4>Tips for using your phone in ${c.country}</h4><ul>`+
+    tips.map(t => `<li>${t}</li>`).join("") + `</ul>`;
+
+  resultSection.classList.add("visible");
+  resultSection.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,9 @@
+{
+  "name": "ctn-roaming-checker",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "npx serve public -p 3333",
+    "preview": "npx serve public -p 3333"
+  }
+}
