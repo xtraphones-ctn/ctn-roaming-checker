@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>O2 Mobile Plans & Pricing | Compare The Networks</title>
-  <meta name="description" content="O2 SIM-only business mobile plans from Compare The Networks. 30-day terms, no long contracts. Prices from £6.50 per month ex VAT.">
+  <title>O2 Business Mobile Plans & Pricing | Compare The Networks</title>
+  <meta name="description" content="O2 SIM-only business mobile plans from Compare The Networks. Flexible contract terms with EU roaming included. All prices exclude VAT.">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -38,14 +38,24 @@
       border-radius: 6px; padding: 4px 12px; font-size: .8rem; color: rgba(255,255,255,.9); margin-top: 12px;
     }
     .network-dot { width: 8px; height: 8px; border-radius: 50%; background: #00a0e1; }
-    /* USP bar */
-    .usp-bar {
-      display: flex; flex-wrap: wrap; gap: 24px; padding: 20px 0; justify-content: center;
-    }
+    .usp-bar { display: flex; flex-wrap: wrap; gap: 24px; padding: 20px 0; justify-content: center; }
     .usp-item { display: flex; align-items: center; gap: 8px; font-size: .88rem; color: var(--grey-600); }
     .usp-icon { width: 28px; height: 28px; border-radius: 50%; background: var(--success-bg); color: var(--success); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: .85rem; }
+    /* Term toggle */
+    .term-toggle {
+      display: flex; align-items: center; justify-content: center; gap: 0;
+      background: var(--grey-100); border-radius: 10px; padding: 4px;
+      width: fit-content; margin: 0 auto 24px;
+    }
+    .term-btn {
+      padding: 10px 24px; border: none; border-radius: 8px; font-size: .9rem;
+      font-weight: 600; cursor: pointer; transition: all .2s;
+      background: transparent; color: var(--grey-600);
+    }
+    .term-btn.active { background: var(--accent); color: #fff; box-shadow: 0 2px 8px rgba(0,102,204,.3); }
+    .term-btn:hover:not(.active) { color: var(--grey-800); }
     /* Plan cards */
-    .plans-section { padding: 24px 0 32px; }
+    .plans-section { padding: 0 0 32px; }
     .plans-section h2 { font-size: 1.2rem; font-weight: 700; margin-bottom: 16px; }
     .plan-grid {
       display: grid;
@@ -63,20 +73,13 @@
       background: var(--accent); color: #fff; padding: 2px 14px; border-radius: 12px;
       font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .5px;
     }
-    .plan-card.promo { border-color: var(--warn); }
-    .plan-card.promo::before {
-      content: "Limited Time"; position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
-      background: var(--warn); color: #fff; padding: 2px 14px; border-radius: 12px;
-      font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .5px;
-    }
     .plan-data { font-size: 2rem; font-weight: 800; color: var(--primary); }
-    .plan-data small { font-size: .8rem; font-weight: 400; color: var(--grey-400); }
     .plan-name { font-size: .82rem; color: var(--grey-600); margin: 4px 0 16px; }
     .plan-features { list-style: none; text-align: left; margin-bottom: 16px; }
     .plan-features li {
       font-size: .82rem; padding: 4px 0; padding-left: 20px; position: relative; color: var(--grey-600);
     }
-    .plan-features li::before { content: "✓"; position: absolute; left: 0; color: var(--success); font-weight: 700; }
+    .plan-features li::before { content: "\2713"; position: absolute; left: 0; color: var(--success); font-weight: 700; }
     .plan-price { font-size: 1.5rem; font-weight: 800; color: var(--accent); }
     .plan-price small { font-size: .7rem; font-weight: 400; color: var(--grey-400); display: block; }
     .plan-cta {
@@ -85,10 +88,7 @@
       cursor: pointer; text-decoration: none; transition: opacity .2s;
     }
     .plan-cta:hover { opacity: .9; }
-    /* Links */
-    .page-links {
-      display: flex; gap: 16px; flex-wrap: wrap; padding: 8px 0 24px;
-    }
+    .page-links { display: flex; gap: 16px; flex-wrap: wrap; padding: 8px 0 24px; }
     .page-link {
       display: inline-flex; align-items: center; gap: 6px; padding: 10px 20px;
       background: #fff; border: 1px solid var(--grey-200); border-radius: 8px;
@@ -96,7 +96,6 @@
       transition: all .2s;
     }
     .page-link:hover { border-color: var(--accent); background: var(--accent-light); }
-    /* Disclaimer */
     .disclaimer {
       padding: 24px 0; font-size: .78rem; color: var(--grey-400); border-top: 1px solid var(--grey-100);
     }
@@ -108,22 +107,27 @@
 <div class="header">
   <div class="container">
     <h1>O2 Business Mobile Plans</h1>
-    <p>SIM-only plans on 30-day terms. No long contracts. All prices exclude VAT.</p>
+    <p>SIM-only plans with EU roaming included. All prices exclude VAT.</p>
     <div class="network-badge"><span class="network-dot"></span> O2 Network</div>
   </div>
 </div>
 
 <div class="container">
   <div class="usp-bar">
-    <div class="usp-item"><div class="usp-icon">✓</div> 30-day rolling terms</div>
-    <div class="usp-item"><div class="usp-icon">✓</div> EU roaming included</div>
-    <div class="usp-item"><div class="usp-icon">✓</div> Worldwide daily roaming</div>
-    <div class="usp-item"><div class="usp-icon">✓</div> UK business support</div>
+    <div class="usp-item"><div class="usp-icon">&check;</div> EU roaming included</div>
+    <div class="usp-item"><div class="usp-icon">&check;</div> Worldwide daily roaming</div>
+    <div class="usp-item"><div class="usp-icon">&check;</div> UK business support</div>
+    <div class="usp-item"><div class="usp-icon">&check;</div> Flexible contract terms</div>
   </div>
 
   <div class="page-links">
     <a href="index.html" class="page-link">&#127758; Roaming checker</a>
     <a href="bolt-ons.html" class="page-link">&#128229; Bolt-ons & top-ups</a>
+  </div>
+
+  <div class="term-toggle">
+    <button class="term-btn active" data-term="24">24 months</button>
+    <button class="term-btn" data-term="36">36 months</button>
   </div>
 
   <div class="plans-section">
@@ -136,37 +140,62 @@
     <div class="plan-grid" id="mbbPlans"></div>
   </div>
 
+  <div id="contact" style="padding:24px 0 32px">
+    <div style="background:#fff;border:1px solid var(--grey-200);border-radius:var(--radius);padding:24px;text-align:center;">
+      <h2 style="font-size:1.15rem;margin-bottom:8px">Get a quote</h2>
+      <p style="font-size:.9rem;color:var(--grey-600);margin-bottom:4px">Call us on <strong>01onal number</strong> or email <strong>sales@comparethenetworks.com</strong></p>
+      <p style="font-size:.82rem;color:var(--grey-400)">Multi-line discounts available. We'll tailor a package to your business.</p>
+    </div>
+  </div>
+
   <div class="disclaimer">
-    <p>All prices exclude VAT. Plans are on 30-day terms and subject to annual price adjustments (CPI/RPI). Fair use policies apply to unlimited allowances. EU roaming (RLAH) and World Travel Select (WTS at £4.00/day ex VAT) included on all plans.</p>
+    <p>All prices exclude VAT. Plans are subject to annual price adjustments (CPI + 3.9%). Fair use policies apply to unlimited allowances. EU roaming included on all plans. Worldwide daily roaming at &pound;5.00/day (ex VAT) on days you use your phone abroad outside Europe.</p>
     <div class="footer-meta">
-      <span>Effective from: 17 February 2026</span>
-      <span>Version: CTN-O2-OOB-20260217-v6</span>
+      <span>Effective from: 20 February 2026</span>
+      <span>Version: CTN-O2-RETAIL-20260220-v1</span>
     </div>
   </div>
 </div>
 
 <script>
-const voicePlans = [
-  {name:"Low User",data:"1GB",mins:"500 minutes",texts:"Unlimited texts",price:"6.50",featured:false},
-  {name:"Standard",data:"2GB",mins:"Unlimited minutes",texts:"Unlimited texts",price:"7.50",featured:false},
-  {name:"5GB",data:"5GB",mins:"Unlimited minutes",texts:"Unlimited texts",price:"9.00",featured:false},
-  {name:"25GB",data:"25GB",mins:"Unlimited minutes",texts:"Unlimited texts",price:"11.00",featured:true},
-  {name:"50GB",data:"50GB",mins:"Unlimited minutes",texts:"Unlimited texts",price:"12.00",featured:false},
-  {name:"Unlimited",data:"Unlimited",mins:"Unlimited minutes",texts:"Unlimited texts",price:"14.50",featured:false},
-];
+// Buy prices (Giacom) — NOT shown to customer
+// These are used to calculate sell prices dynamically
+const PLANS = {
+  voice: [
+    {name:"Low User",data:"1GB",mins:"500 minutes",texts:"Unlimited texts",buy:5.25,featured:false},
+    {name:"Standard",data:"2GB",mins:"Unlimited minutes",texts:"Unlimited texts",buy:6.25,featured:false},
+    {name:"5GB",data:"5GB",mins:"Unlimited minutes",texts:"Unlimited texts",buy:7.50,featured:false},
+    {name:"25GB",data:"25GB",mins:"Unlimited minutes",texts:"Unlimited texts",buy:9.00,featured:true},
+    {name:"50GB",data:"50GB",mins:"Unlimited minutes",texts:"Unlimited texts",buy:10.00,featured:false},
+    {name:"Unlimited",data:"Unlimited",mins:"Unlimited minutes",texts:"Unlimited texts",buy:12.00,featured:false},
+  ],
+  mbb: [
+    {name:"MBB",data:"1GB",buy:4.50},
+    {name:"MBB",data:"3GB",buy:6.50},
+    {name:"MBB",data:"10GB",buy:9.00},
+    {name:"MBB",data:"30GB",buy:10.00},
+    {name:"MBB",data:"50GB",buy:11.00},
+    {name:"MBB",data:"100GB",buy:14.00},
+  ]
+};
 
-const mbbPlans = [
-  {name:"MBB",data:"1GB",price:"5.50"},
-  {name:"MBB",data:"3GB",price:"8.00"},
-  {name:"MBB",data:"10GB",price:"11.00"},
-  {name:"MBB",data:"30GB",price:"12.00"},
-  {name:"MBB",data:"50GB",price:"13.50"},
-  {name:"MBB",data:"100GB",price:"17.00"},
-];
+const TARGET_PROFIT = 200; // £200 per line over contract
 
-function renderVoice(plans, containerId) {
-  const el = document.getElementById(containerId);
-  el.innerHTML = plans.map(p => `
+function sellPrice(buy, termMonths) {
+  const markup = TARGET_PROFIT / termMonths;
+  const raw = buy + markup;
+  // Round to nearest £0.50
+  return (Math.round(raw * 2) / 2).toFixed(2);
+}
+
+let currentTerm = 24;
+
+function render() {
+  // Voice plans
+  const vEl = document.getElementById('voicePlans');
+  vEl.innerHTML = PLANS.voice.map(p => {
+    const price = sellPrice(p.buy, currentTerm);
+    return `
     <div class="plan-card${p.featured?' featured':''}">
       <div class="plan-data">${p.data}</div>
       <div class="plan-name">${p.name}</div>
@@ -174,33 +203,43 @@ function renderVoice(plans, containerId) {
         <li>${p.mins}</li>
         <li>${p.texts}</li>
         <li>EU roaming included</li>
-        <li>WTS worldwide roaming</li>
+        <li>Worldwide daily roaming</li>
       </ul>
-      <div class="plan-price">&pound;${p.price}<small>per month (ex VAT)</small></div>
-      <a href="#contact" class="plan-cta">Get this plan</a>
-    </div>
-  `).join('');
-}
+      <div class="plan-price">&pound;${price}<small>per month (ex VAT) &middot; ${currentTerm} months</small></div>
+      <a href="#contact" class="plan-cta">Get a quote</a>
+    </div>`;
+  }).join('');
 
-function renderMBB(plans, containerId) {
-  const el = document.getElementById(containerId);
-  el.innerHTML = plans.map(p => `
+  // MBB plans
+  const mEl = document.getElementById('mbbPlans');
+  mEl.innerHTML = PLANS.mbb.map(p => {
+    const price = sellPrice(p.buy, currentTerm);
+    return `
     <div class="plan-card">
       <div class="plan-data">${p.data}</div>
       <div class="plan-name">${p.name}</div>
       <ul class="plan-features">
         <li>Data only</li>
         <li>EU roaming included</li>
-        <li>WTS worldwide roaming</li>
+        <li>Worldwide daily roaming</li>
       </ul>
-      <div class="plan-price">&pound;${p.price}<small>per month (ex VAT)</small></div>
-      <a href="#contact" class="plan-cta">Get this plan</a>
-    </div>
-  `).join('');
+      <div class="plan-price">&pound;${price}<small>per month (ex VAT) &middot; ${currentTerm} months</small></div>
+      <a href="#contact" class="plan-cta">Get a quote</a>
+    </div>`;
+  }).join('');
 }
 
-renderVoice(voicePlans, 'voicePlans');
-renderMBB(mbbPlans, 'mbbPlans');
+// Term toggle
+document.querySelectorAll('.term-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.term-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentTerm = parseInt(btn.dataset.term);
+    render();
+  });
+});
+
+render();
 </script>
 
 </body>
