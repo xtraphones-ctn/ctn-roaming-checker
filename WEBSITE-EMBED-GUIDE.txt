@@ -1,0 +1,50 @@
+EMBEDDING THESE PAGES INTO YOUR WORDPRESS SITE
+================================================
+
+Once deployed to Cloudflare Pages, these pages will be at:
+  https://ctn-roaming-checker.pages.dev/
+  https://ctn-roaming-checker.pages.dev/bolt-ons.html
+  https://ctn-roaming-checker.pages.dev/pricing.html
+
+OPTION 1: IFRAME EMBED (simplest)
+-----------------------------------
+Add an HTML block in Elementor or WordPress editor with:
+
+<iframe src="https://ctn-roaming-checker.pages.dev/"
+        width="100%" height="900"
+        style="border:none; border-radius:12px;"
+        title="Roaming Checker">
+</iframe>
+
+Same for bolt-ons:
+<iframe src="https://ctn-roaming-checker.pages.dev/bolt-ons.html"
+        width="100%" height="900"
+        style="border:none; border-radius:12px;"
+        title="Bolt-Ons & Top-Ups">
+</iframe>
+
+And pricing:
+<iframe src="https://ctn-roaming-checker.pages.dev/pricing.html"
+        width="100%" height="1200"
+        style="border:none; border-radius:12px;"
+        title="O2 Plans & Pricing">
+</iframe>
+
+OPTION 2: CUSTOM DOMAIN
+-------------------------
+In Cloudflare Pages > Custom Domains, add:
+  roaming.comparethenetworks.com
+  pricing.comparethenetworks.com
+Then the iframe src would use those domains instead.
+
+OPTION 3: DIRECT LINK
+-----------------------
+Add navigation menu items in WordPress pointing directly to:
+  https://ctn-roaming-checker.pages.dev/ (opens in new tab)
+  https://ctn-roaming-checker.pages.dev/bolt-ons.html
+  https://ctn-roaming-checker.pages.dev/pricing.html
+
+DEPLOYMENT
+----------
+Run: wrangler pages deploy public --project-name ctn-roaming-checker
+Or: push to GitHub and connect to Cloudflare Pages for auto-deploy.

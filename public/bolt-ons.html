@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>O2 Bolt-Ons & Data Top-Ups | Compare The Networks</title>
+  <meta name="description" content="Browse O2 data top-ups, international calling packs, roaming bolt-ons and more. All prices shown exclude VAT.">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --primary: #1a2b4a;
+      --accent: #0066cc;
+      --accent-light: #e8f2ff;
+      --success: #0a8a3e;
+      --success-bg: #e6f7ed;
+      --warn: #c45500;
+      --warn-bg: #fff4e6;
+      --grey-50: #f8f9fb;
+      --grey-100: #eef0f4;
+      --grey-200: #dde1e8;
+      --grey-400: #9ba3b2;
+      --grey-600: #5c6370;
+      --grey-800: #2d3341;
+      --radius: 12px;
+      --shadow: 0 1px 3px rgba(0,0,0,.08), 0 4px 12px rgba(0,0,0,.04);
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+      color: var(--grey-800);
+      background: var(--grey-50);
+      line-height: 1.6;
+    }
+    .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+    .header { background: var(--primary); color: #fff; padding: 24px 0; }
+    .header h1 { font-size: 1.75rem; font-weight: 700; }
+    .header p { color: rgba(255,255,255,.75); margin-top: 4px; font-size: .95rem; }
+    .network-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2);
+      border-radius: 6px; padding: 4px 12px; font-size: .8rem;
+      color: rgba(255,255,255,.9); margin-top: 12px;
+    }
+    .network-dot { width: 8px; height: 8px; border-radius: 50%; background: #00a0e1; }
+    /* Nav tabs */
+    .tab-nav { display: flex; gap: 4px; padding: 24px 0 0; flex-wrap: wrap; }
+    .tab-btn {
+      padding: 10px 20px; background: #fff; border: 1px solid var(--grey-200);
+      border-bottom: none; border-radius: 10px 10px 0 0; font-size: .9rem;
+      cursor: pointer; color: var(--grey-600); font-weight: 500; transition: all .2s;
+    }
+    .tab-btn.active { background: #fff; color: var(--accent); border-color: var(--accent); font-weight: 700; position: relative; }
+    .tab-btn.active::after {
+      content: ""; position: absolute; bottom: -1px; left: 0; right: 0;
+      height: 2px; background: #fff;
+    }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+    .tab-panel {
+      background: #fff; border: 1px solid var(--grey-200);
+      border-radius: 0 var(--radius) var(--radius) var(--radius);
+      padding: 24px; box-shadow: var(--shadow); margin-bottom: 32px;
+    }
+    /* Section intro */
+    .section-intro { font-size: .92rem; color: var(--grey-600); margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--grey-100); }
+    /* Bolt-on cards */
+    .bolton-grid { display: grid; gap: 12px; }
+    .bolton-row {
+      display: grid; grid-template-columns: 1fr 180px 120px;
+      align-items: center; padding: 16px 20px;
+      background: var(--grey-50); border: 1px solid var(--grey-100);
+      border-radius: 10px; gap: 16px; transition: border-color .2s;
+    }
+    .bolton-row:hover { border-color: var(--accent); }
+    @media (max-width: 640px) {
+      .bolton-row { grid-template-columns: 1fr; gap: 8px; }
+    }
+    .bolton-name { font-weight: 700; font-size: .95rem; }
+    .bolton-sku { font-size: .75rem; color: var(--grey-400); font-family: monospace; }
+    .bolton-desc { font-size: .85rem; color: var(--grey-600); margin-top: 2px; }
+    .bolton-allowance { font-size: .85rem; font-weight: 600; color: var(--primary); }
+    .bolton-price { font-size: 1.2rem; font-weight: 700; color: var(--accent); text-align: right; }
+    .bolton-price small { display: block; font-size: .72rem; font-weight: 400; color: var(--grey-400); }
+    /* OOB table */
+    .oob-table { width: 100%; border-collapse: collapse; }
+    .oob-table th {
+      text-align: left; padding: 10px 16px; background: var(--primary);
+      color: #fff; font-size: .8rem; text-transform: uppercase; letter-spacing: .4px;
+    }
+    .oob-table td { padding: 12px 16px; border-bottom: 1px solid var(--grey-100); font-size: .9rem; }
+    .oob-table tr:last-child td { border-bottom: none; }
+    .oob-table tr:hover td { background: var(--grey-50); }
+    .oob-price { font-weight: 700; color: var(--accent); }
+    /* Plans table */
+    .plans-table { width: 100%; border-collapse: collapse; }
+    .plans-table th {
+      text-align: left; padding: 10px 14px; background: var(--primary);
+      color: #fff; font-size: .78rem; text-transform: uppercase; letter-spacing: .4px;
+    }
+    .plans-table td { padding: 12px 14px; border-bottom: 1px solid var(--grey-100); font-size: .88rem; }
+    .plans-table tr:last-child td { border-bottom: none; }
+    .plans-table tr:hover td { background: var(--grey-50); }
+    .plan-price { font-weight: 700; color: var(--accent); }
+    .plan-tag {
+      display: inline-block; padding: 2px 8px; border-radius: 4px;
+      font-size: .7rem; font-weight: 600;
+    }
+    .tag-rlah { background: var(--success-bg); color: var(--success); }
+    .tag-promo { background: var(--warn-bg); color: var(--warn); }
+    /* Back link */
+    .back-link {
+      display: inline-flex; align-items: center; gap: 6px; margin-top: 16px;
+      color: var(--accent); text-decoration: none; font-size: .9rem; font-weight: 500;
+    }
+    .back-link:hover { text-decoration: underline; }
+    /* Disclaimer */
+    .disclaimer {
+      padding: 24px 0; font-size: .78rem; color: var(--grey-400);
+      border-top: 1px solid var(--grey-100);
+    }
+    .footer-meta { display: flex; gap: 20px; margin-top: 8px; }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="container">
+    <h1>O2 Bolt-Ons, Top-Ups & Pricing</h1>
+    <p>Optional add-ons to manage your usage and reduce out-of-bundle spend</p>
+    <div class="network-badge"><span class="network-dot"></span> O2 Network</div>
+  </div>
+</div>
+
+<div class="container">
+  <a href="index.html" class="back-link">&#8592; Roaming checker</a>
+
+  <div class="tab-nav">
+    <button class="tab-btn active" data-tab="topups">Data Top-Ups</button>
+    <button class="tab-btn" data-tab="intl">International Calling</button>
+    <button class="tab-btn" data-tab="roaming">Roaming Packs</button>
+    <button class="tab-btn" data-tab="other">Other Add-Ons</button>
+    <button class="tab-btn" data-tab="oob">Out-of-Bundle Rates</button>
+    <button class="tab-btn" data-tab="plans">Monthly Plans</button>
+  </div>
+
+  <!-- DATA TOP-UPS -->
+  <div class="tab-content active" id="tab-topups">
+    <div class="tab-panel">
+      <div class="section-intro">Add extra data to your monthly allowance. Top-ups apply to your UK data and can be used while roaming in RLAH destinations.</div>
+      <div class="bolton-grid">
+        <div class="bolton-row">
+          <div><div class="bolton-name">Data Top Up 5GB</div><div class="bolton-sku">AIOATOP5GB</div><div class="bolton-desc">Extra UK data if you exceed your plan allowance.</div></div>
+          <div class="bolton-allowance">5GB data</div>
+          <div class="bolton-price">&pound;5.50<small>ex VAT / month</small></div>
+        </div>
+        <div class="bolton-row">
+          <div><div class="bolton-name">Data Top Up 10GB</div><div class="bolton-sku">AIOATOP10GB</div><div class="bolton-desc">Extra UK data for higher monthly usage.</div></div>
+          <div class="bolton-allowance">10GB data</div>
+          <div class="bolton-price">&pound;8.00<small>ex VAT / month</small></div>
+        </div>
+        <div class="bolton-row">
+          <div><div class="bolton-name">Data Top Up 20GB</div><div class="bolton-sku">AIOATOP20GB</div><div class="bolton-desc">Best value top-up for heavy data users.</div></div>
+          <div class="bolton-allowance">20GB data</div>
+          <div class="bolton-price">&pound;13.50<small>ex VAT / month</small></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- INTERNATIONAL CALLING -->
+  <div class="tab-content" id="tab-intl">
+    <div class="tab-panel">
+      <div class="section-intro">Reduce the cost of calling and texting international numbers from the UK. Choose a pack based on your destination and volume.</div>
+      <div class="bolton-grid">
+        <div class="bolton-row">
+          <div><div class="bolton-name">International Caller Add-On</div><div class="bolton-sku">AIOAIC*</div><div class="bolton-desc">Reduced international calling rates from the UK (destination-based).</div></div>
+          <div class="bolton-allowance">Reduced rates</div>
+          <div class="bolton-price">&pound;3.50<small>ex VAT / month</small></div>
+        </div>
+        <div class="bolton-row">
+          <div><div class="bolton-name">Int. Minutes Europe 500</div><div class="bolton-sku">AIOA500IME</div><div class="bolton-desc">Calls from the UK to European destinations.</div></div>
+          <div class="bolton-allowance">500 minutes</div>
+          <div class="bolton-price">&pound;5.50<small>ex VAT / month</small></div>
+        </div>
+        <div class="bolton-row">
+          <div><div class="bolton-name">Int. Minutes Europe 1000</div><div class="bolton-sku">AIOA1000IME</div><div class="bolton-desc">Higher-volume calling to Europe from the UK.</div></div>
+          <div class="bolton-allowance">1,000 minutes</div>
+          <div class="bolton-price">&pound;10.00<small>ex VAT / month</small></div>
+        </div>
+        <div class="bolton-row">
+          <div><div class="bolton-name">Int. Minutes Worldwide 500</div><div class="bolton-sku">AIOA500IMW</div><div class="bolton-desc">Calls from the UK to worldwide destinations.</div></div>
+          <div class="bolton-allowance">500 minutes</div>
+          <div class="bolton-price">&pound;30.00<small>ex VAT / month</small></div>
+        </div>
+        <div class="bolton-row">
+          <div><div class="bolton-name">Int. Minutes Worldwide 1000</div><div class="bolton-sku">AIOA1000IMW</div><div class="bolton-desc">Higher-volume worldwide calling from the UK.</div></div>
+          <div class="bolton-allowance">1,000 minutes</div>
+          <div class="bolton-price">&pound;48.00<small>ex VAT / month</small></div>
+        </div>
+        <div class="bolton-row">
+          <div><div class="bolton-name">International SMS 250</div><div class="bolton-sku">AIOA250ISMS</div><div class="bolton-desc">Texts from the UK to international destinations.</div></div>
+          <div class="bolton-allowance">250 SMS</div>
+          <div class="bolton-price">&pound;6.00<small>ex VAT / month</small></div>
+        </div>
+        <div class="bolton-row">
+          <div><div class="bolton-name">International SMS 500</div><div class="bolton-sku">AIOA500ISMS</div><div class="bolton-desc">Higher-volume international texting from the UK.</div></div>
+          <div class="bolton-allowance">500 SMS</div>
+          <div class="bolton-price">&pound;12.00<small>ex VAT / month</small></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROAMING PACKS -->
+  <div class="tab-content" id="tab-roaming">
+    <div class="tab-panel">
+      <div class="section-intro">Roaming packs for calls and data when travelling outside of Europe. These apply alongside any daily roaming services (e.g. World Travel Select) and cover destinations not included in your daily service.</div>
+      <div class="bolton-grid">
+        <div class="bolton-row">
+          <div><div class="bolton-name">Roaming Minutes & Data 250</div><div class="bolton-sku">AIOA250RMD</div><div class="bolton-desc">Short trips outside Europe — light usage.</div></div>
+          <div class="bolton-allowance">250 mins + 250MB</div>
+          <div class="bolton-price">&pound;60.00<small>ex VAT / month</small></div>
+        </div>
+        <div class="bolton-row">
+          <div><div class="bolton-name">Roaming Minutes & Data 500</div><div class="bolton-sku">AIOA500RMD</div><div class="bolton-desc">Trips outside Europe — moderate usage.</div></div>
+          <div class="bolton-allowance">500 mins + 500MB</div>
+          <div class="bolton-price">&pound;90.00<small>ex VAT / month</small></div>
+        </div>
+        <div class="bolton-row">
+          <div><div class="bolton-name">Roaming Minutes & Data 1000</div><div class="bolton-sku">AIOA1000RMD</div><div class="bolton-desc">Trips outside Europe — heavier usage.</div></div>
+          <div class="bolton-allowance">1,000 mins + 1GB</div>
+          <div class="bolton-price">&pound;120.00<small>ex VAT / month</small></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OTHER ADD-ONS -->
+  <div class="tab-content" id="tab-other">
+    <div class="tab-panel">
+      <div class="section-intro">Specialist bolt-ons for non-geographic calls, Ireland calling, and bundled options.</div>
+      <div class="bolton-grid">
+        <div class="bolton-row">
+          <div><div class="bolton-name">Non-Geographic Minutes 300</div><div class="bolton-sku">AIOA300NG</div><div class="bolton-desc">Frequent calls to 084/087 service numbers.</div></div>
+          <div class="bolton-allowance">300 minutes</div>
+          <div class="bolton-price">&pound;3.50<small>ex VAT / month</small></div>
+        </div>
+        <div class="bolton-row">
+          <div><div class="bolton-name">Ireland Plus</div><div class="bolton-sku">AIOAROI</div><div class="bolton-desc">Use your UK allowance to call and text the Republic of Ireland.</div></div>
+          <div class="bolton-allowance">ROI calls &amp; texts</div>
+          <div class="bolton-price">&pound;3.50<small>ex VAT / month</small></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OUT-OF-BUNDLE RATES -->
+  <div class="tab-content" id="tab-oob">
+    <div class="tab-panel">
+      <div class="section-intro">These charges apply when you use services not included in your plan allowance, or when you exceed your allowance. Adding a bolt-on can significantly reduce these costs.</div>
+      <table class="oob-table">
+        <thead>
+          <tr><th>Charge type</th><th>Price (ex VAT)</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Data (exceeding plan allowance)</td>
+            <td class="oob-price">&pound;0.026 per MB</td>
+            <td>Approx &pound;26.62 per GB. Charged per billing increment.</td>
+          </tr>
+          <tr>
+            <td>Picture message (MMS)</td>
+            <td class="oob-price">&pound;0.66 per message</td>
+            <td>UK picture messages sent.</td>
+          </tr>
+          <tr>
+            <td>Video message (MMS)</td>
+            <td class="oob-price">&pound;0.66 per message</td>
+            <td>UK video messages sent.</td>
+          </tr>
+          <tr>
+            <td>Calls to 084/087/09/118 numbers</td>
+            <td class="oob-price">&pound;0.79 per 60 sec</td>
+            <td>Access charge — plus service charge set by the organisation.</td>
+          </tr>
+          <tr>
+            <td>UK premium rate services</td>
+            <td class="oob-price">&pound;0.79 per 60 sec</td>
+            <td>Plus service charge set by the provider.</td>
+          </tr>
+          <tr>
+            <td>Freephone 0800/0808</td>
+            <td class="oob-price">Free</td>
+            <td>Free from the UK.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- MONTHLY PLANS -->
+  <div class="tab-content" id="tab-plans">
+    <div class="tab-panel">
+      <div class="section-intro">Example monthly plan prices on 30-day terms. All plans include RLAH roaming in Europe and World Travel Select (WTS) daily roaming worldwide. Availability and promotions may change.</div>
+
+      <h3 style="font-size:.95rem;margin-bottom:12px;color:var(--primary)">Voice &amp; Data Plans</h3>
+      <table class="plans-table" style="margin-bottom:28px">
+        <thead>
+          <tr><th>Plan</th><th>Data</th><th>Minutes</th><th>Texts</th><th>Roaming</th><th>Price (ex VAT)</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Low User</td><td>1GB</td><td>500</td><td>Unlimited</td>
+            <td><span class="plan-tag tag-rlah">RLAH + WTS</span></td>
+            <td class="plan-price">&pound;6.50/mo</td>
+          </tr>
+          <tr>
+            <td>2GB</td><td>2GB</td><td>Unlimited</td><td>Unlimited</td>
+            <td><span class="plan-tag tag-rlah">RLAH + WTS</span></td>
+            <td class="plan-price">&pound;7.50/mo</td>
+          </tr>
+          <tr>
+            <td>5GB</td><td>5GB</td><td>Unlimited</td><td>Unlimited</td>
+            <td><span class="plan-tag tag-rlah">RLAH + WTS</span></td>
+            <td class="plan-price">&pound;9.00/mo</td>
+          </tr>
+          <tr>
+            <td>25GB</td><td>25GB</td><td>Unlimited</td><td>Unlimited</td>
+            <td><span class="plan-tag tag-rlah">RLAH + WTS</span></td>
+            <td class="plan-price">&pound;11.00/mo</td>
+          </tr>
+          <tr>
+            <td>50GB</td><td>50GB</td><td>Unlimited</td><td>Unlimited</td>
+            <td><span class="plan-tag tag-rlah">RLAH + WTS</span></td>
+            <td class="plan-price">&pound;12.00/mo</td>
+          </tr>
+          <tr>
+            <td>Unlimited</td><td>Unlimited</td><td>Unlimited</td><td>Unlimited</td>
+            <td><span class="plan-tag tag-rlah">RLAH + WTS</span></td>
+            <td class="plan-price">&pound;14.50/mo</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3 style="font-size:.95rem;margin-bottom:12px;color:var(--primary)">Mobile Broadband (Data-Only)</h3>
+      <table class="plans-table" style="margin-bottom:28px">
+        <thead>
+          <tr><th>Plan</th><th>Data</th><th>Roaming</th><th>Price (ex VAT)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>MBB 1GB</td><td>1GB</td><td><span class="plan-tag tag-rlah">RLAH + WTS</span></td><td class="plan-price">&pound;5.50/mo</td></tr>
+          <tr><td>MBB 3GB</td><td>3GB</td><td><span class="plan-tag tag-rlah">RLAH + WTS</span></td><td class="plan-price">&pound;8.00/mo</td></tr>
+          <tr><td>MBB 10GB</td><td>10GB</td><td><span class="plan-tag tag-rlah">RLAH + WTS</span></td><td class="plan-price">&pound;11.00/mo</td></tr>
+          <tr><td>MBB 30GB</td><td>30GB</td><td><span class="plan-tag tag-rlah">RLAH + WTS</span></td><td class="plan-price">&pound;12.00/mo</td></tr>
+          <tr><td>MBB 50GB</td><td>50GB</td><td><span class="plan-tag tag-rlah">RLAH + WTS</span></td><td class="plan-price">&pound;13.50/mo</td></tr>
+          <tr><td>MBB 100GB</td><td>100GB</td><td><span class="plan-tag tag-rlah">RLAH + WTS</span></td><td class="plan-price">&pound;17.00/mo</td></tr>
+        </tbody>
+      </table>
+
+      <h3 style="font-size:.95rem;margin-bottom:12px;color:var(--primary)">Shared Data Bundles</h3>
+      <p style="font-size:.85rem;color:var(--grey-600);margin-bottom:12px">Account-level data shared across assigned subscriptions.</p>
+      <table class="plans-table">
+        <thead>
+          <tr><th>Bundle</th><th>Data</th><th>Price (ex VAT)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Shared Data 25GB</td><td>25GB</td><td class="plan-price">&pound;48.00/mo</td></tr>
+          <tr><td>Shared Data 50GB</td><td>50GB</td><td class="plan-price">&pound;96.00/mo</td></tr>
+          <tr><td>Shared Data 75GB</td><td>75GB</td><td class="plan-price">&pound;144.00/mo</td></tr>
+          <tr><td>Shared Data 100GB</td><td>100GB</td><td class="plan-price">&pound;180.00/mo</td></tr>
+          <tr><td>Shared Data 250GB</td><td>250GB</td><td class="plan-price">&pound;420.00/mo</td></tr>
+          <tr><td>Shared Data 500GB</td><td>500GB</td><td class="plan-price">&pound;840.00/mo</td></tr>
+          <tr><td>Shared Data 1TB</td><td>1TB</td><td class="plan-price">&pound;1,680.00/mo</td></tr>
+          <tr><td>Shared Data 2TB</td><td>2TB</td><td class="plan-price">&pound;3,360.00/mo</td></tr>
+          <tr><td>Shared Data 5TB</td><td>5TB</td><td class="plan-price">&pound;8,400.00/mo</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    <p>All prices shown exclude VAT. Bolt-ons apply secondary to any daily roaming services (e.g. World Travel Select). Only one bolt-on of each type should be applied per subscription at a time. Prices, availability and promotions are subject to change.</p>
+    <p>If you are unsure which bolt-on is best for your usage, contact us before you travel or place international calls.</p>
+    <div class="footer-meta">
+      <span>Effective from: 17 February 2026</span>
+      <span>Version: CTN-O2-OOB-20260217-v6</span>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>

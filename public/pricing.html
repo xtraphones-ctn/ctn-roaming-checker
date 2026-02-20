@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>O2 Mobile Plans & Pricing | Compare The Networks</title>
+  <meta name="description" content="O2 SIM-only business mobile plans from Compare The Networks. 30-day terms, no long contracts. Prices from £6.50 per month ex VAT.">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --primary: #1a2b4a;
+      --accent: #0066cc;
+      --accent-light: #e8f2ff;
+      --success: #0a8a3e;
+      --success-bg: #e6f7ed;
+      --warn: #c45500;
+      --warn-bg: #fff4e6;
+      --grey-50: #f8f9fb;
+      --grey-100: #eef0f4;
+      --grey-200: #dde1e8;
+      --grey-400: #9ba3b2;
+      --grey-600: #5c6370;
+      --grey-800: #2d3341;
+      --radius: 12px;
+      --shadow: 0 1px 3px rgba(0,0,0,.08), 0 4px 12px rgba(0,0,0,.04);
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+      color: var(--grey-800); background: var(--grey-50); line-height: 1.6;
+    }
+    .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+    .header { background: var(--primary); color: #fff; padding: 32px 0; }
+    .header h1 { font-size: 1.75rem; font-weight: 700; }
+    .header p { color: rgba(255,255,255,.75); margin-top: 4px; font-size: .95rem; }
+    .network-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2);
+      border-radius: 6px; padding: 4px 12px; font-size: .8rem; color: rgba(255,255,255,.9); margin-top: 12px;
+    }
+    .network-dot { width: 8px; height: 8px; border-radius: 50%; background: #00a0e1; }
+    /* USP bar */
+    .usp-bar {
+      display: flex; flex-wrap: wrap; gap: 24px; padding: 20px 0; justify-content: center;
+    }
+    .usp-item { display: flex; align-items: center; gap: 8px; font-size: .88rem; color: var(--grey-600); }
+    .usp-icon { width: 28px; height: 28px; border-radius: 50%; background: var(--success-bg); color: var(--success); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: .85rem; }
+    /* Plan cards */
+    .plans-section { padding: 24px 0 32px; }
+    .plans-section h2 { font-size: 1.2rem; font-weight: 700; margin-bottom: 16px; }
+    .plan-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+    }
+    .plan-card {
+      background: #fff; border: 2px solid var(--grey-200); border-radius: var(--radius);
+      padding: 24px 20px; text-align: center; transition: all .2s; position: relative;
+    }
+    .plan-card:hover { border-color: var(--accent); box-shadow: var(--shadow); transform: translateY(-2px); }
+    .plan-card.featured { border-color: var(--accent); }
+    .plan-card.featured::before {
+      content: "Popular"; position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+      background: var(--accent); color: #fff; padding: 2px 14px; border-radius: 12px;
+      font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .5px;
+    }
+    .plan-card.promo { border-color: var(--warn); }
+    .plan-card.promo::before {
+      content: "Limited Time"; position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+      background: var(--warn); color: #fff; padding: 2px 14px; border-radius: 12px;
+      font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .5px;
+    }
+    .plan-data { font-size: 2rem; font-weight: 800; color: var(--primary); }
+    .plan-data small { font-size: .8rem; font-weight: 400; color: var(--grey-400); }
+    .plan-name { font-size: .82rem; color: var(--grey-600); margin: 4px 0 16px; }
+    .plan-features { list-style: none; text-align: left; margin-bottom: 16px; }
+    .plan-features li {
+      font-size: .82rem; padding: 4px 0; padding-left: 20px; position: relative; color: var(--grey-600);
+    }
+    .plan-features li::before { content: "✓"; position: absolute; left: 0; color: var(--success); font-weight: 700; }
+    .plan-price { font-size: 1.5rem; font-weight: 800; color: var(--accent); }
+    .plan-price small { font-size: .7rem; font-weight: 400; color: var(--grey-400); display: block; }
+    .plan-cta {
+      display: block; margin-top: 12px; padding: 10px; background: var(--accent);
+      color: #fff; border: none; border-radius: 8px; font-size: .88rem; font-weight: 600;
+      cursor: pointer; text-decoration: none; transition: opacity .2s;
+    }
+    .plan-cta:hover { opacity: .9; }
+    /* Links */
+    .page-links {
+      display: flex; gap: 16px; flex-wrap: wrap; padding: 8px 0 24px;
+    }
+    .page-link {
+      display: inline-flex; align-items: center; gap: 6px; padding: 10px 20px;
+      background: #fff; border: 1px solid var(--grey-200); border-radius: 8px;
+      font-size: .88rem; color: var(--accent); text-decoration: none; font-weight: 500;
+      transition: all .2s;
+    }
+    .page-link:hover { border-color: var(--accent); background: var(--accent-light); }
+    /* Disclaimer */
+    .disclaimer {
+      padding: 24px 0; font-size: .78rem; color: var(--grey-400); border-top: 1px solid var(--grey-100);
+    }
+    .footer-meta { display: flex; gap: 20px; margin-top: 8px; }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="container">
+    <h1>O2 Business Mobile Plans</h1>
+    <p>SIM-only plans on 30-day terms. No long contracts. All prices exclude VAT.</p>
+    <div class="network-badge"><span class="network-dot"></span> O2 Network</div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="usp-bar">
+    <div class="usp-item"><div class="usp-icon">✓</div> 30-day rolling terms</div>
+    <div class="usp-item"><div class="usp-icon">✓</div> EU roaming included</div>
+    <div class="usp-item"><div class="usp-icon">✓</div> Worldwide daily roaming</div>
+    <div class="usp-item"><div class="usp-icon">✓</div> UK business support</div>
+  </div>
+
+  <div class="page-links">
+    <a href="index.html" class="page-link">&#127758; Roaming checker</a>
+    <a href="bolt-ons.html" class="page-link">&#128229; Bolt-ons & top-ups</a>
+  </div>
+
+  <div class="plans-section">
+    <h2>Voice &amp; Data Plans</h2>
+    <div class="plan-grid" id="voicePlans"></div>
+  </div>
+
+  <div class="plans-section">
+    <h2>Mobile Broadband (Data-Only)</h2>
+    <div class="plan-grid" id="mbbPlans"></div>
+  </div>
+
+  <div class="disclaimer">
+    <p>All prices exclude VAT. Plans are on 30-day terms and subject to annual price adjustments (CPI/RPI). Fair use policies apply to unlimited allowances. EU roaming (RLAH) and World Travel Select (WTS at £4.00/day ex VAT) included on all plans.</p>
+    <div class="footer-meta">
+      <span>Effective from: 17 February 2026</span>
+      <span>Version: CTN-O2-OOB-20260217-v6</span>
+    </div>
+  </div>
+</div>
+
+<script>
+const voicePlans = [
+  {name:"Low User",data:"1GB",mins:"500 minutes",texts:"Unlimited texts",price:"6.50",featured:false},
+  {name:"Standard",data:"2GB",mins:"Unlimited minutes",texts:"Unlimited texts",price:"7.50",featured:false},
+  {name:"5GB",data:"5GB",mins:"Unlimited minutes",texts:"Unlimited texts",price:"9.00",featured:false},
+  {name:"25GB",data:"25GB",mins:"Unlimited minutes",texts:"Unlimited texts",price:"11.00",featured:true},
+  {name:"50GB",data:"50GB",mins:"Unlimited minutes",texts:"Unlimited texts",price:"12.00",featured:false},
+  {name:"Unlimited",data:"Unlimited",mins:"Unlimited minutes",texts:"Unlimited texts",price:"14.50",featured:false},
+];
+
+const mbbPlans = [
+  {name:"MBB",data:"1GB",price:"5.50"},
+  {name:"MBB",data:"3GB",price:"8.00"},
+  {name:"MBB",data:"10GB",price:"11.00"},
+  {name:"MBB",data:"30GB",price:"12.00"},
+  {name:"MBB",data:"50GB",price:"13.50"},
+  {name:"MBB",data:"100GB",price:"17.00"},
+];
+
+function renderVoice(plans, containerId) {
+  const el = document.getElementById(containerId);
+  el.innerHTML = plans.map(p => `
+    <div class="plan-card${p.featured?' featured':''}">
+      <div class="plan-data">${p.data}</div>
+      <div class="plan-name">${p.name}</div>
+      <ul class="plan-features">
+        <li>${p.mins}</li>
+        <li>${p.texts}</li>
+        <li>EU roaming included</li>
+        <li>WTS worldwide roaming</li>
+      </ul>
+      <div class="plan-price">&pound;${p.price}<small>per month (ex VAT)</small></div>
+      <a href="#contact" class="plan-cta">Get this plan</a>
+    </div>
+  `).join('');
+}
+
+function renderMBB(plans, containerId) {
+  const el = document.getElementById(containerId);
+  el.innerHTML = plans.map(p => `
+    <div class="plan-card">
+      <div class="plan-data">${p.data}</div>
+      <div class="plan-name">${p.name}</div>
+      <ul class="plan-features">
+        <li>Data only</li>
+        <li>EU roaming included</li>
+        <li>WTS worldwide roaming</li>
+      </ul>
+      <div class="plan-price">&pound;${p.price}<small>per month (ex VAT)</small></div>
+      <a href="#contact" class="plan-cta">Get this plan</a>
+    </div>
+  `).join('');
+}
+
+renderVoice(voicePlans, 'voicePlans');
+renderMBB(mbbPlans, 'mbbPlans');
+</script>
+
+</body>
+</html>
