@@ -74,12 +74,17 @@
     }
     .net-card.selected-o2 .net-card-check { opacity: 1; background: #00a0e1; color: #fff; }
     .net-card.selected-vf .net-card-check { opacity: 1; background: #e60000; color: #fff; }
+    .net-card.selected-plan { background: rgba(0,200,120,.18); border-color: #00c878; box-shadow: 0 0 0 1px #00c878, 0 4px 16px rgba(0,200,120,.3); }
+    .net-card.selected-plan .net-card-logo { opacity: 1; }
+    .net-card.selected-plan .net-card-label { color: #fff; }
+    .net-card.selected-plan .net-card-check { opacity: 1; background: #00c878; color: #fff; }
     .net-active-banner {
       margin-top: 14px; padding: 8px 16px; border-radius: 8px; font-size: .9rem;
       font-weight: 600; display: inline-flex; align-items: center; gap: 8px; transition: all .3s;
     }
     .net-active-banner.o2 { background: #00a0e1; color: #fff; }
     .net-active-banner.vf { background: #e60000; color: #fff; }
+    .net-active-banner.plan { background: #00c878; color: #fff; }
     @media (max-width: 600px) {
       .net-selector { gap: 8px; }
       .net-card { padding: 12px 14px; gap: 10px; }
@@ -311,6 +316,10 @@
         <span class="net-card-label">Vodafone</span>
         <span class="net-card-check" aria-hidden="true">&#10003;</span>
       </div>
+      <div class="net-card" data-net="plan" role="button" tabindex="0" aria-label="Select Plan.com network">
+        <span class="net-card-label" style="font-size:1.1rem">plan.com</span>
+        <span class="net-card-check" aria-hidden="true">&#10003;</span>
+      </div>
     </div>
     <div class="net-active-banner o2" id="netBanner">Viewing rates for <strong>O2</strong></div>
   </div>
@@ -366,7 +375,7 @@
           <th>What's included</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody id="overviewTbody">
         <tr>
           <td><span class="result-zone zone-europe">Europe</span></td>
           <td><strong>No extra charge</strong></td>
@@ -611,6 +620,48 @@ const COUNTRIES = [
   {country:"Lebanon",iso2:"LB",flag:"🇱🇧",region:"Middle East",zone:"ROW_STD"},
 ];
 
+// ── PLAN.COM ZONE OVERRIDES ──
+// Plan.com has different zones from O2/Vodafone
+// PLAN_EU = Europe Zone (use UK allowance), PLAN_DT = Daily Traveller (bolt-on available), PLAN_STD = Standard rates
+const PLAN_ZONES = {
+  // Europe Zone (47 destinations — use UK allowance at no extra cost)
+  AT:"PLAN_EU",BE:"PLAN_EU",BG:"PLAN_EU",HR:"PLAN_EU",CY:"PLAN_EU",CZ:"PLAN_EU",
+  DK:"PLAN_EU",EE:"PLAN_EU",FI:"PLAN_EU",FR:"PLAN_EU",GF:"PLAN_EU",GP:"PLAN_EU",
+  MQ:"PLAN_EU",YT:"PLAN_EU",RE:"PLAN_EU",MF:"PLAN_EU",DE:"PLAN_EU",GI:"PLAN_EU",
+  GR:"PLAN_EU",HU:"PLAN_EU",IS:"PLAN_EU",IE:"PLAN_EU",IT:"PLAN_EU",LV:"PLAN_EU",
+  LI:"PLAN_EU",LT:"PLAN_EU",LU:"PLAN_EU",MT:"PLAN_EU",MC:"PLAN_EU",NL:"PLAN_EU",
+  NO:"PLAN_EU",PL:"PLAN_EU",PT:"PLAN_EU",RO:"PLAN_EU",SK:"PLAN_EU",SI:"PLAN_EU",
+  ES:"PLAN_EU",SE:"PLAN_EU",CH:"PLAN_EU",GG:"PLAN_EU",JE:"PLAN_EU",IM:"PLAN_EU",
+  SM:"PLAN_EU",FO:"PLAN_EU",
+  // Daily Traveller destinations (bolt-on covers these)
+  AL:"PLAN_DT",BA:"PLAN_DT",MK:"PLAN_DT",ME:"PLAN_DT",RS:"PLAN_DT",TR:"PLAN_DT",
+  AU:"PLAN_DT",HK:"PLAN_DT",MY:"PLAN_DT",NZ:"PLAN_DT",SG:"PLAN_DT",ZA:"PLAN_DT",
+  US:"PLAN_DT",CA:"PLAN_DT",
+  AF:"PLAN_DT",AI:"PLAN_DT",AG:"PLAN_DT",AR:"PLAN_DT",BH:"PLAN_DT",BD:"PLAN_DT",
+  BB:"PLAN_DT",BZ:"PLAN_DT",BJ:"PLAN_DT",BW:"PLAN_DT",BR:"PLAN_DT",VG:"PLAN_DT",
+  BF:"PLAN_DT",KH:"PLAN_DT",CM:"PLAN_DT",TD:"PLAN_DT",CL:"PLAN_DT",CN:"PLAN_DT",
+  CO:"PLAN_DT",CD:"PLAN_DT",CG:"PLAN_DT",CR:"PLAN_DT",DM:"PLAN_DT",DO:"PLAN_DT",
+  EC:"PLAN_DT",EG:"PLAN_DT",SV:"PLAN_DT",FJ:"PLAN_DT",GA:"PLAN_DT",GH:"PLAN_DT",
+  GD:"PLAN_DT",GT:"PLAN_DT",GN:"PLAN_DT",IN:"PLAN_DT",ID:"PLAN_DT",IQ:"PLAN_DT",
+  IL:"PLAN_DT",CI:"PLAN_DT",JM:"PLAN_DT",JP:"PLAN_DT",JO:"PLAN_DT",KZ:"PLAN_DT",
+  KW:"PLAN_DT",MO:"PLAN_DT",MG:"PLAN_DT",MW:"PLAN_DT",MR:"PLAN_DT",MX:"PLAN_DT",
+  MD:"PLAN_DT",MN:"PLAN_DT",MS:"PLAN_DT",NP:"PLAN_DT",NI:"PLAN_DT",NE:"PLAN_DT",
+  NG:"PLAN_DT",OM:"PLAN_DT",PK:"PLAN_DT",PA:"PLAN_DT",PG:"PLAN_DT",PY:"PLAN_DT",
+  PE:"PLAN_DT",PH:"PLAN_DT",QA:"PLAN_DT",RU:"PLAN_DT",RW:"PLAN_DT",KN:"PLAN_DT",
+  LC:"PLAN_DT",SA:"PLAN_DT",SN:"PLAN_DT",SL:"PLAN_DT",KR:"PLAN_DT",LK:"PLAN_DT",
+  VC:"PLAN_DT",SZ:"PLAN_DT",TW:"PLAN_DT",TH:"PLAN_DT",TG:"PLAN_DT",TT:"PLAN_DT",
+  TC:"PLAN_DT",UG:"PLAN_DT",UA:"PLAN_DT",AE:"PLAN_DT",UY:"PLAN_DT",UZ:"PLAN_DT",
+  VU:"PLAN_DT",VE:"PLAN_DT",YE:"PLAN_DT",ZM:"PLAN_DT",
+  // Everything else falls to PLAN_STD (handled in getZone function)
+};
+
+function getZoneForCountry(c) {
+  if (currentNet === 'plan') {
+    return PLAN_ZONES[c.iso2] || 'PLAN_STD';
+  }
+  return c.zone; // O2/Vodafone use the zone from COUNTRIES array
+}
+
 // ── ZONE CONFIG ──
 const ZONES = {
   EU_RLAH: {
@@ -645,6 +696,34 @@ const ZONES = {
     cls: "zone-standard",
     headlineCls: "headline-caution",
     headline: "This destination is not covered by our daily roaming services. Standard per-minute and per-MB rates apply, which can be expensive. We strongly recommend adding a roaming bolt-on before you travel.",
+    dailyCharge: null,
+    dailyLabel: "Not available",
+    dailyNote: "No daily service — standard rates apply"
+  },
+  // ── PLAN.COM ZONES ──
+  PLAN_EU: {
+    label: "Europe Zone",
+    cls: "zone-europe",
+    headlineCls: "headline-good",
+    headline: "Good news — this destination is in the plan.com Europe Zone. Use your UK data, minutes and texts at no extra cost. Out-of-bundle data is just 4p/MB.",
+    dailyCharge: null,
+    dailyLabel: "Included",
+    dailyNote: "No daily charge — use your UK allowance"
+  },
+  PLAN_DT: {
+    label: "Daily Traveller",
+    cls: "zone-wts",
+    headlineCls: "headline-ok",
+    headline: "This destination is outside the Europe Zone. Without a bolt-on, standard rates apply (£1.40/min calls, £6.00/MB data). We strongly recommend adding a Daily Traveller bolt-on — it gives you data, calls and texts for a daily fee, only charged on days you use your phone.",
+    dailyCharge: null,
+    dailyLabel: "Bolt-on required",
+    dailyNote: "Add Daily Traveller for a daily rate, or pay standard rates"
+  },
+  PLAN_STD: {
+    label: "Standard Rates",
+    cls: "zone-standard",
+    headlineCls: "headline-caution",
+    headline: "This destination is outside the Europe Zone and is not covered by Daily Traveller bolt-ons. Standard roaming rates apply: £1.40/min for calls (made or received), 40p/text, and £6.00/MB for data. A Global Data or Global Minutes bolt-on is strongly recommended.",
     dailyCharge: null,
     dailyLabel: "Not available",
     dailyNote: "No daily service — standard rates apply"
@@ -696,6 +775,25 @@ const BOLTONS = {
       {name:"Roaming Worldwide 500MB", detail:"Recommended for a week+", price:"£78.00"},
       {name:"Roaming Worldwide 1GB", detail:"Best coverage for longer stays", price:"£140.00"},
     ]
+  },
+  plan: {
+    PLAN_EU: [
+      {name:"No bolt-on needed", detail:"Your UK data, minutes and texts are included in the Europe Zone", price:"Included"},
+    ],
+    PLAN_DT: [
+      {name:"Daily Traveller", detail:"500MB + 100 mins + 50 texts per day — only charged on days you roam", price:"From £5/day"},
+      {name:"Daily Traveller Plus", detail:"1GB + 500 mins + 200 texts per day — for heavier usage", price:"From £8/day"},
+      {name:"Global Data 500MB", detail:"Monthly data bolt-on for all non-EU countries", price:"£30/month"},
+      {name:"Global Data 1GB", detail:"Monthly data bolt-on — moderate usage", price:"£50/month"},
+      {name:"Global Minutes 100", detail:"100 mins for calls made/received outside EU", price:"£35/month"},
+    ],
+    PLAN_STD: [
+      {name:"Global Data 500MB", detail:"Monthly data bolt-on for all non-EU countries", price:"£30/month"},
+      {name:"Global Data 1GB", detail:"Monthly data bolt-on — moderate usage", price:"£50/month"},
+      {name:"Global Data 2GB", detail:"Monthly data bolt-on — heavier usage", price:"£90/month"},
+      {name:"Global Minutes 100", detail:"100 mins for calls made/received outside EU", price:"£35/month"},
+      {name:"Global Minutes 200", detail:"200 mins for calls made/received outside EU", price:"£60/month"},
+    ]
   }
 };
 
@@ -728,6 +826,28 @@ const TIPS = {
     "Use Wi-Fi calling and messaging apps wherever possible.",
     "Keep Data Roaming switched off unless you have a bolt-on applied.",
     "Set a spend cap on your account to avoid unexpected charges."
+  ],
+  // ── PLAN.COM TIPS ──
+  PLAN_EU: [
+    "Your UK data, minutes and texts work here at no extra cost.",
+    "Out-of-bundle data is charged at 4p/MB — much cheaper than outside the EU.",
+    "Receiving calls in the Europe Zone is free.",
+    "Enable Data Roaming in your phone settings before you travel.",
+    "Use Wi-Fi where possible to conserve your UK data allowance."
+  ],
+  PLAN_DT: [
+    "Without a bolt-on, standard rates apply: £1.40/min calls, 40p/text, £6.00/MB data.",
+    "Daily Traveller is only charged on days you actually use your phone abroad.",
+    "Daily allowances reset at midnight UK time each day.",
+    "If you exceed your Daily Traveller allowance, standard roaming rates kick in.",
+    "Turn off background app refresh and auto-updates to control data use."
+  ],
+  PLAN_STD: [
+    "Standard rates are expensive: £1.40/min calls (made or received), 40p/text, £6.00/MB data.",
+    "A Global Data or Global Minutes bolt-on is strongly recommended for this destination.",
+    "Keep Data Roaming OFF unless you have a bolt-on applied.",
+    "Use Wi-Fi calling and messaging apps wherever possible.",
+    "Contact us before you travel — we can help find the right bolt-on for your trip."
   ]
 };
 
@@ -979,14 +1099,58 @@ let currentNet = 'o2';
 let lastCountry = null;
 
 // Network toggle
+const NET_NAMES = {o2:'O2', vf:'Vodafone', plan:'plan.com'};
+const NET_CLS = {o2:'selected-o2', vf:'selected-vf', plan:'selected-plan'};
 function updateNetworkUI() {
   document.querySelectorAll('.net-card').forEach(c => {
-    c.className = 'net-card' + (c.dataset.net === currentNet ? (currentNet === 'o2' ? ' selected-o2' : ' selected-vf') : '');
+    c.className = 'net-card' + (c.dataset.net === currentNet ? ' ' + NET_CLS[currentNet] : '');
   });
   const banner = document.getElementById('netBanner');
-  const name = currentNet === 'o2' ? 'O2' : 'Vodafone';
   banner.className = 'net-active-banner ' + currentNet;
-  banner.innerHTML = 'Viewing rates for <strong>' + name + '</strong>';
+  banner.innerHTML = 'Viewing rates for <strong>' + NET_NAMES[currentNet] + '</strong>';
+  // Update overview table
+  updateOverviewTable();
+}
+function updateOverviewTable() {
+  const tbody = document.getElementById('overviewTbody');
+  if (!tbody) return;
+  if (currentNet === 'plan') {
+    tbody.innerHTML = `
+      <tr>
+        <td><span class="result-zone zone-europe">Europe Zone</span></td>
+        <td><strong>No extra charge</strong></td>
+        <td>Use your UK data, minutes &amp; texts. Out-of-bundle data: 4p/MB. Receiving calls: free.</td>
+      </tr>
+      <tr>
+        <td><span class="result-zone zone-wts">Daily Traveller</span></td>
+        <td><strong>From &pound;5/day</strong> (bolt-on)</td>
+        <td>500MB + 100 mins + 50 texts/day. Only charged on days you roam. 115 destinations.</td>
+      </tr>
+      <tr>
+        <td><span class="result-zone zone-standard">Standard Rates</span></td>
+        <td>&pound;1.40/min &middot; &pound;6.00/MB</td>
+        <td>No daily service available. Global Data or Global Minutes bolt-on recommended.</td>
+      </tr>
+    `;
+  } else {
+    tbody.innerHTML = `
+      <tr>
+        <td><span class="result-zone zone-europe">Europe</span></td>
+        <td><strong>No extra charge</strong></td>
+        <td>Use your UK allowance in the EU/EEA. Fair use limit: 25GB data/month.</td>
+      </tr>
+      <tr>
+        <td><span class="result-zone zone-wts">World Travel</span></td>
+        <td><strong>&pound;5.00 per day</strong></td>
+        <td>Charged on days you use your phone. Access your UK allowance.</td>
+      </tr>
+      <tr>
+        <td><span class="result-zone zone-standard">Standard Rates</span></td>
+        <td>Per-minute / per-MB rates</td>
+        <td>Not covered by daily services. A roaming bolt-on is recommended.</td>
+      </tr>
+    `;
+  }
 }
 document.querySelectorAll('.net-card').forEach(card => {
   card.addEventListener('click', () => {
@@ -1095,9 +1259,10 @@ function selectCountry(c) {
   lastCountry = c;
   searchInput.value = c.country;
   acList.classList.remove("open");
-  const z = ZONES[c.zone];
-  const boltons = (BOLTONS[currentNet] && BOLTONS[currentNet][c.zone]) || [];
-  const tips = TIPS[c.zone] || [];
+  const zoneKey = getZoneForCountry(c);
+  const z = ZONES[zoneKey];
+  const boltons = (BOLTONS[currentNet] && BOLTONS[currentNet][zoneKey]) || [];
+  const tips = TIPS[zoneKey] || [];
 
   document.getElementById("rFlag").textContent = c.flag;
   document.getElementById("rCountry").textContent = c.country;
@@ -1110,20 +1275,70 @@ function selectCountry(c) {
   headEl.textContent = z.headline;
   headEl.className = "result-headline " + z.headlineCls;
 
-  // Info grid
+  // Info grid — Plan.com shows different rate info
   const grid = document.getElementById("rInfoGrid");
-  grid.innerHTML = `
-    <div class="info-box">
-      <h4>Daily charge</h4>
-      <div class="value">${z.dailyLabel} <small>(ex VAT)</small></div>
-      <div class="note">${z.dailyNote}</div>
-    </div>
-    <div class="info-box">
-      <h4>Out-of-bundle data</h4>
-      <div class="value">£0.026/MB <small>(ex VAT)</small></div>
-      <div class="note">Approx £26.62 per GB if you exceed your allowance</div>
-    </div>
-  `;
+  if (currentNet === 'plan') {
+    if (zoneKey === 'PLAN_EU') {
+      grid.innerHTML = `
+        <div class="info-box">
+          <h4>Daily charge</h4>
+          <div class="value">Included</div>
+          <div class="note">Use your UK allowance at no extra cost</div>
+        </div>
+        <div class="info-box">
+          <h4>Out-of-bundle data</h4>
+          <div class="value">4p/MB</div>
+          <div class="note">If you go over your UK data allowance</div>
+        </div>
+        <div class="info-box">
+          <h4>Receiving calls</h4>
+          <div class="value">Free</div>
+          <div class="note">No charge for incoming calls in Europe Zone</div>
+        </div>
+        <div class="info-box">
+          <h4>Out-of-zone calls</h4>
+          <div class="value">79p/min</div>
+          <div class="note">Calling numbers outside the Europe Zone</div>
+        </div>
+      `;
+    } else {
+      grid.innerHTML = `
+        <div class="info-box">
+          <h4>Calls (without bolt-on)</h4>
+          <div class="value">£1.40/min</div>
+          <div class="note">All calls made or received</div>
+        </div>
+        <div class="info-box">
+          <h4>Data (without bolt-on)</h4>
+          <div class="value">£6.00/MB</div>
+          <div class="note">That's £6,144 per GB — bolt-on essential!</div>
+        </div>
+        <div class="info-box">
+          <h4>Texts (without bolt-on)</h4>
+          <div class="value">40p/text</div>
+          <div class="note">Per SMS sent</div>
+        </div>
+        <div class="info-box">
+          <h4>With Daily Traveller</h4>
+          <div class="value">${zoneKey === 'PLAN_DT' ? 'From £5/day' : 'Not available'}</div>
+          <div class="note">${zoneKey === 'PLAN_DT' ? '500MB + 100 mins + 50 texts per day' : 'Use Global Data/Minutes bolt-on instead'}</div>
+        </div>
+      `;
+    }
+  } else {
+    grid.innerHTML = `
+      <div class="info-box">
+        <h4>Daily charge</h4>
+        <div class="value">${z.dailyLabel} <small>(ex VAT)</small></div>
+        <div class="note">${z.dailyNote}</div>
+      </div>
+      <div class="info-box">
+        <h4>Out-of-bundle data</h4>
+        <div class="value">£0.026/MB <small>(ex VAT)</small></div>
+        <div class="note">Approx £26.62 per GB if you exceed your allowance</div>
+      </div>
+    `;
+  }
 
   // Bolt-ons
   const bDiv = document.getElementById("rBoltons");
@@ -1131,7 +1346,7 @@ function selectCountry(c) {
     boltons.map(b =>
       `<div class="bolton-card">`+
       `<div><div class="bolton-name">${b.name}</div><div class="bolton-detail">${b.detail}</div></div>`+
-      `<div class="bolton-price">${b.price} <small>(ex VAT)</small></div>`+
+      `<div class="bolton-price">${b.price}</div>`+
       `</div>`
     ).join("");
 
