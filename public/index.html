@@ -78,6 +78,10 @@
     .net-card.selected-plan .net-card-logo { opacity: 1; }
     .net-card.selected-plan .net-card-label { color: #fff; }
     .net-card.selected-plan .net-card-check { opacity: 1; background: #00c878; color: #fff; }
+    .net-card.selected-three { background: rgba(255,0,100,.18); border-color: #ff0064; box-shadow: 0 0 0 1px #ff0064, 0 4px 16px rgba(255,0,100,.3); }
+    .net-card.selected-three .net-card-logo { opacity: 1; }
+    .net-card.selected-three .net-card-label { color: #fff; }
+    .net-card.selected-three .net-card-check { opacity: 1; background: #ff0064; color: #fff; }
     .net-active-banner {
       margin-top: 14px; padding: 8px 16px; border-radius: 8px; font-size: .9rem;
       font-weight: 600; display: inline-flex; align-items: center; gap: 8px; transition: all .3s;
@@ -85,6 +89,7 @@
     .net-active-banner.o2 { background: #00a0e1; color: #fff; }
     .net-active-banner.vf { background: #e60000; color: #fff; }
     .net-active-banner.plan { background: #00c878; color: #fff; }
+    .net-active-banner.three { background: #ff0064; color: #fff; }
     @media (max-width: 600px) {
       .net-selector { gap: 8px; }
       .net-card { padding: 12px 14px; gap: 10px; }
@@ -318,6 +323,10 @@
       </div>
       <div class="net-card" data-net="plan" role="button" tabindex="0" aria-label="Select Plan.com network">
         <span class="net-card-label" style="font-size:1.1rem">plan.com</span>
+        <span class="net-card-check" aria-hidden="true">&#10003;</span>
+      </div>
+      <div class="net-card" data-net="three" role="button" tabindex="0" aria-label="Select Three Business network">
+        <span class="net-card-label" style="font-size:1.1rem">Three</span>
         <span class="net-card-check" aria-hidden="true">&#10003;</span>
       </div>
     </div>
@@ -655,9 +664,52 @@ const PLAN_ZONES = {
   // Everything else falls to PLAN_STD (handled in getZone function)
 };
 
+// ── THREE BUSINESS ZONE OVERRIDES ──
+// THREE_EU = Go Roam Europe (£2/day), THREE_ATW = Around the World (£5/day),
+// THREE_ATWX = Around the World Extra (£7/day), THREE_STD = Rest of World (pay per use)
+const THREE_ZONES = {
+  // Go Roam in Europe (£2/day — 12GB fair use)
+  AT:"THREE_EU",BE:"THREE_EU",BG:"THREE_EU",HR:"THREE_EU",CY:"THREE_EU",CZ:"THREE_EU",
+  DK:"THREE_EU",EE:"THREE_EU",FI:"THREE_EU",FR:"THREE_EU",GF:"THREE_EU",GP:"THREE_EU",
+  MQ:"THREE_EU",YT:"THREE_EU",RE:"THREE_EU",MF:"THREE_EU",DE:"THREE_EU",GI:"THREE_EU",
+  GR:"THREE_EU",HU:"THREE_EU",IS:"THREE_EU",IE:"THREE_EU",IT:"THREE_EU",LV:"THREE_EU",
+  LI:"THREE_EU",LT:"THREE_EU",LU:"THREE_EU",MT:"THREE_EU",MC:"THREE_EU",NL:"THREE_EU",
+  NO:"THREE_EU",PL:"THREE_EU",PT:"THREE_EU",RO:"THREE_EU",SK:"THREE_EU",SI:"THREE_EU",
+  ES:"THREE_EU",SE:"THREE_EU",CH:"THREE_EU",GG:"THREE_EU",JE:"THREE_EU",IM:"THREE_EU",
+  SM:"THREE_EU",FO:"THREE_EU",
+  // Go Roam Around the World (£5/day)
+  AU:"THREE_ATW",BR:"THREE_ATW",CL:"THREE_ATW",CO:"THREE_ATW",CR:"THREE_ATW",
+  SV:"THREE_ATW",GT:"THREE_ATW",HK:"THREE_ATW",ID:"THREE_ATW",IL:"THREE_ATW",
+  MO:"THREE_ATW",NZ:"THREE_ATW",NI:"THREE_ATW",PA:"THREE_ATW",PE:"THREE_ATW",
+  PR:"THREE_ATW",SG:"THREE_ATW",LK:"THREE_ATW",US:"THREE_ATW",UY:"THREE_ATW",
+  VI:"THREE_ATW",VN:"THREE_ATW",
+  // Go Roam Around the World Extra (£7/day)
+  AL:"THREE_ATWX",AG:"THREE_ATWX",AR:"THREE_ATWX",AW:"THREE_ATWX",BS:"THREE_ATWX",
+  BH:"THREE_ATWX",BD:"THREE_ATWX",BB:"THREE_ATWX",BZ:"THREE_ATWX",BM:"THREE_ATWX",
+  BO:"THREE_ATWX",BA:"THREE_ATWX",BW:"THREE_ATWX",VG:"THREE_ATWX",KH:"THREE_ATWX",
+  CA:"THREE_ATWX",KY:"THREE_ATWX",CN:"THREE_ATWX",CW:"THREE_ATWX",DM:"THREE_ATWX",
+  DO:"THREE_ATWX",EC:"THREE_ATWX",EG:"THREE_ATWX",SZ:"THREE_ATWX",GH:"THREE_ATWX",
+  GD:"THREE_ATWX",GY:"THREE_ATWX",HT:"THREE_ATWX",HN:"THREE_ATWX",IN:"THREE_ATWX",
+  IQ:"THREE_ATWX",JM:"THREE_ATWX",JP:"THREE_ATWX",JO:"THREE_ATWX",KZ:"THREE_ATWX",
+  KE:"THREE_ATWX",KW:"THREE_ATWX",LA:"THREE_ATWX",LS:"THREE_ATWX",MK:"THREE_ATWX",
+  MY:"THREE_ATWX",MV:"THREE_ATWX",MX:"THREE_ATWX",MD:"THREE_ATWX",ME:"THREE_ATWX",
+  MA:"THREE_ATWX",MZ:"THREE_ATWX",MM:"THREE_ATWX",NA:"THREE_ATWX",NP:"THREE_ATWX",
+  NG:"THREE_ATWX",PK:"THREE_ATWX",PY:"THREE_ATWX",PH:"THREE_ATWX",QA:"THREE_ATWX",
+  RU:"THREE_ATWX",SA:"THREE_ATWX",RS:"THREE_ATWX",SL:"THREE_ATWX",ZA:"THREE_ATWX",
+  KR:"THREE_ATWX",SS:"THREE_ATWX",SN:"THREE_ATWX",SX:"THREE_ATWX",TW:"THREE_ATWX",
+  TZ:"THREE_ATWX",TH:"THREE_ATWX",TG:"THREE_ATWX",TO:"THREE_ATWX",TT:"THREE_ATWX",
+  TN:"THREE_ATWX",TR:"THREE_ATWX",TC:"THREE_ATWX",UG:"THREE_ATWX",UA:"THREE_ATWX",
+  AE:"THREE_ATWX",UZ:"THREE_ATWX",VE:"THREE_ATWX",ZM:"THREE_ATWX",ZW:"THREE_ATWX",
+  MS:"THREE_ATWX",KN:"THREE_ATWX",LC:"THREE_ATWX",VC:"THREE_ATWX",
+  // Everything else → THREE_STD
+};
+
 function getZoneForCountry(c) {
   if (currentNet === 'plan') {
     return PLAN_ZONES[c.iso2] || 'PLAN_STD';
+  }
+  if (currentNet === 'three') {
+    return THREE_ZONES[c.iso2] || 'THREE_STD';
   }
   return c.zone; // O2/Vodafone use the zone from COUNTRIES array
 }
@@ -727,6 +779,43 @@ const ZONES = {
     dailyCharge: null,
     dailyLabel: "Not available",
     dailyNote: "No daily service — standard rates apply"
+  },
+  // ── THREE BUSINESS ZONES ──
+  THREE_EU: {
+    label: "Go Roam Europe",
+    cls: "zone-europe",
+    headlineCls: "headline-good",
+    headline: "This destination is covered by Go Roam in Europe. A £2/day charge applies on days you use your phone (inc VAT). You get up to 12GB data from your UK allowance, plus calls and texts to UK and European numbers.",
+    dailyCharge: 2.00,
+    dailyLabel: "£2/day",
+    dailyNote: "Charged per day of use (inc VAT). 12GB fair use data limit."
+  },
+  THREE_ATW: {
+    label: "Go Roam World",
+    cls: "zone-wts",
+    headlineCls: "headline-ok",
+    headline: "This destination is covered by Go Roam Around the World. A £5/day charge applies on days you use your phone (inc VAT). You get up to 12GB data, 3,000 minutes to UK numbers, and 5,000 texts.",
+    dailyCharge: 5.00,
+    dailyLabel: "£5/day",
+    dailyNote: "Charged per day of use (inc VAT). 12GB data, 3,000 mins, 5,000 texts."
+  },
+  THREE_ATWX: {
+    label: "Go Roam World Extra",
+    cls: "zone-wts",
+    headlineCls: "headline-ok",
+    headline: "This destination is covered by Go Roam Around the World Extra. A £7/day charge applies on days you use your phone (inc VAT). You get up to 12GB data, 3,000 minutes to UK numbers, and 5,000 texts.",
+    dailyCharge: 7.00,
+    dailyLabel: "£7/day",
+    dailyNote: "Charged per day of use (inc VAT). 12GB data, 3,000 mins, 5,000 texts."
+  },
+  THREE_STD: {
+    label: "Rest of World",
+    cls: "zone-standard",
+    headlineCls: "headline-caution",
+    headline: "This destination is not covered by Go Roam. Standard pay-per-use rates apply: £2.00/min for calls, £6.00/MB for data, and 35p/text. These rates can add up quickly — contact us before you travel.",
+    dailyCharge: null,
+    dailyLabel: "Not available",
+    dailyNote: "No daily service — pay-per-use standard rates"
   }
 };
 
@@ -794,6 +883,30 @@ const BOLTONS = {
       {name:"Global Minutes 100", detail:"100 mins for calls made/received outside EU", price:"£35/month"},
       {name:"Global Minutes 200", detail:"200 mins for calls made/received outside EU", price:"£60/month"},
     ]
+  },
+  three: {
+    THREE_EU: [
+      {name:"Go Roam Europe Pass (7 days)", detail:"Remove the £2/day charge — pay once for 7 days", price:"£12 (inc VAT)"},
+      {name:"Go Roam Europe Pass (14 days)", detail:"Remove the £2/day charge — great for 2-week holidays", price:"£24 (inc VAT)"},
+      {name:"Data Passport (24hr)", detail:"Unlimited data for 24 hours while roaming", price:"£6 (inc VAT)"},
+    ],
+    THREE_ATW: [
+      {name:"Go Roam ATW Pass (7 days)", detail:"Remove the £5/day charge — pay once for 7 days", price:"£30 (inc VAT)"},
+      {name:"Go Roam ATW Pass (14 days)", detail:"Remove the £5/day charge — pay once for 2 weeks", price:"£60 (inc VAT)"},
+      {name:"Data Passport (24hr)", detail:"Unlimited data for 24 hours while roaming", price:"£6 (inc VAT)"},
+      {name:"Data Passport (7 days)", detail:"Unlimited data for 7 days while roaming", price:"£30 (inc VAT)"},
+    ],
+    THREE_ATWX: [
+      {name:"Go Roam ATWX Pass (7 days)", detail:"Remove the £7/day charge — pay once for 7 days", price:"£30 (inc VAT)"},
+      {name:"Go Roam ATWX Pass (14 days)", detail:"Remove the £7/day charge — pay once for 2 weeks", price:"£60 (inc VAT)"},
+      {name:"Data Passport (24hr)", detail:"Unlimited data for 24 hours while roaming", price:"£6 (inc VAT)"},
+      {name:"Data Passport (7 days)", detail:"Unlimited data for 7 days while roaming", price:"£30 (inc VAT)"},
+    ],
+    THREE_STD: [
+      {name:"Data Passport (24hr)", detail:"Unlimited data for 24 hours — essential for this destination", price:"£6 (inc VAT)"},
+      {name:"Data Passport (7 days)", detail:"Unlimited data for 7 days while roaming", price:"£30 (inc VAT)"},
+      {name:"Data Passport (30 days)", detail:"Unlimited data for 30 days while roaming", price:"£60 (inc VAT)"},
+    ]
   }
 };
 
@@ -848,6 +961,35 @@ const TIPS = {
     "Keep Data Roaming OFF unless you have a bolt-on applied.",
     "Use Wi-Fi calling and messaging apps wherever possible.",
     "Contact us before you travel — we can help find the right bolt-on for your trip."
+  ],
+  // ── THREE BUSINESS TIPS ──
+  THREE_EU: [
+    "The £2/day charge only applies on days you use calls, texts or data.",
+    "You can use up to 12GB of your UK data allowance while roaming — this is a fair use limit.",
+    "Calls and texts to UK numbers and within Europe are included.",
+    "Consider a Go Roam Europe Pass if travelling for more than a few days — it can save money.",
+    "Receiving calls and texts is free in Go Roam Europe destinations."
+  ],
+  THREE_ATW: [
+    "The £5/day charge only applies on days you use your phone.",
+    "12GB data fair use limit applies. You also get 3,000 minutes to UK and 5,000 texts.",
+    "Calls to non-UK numbers outside Go Roam destinations cost £1.40/min.",
+    "Consider a Go Roam Pass to avoid daily charges on longer trips.",
+    "Turn off background app refresh and auto-updates to control data use."
+  ],
+  THREE_ATWX: [
+    "The £7/day charge only applies on days you use your phone.",
+    "12GB data fair use limit applies. You also get 3,000 minutes to UK and 5,000 texts.",
+    "This is the highest Go Roam tier — daily charges can add up on longer trips.",
+    "Consider a Go Roam Pass for trips longer than a few days.",
+    "Use Wi-Fi wherever possible to reduce data usage and save on daily charges."
+  ],
+  THREE_STD: [
+    "This destination has no Go Roam coverage — standard rates are expensive.",
+    "Calls cost £2.00/min (made or received), data is £6.00/MB, texts are 35p each.",
+    "Keep Data Roaming switched OFF unless you have a Data Passport applied.",
+    "A Data Passport gives unlimited data for a fixed price — essential for this destination.",
+    "Contact us before you travel so we can help set up the right add-on."
   ]
 };
 
@@ -1099,8 +1241,8 @@ let currentNet = 'o2';
 let lastCountry = null;
 
 // Network toggle
-const NET_NAMES = {o2:'O2', vf:'Vodafone', plan:'plan.com'};
-const NET_CLS = {o2:'selected-o2', vf:'selected-vf', plan:'selected-plan'};
+const NET_NAMES = {o2:'O2', vf:'Vodafone', plan:'plan.com', three:'Three Business'};
+const NET_CLS = {o2:'selected-o2', vf:'selected-vf', plan:'selected-plan', three:'selected-three'};
 function updateNetworkUI() {
   document.querySelectorAll('.net-card').forEach(c => {
     c.className = 'net-card' + (c.dataset.net === currentNet ? ' ' + NET_CLS[currentNet] : '');
@@ -1130,6 +1272,29 @@ function updateOverviewTable() {
         <td><span class="result-zone zone-standard">Standard Rates</span></td>
         <td>&pound;1.40/min &middot; &pound;6.00/MB</td>
         <td>No daily service available. Global Data or Global Minutes bolt-on recommended.</td>
+      </tr>
+    `;
+  } else if (currentNet === 'three') {
+    tbody.innerHTML = `
+      <tr>
+        <td><span class="result-zone zone-europe">Go Roam Europe</span></td>
+        <td><strong>&pound;2/day</strong> (inc VAT)</td>
+        <td>12GB data fair use. Calls &amp; texts to UK/Europe included. Receiving calls free.</td>
+      </tr>
+      <tr>
+        <td><span class="result-zone zone-wts">Go Roam World</span></td>
+        <td><strong>&pound;5/day</strong> (inc VAT)</td>
+        <td>12GB data, 3,000 mins to UK, 5,000 texts. 22 destinations.</td>
+      </tr>
+      <tr>
+        <td><span class="result-zone zone-wts">Go Roam World Extra</span></td>
+        <td><strong>&pound;7/day</strong> (inc VAT)</td>
+        <td>Same allowances as World. 100+ additional destinations.</td>
+      </tr>
+      <tr>
+        <td><span class="result-zone zone-standard">Rest of World</span></td>
+        <td>&pound;2.00/min &middot; &pound;6.00/MB</td>
+        <td>No Go Roam coverage. Data Passport recommended.</td>
       </tr>
     `;
   } else {
@@ -1322,6 +1487,78 @@ function selectCountry(c) {
           <h4>With Daily Traveller</h4>
           <div class="value">${zoneKey === 'PLAN_DT' ? 'From £5/day' : 'Not available'}</div>
           <div class="note">${zoneKey === 'PLAN_DT' ? '500MB + 100 mins + 50 texts per day' : 'Use Global Data/Minutes bolt-on instead'}</div>
+        </div>
+      `;
+    }
+  } else if (currentNet === 'three') {
+    if (zoneKey === 'THREE_EU') {
+      grid.innerHTML = `
+        <div class="info-box">
+          <h4>Daily charge</h4>
+          <div class="value">£2/day <small>(inc VAT)</small></div>
+          <div class="note">Only charged on days you use your phone</div>
+        </div>
+        <div class="info-box">
+          <h4>Data fair use</h4>
+          <div class="value">12GB</div>
+          <div class="note">From your UK monthly allowance. Over 12GB: 0.3p/MB</div>
+        </div>
+        <div class="info-box">
+          <h4>Calls &amp; texts</h4>
+          <div class="value">Included</div>
+          <div class="note">To UK numbers and within Europe. Receiving calls free.</div>
+        </div>
+        <div class="info-box">
+          <h4>Calls outside Europe</h4>
+          <div class="value">£1.40/min</div>
+          <div class="note">Calling numbers outside Go Roam destinations</div>
+        </div>
+      `;
+    } else if (zoneKey === 'THREE_ATW' || zoneKey === 'THREE_ATWX') {
+      const daily = zoneKey === 'THREE_ATW' ? '£5' : '£7';
+      grid.innerHTML = `
+        <div class="info-box">
+          <h4>Daily charge</h4>
+          <div class="value">${daily}/day <small>(inc VAT)</small></div>
+          <div class="note">Only charged on days you use your phone</div>
+        </div>
+        <div class="info-box">
+          <h4>Data fair use</h4>
+          <div class="value">12GB</div>
+          <div class="note">From your UK allowance. Over 12GB: 0.3p/MB</div>
+        </div>
+        <div class="info-box">
+          <h4>Calls to UK</h4>
+          <div class="value">Included</div>
+          <div class="note">Up to 3,000 mins/month. Receiving calls free.</div>
+        </div>
+        <div class="info-box">
+          <h4>Texts to UK</h4>
+          <div class="value">Included</div>
+          <div class="note">Up to 5,000 texts/month</div>
+        </div>
+      `;
+    } else {
+      grid.innerHTML = `
+        <div class="info-box">
+          <h4>Calls (made or received)</h4>
+          <div class="value">£2.00/min</div>
+          <div class="note">All calls to/from this destination</div>
+        </div>
+        <div class="info-box">
+          <h4>Data</h4>
+          <div class="value">£6.00/MB</div>
+          <div class="note">That's £6,144 per GB — Data Passport essential!</div>
+        </div>
+        <div class="info-box">
+          <h4>Texts</h4>
+          <div class="value">35p/text</div>
+          <div class="note">Per SMS sent</div>
+        </div>
+        <div class="info-box">
+          <h4>Receiving calls</h4>
+          <div class="value">£1.25/min</div>
+          <div class="note">Charged for incoming calls at this destination</div>
         </div>
       `;
     }
