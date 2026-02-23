@@ -231,6 +231,15 @@
     .headline-good { background: var(--success-bg); color: var(--success); border-left: 4px solid var(--success); }
     .headline-ok { background: var(--warn-bg); color: var(--warn); border-left: 4px solid var(--warn); }
     .headline-caution { background: var(--danger-bg); color: var(--danger); border-left: 4px solid var(--danger); }
+    /* Travel notice banner */
+    .travel-notice {
+      display: flex; align-items: flex-start; gap: 10px;
+      padding: 12px 16px; border-radius: 10px; margin-bottom: 20px;
+      background: #fff8e1; border: 1px solid #ffe082; color: #6d4c00;
+      font-size: .88rem; line-height: 1.5;
+    }
+    .travel-notice-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 1px; }
+    .travel-notice strong { color: #4e3600; }
     /* Bolt-on section */
     .boltons-title { font-size: 1rem; font-weight: 700; margin-bottom: 12px; }
     .bolton-card {
@@ -367,6 +376,7 @@
       </div>
       <div class="result-body">
         <div class="result-headline" id="rHeadline"></div>
+        <div class="travel-notice" id="rTravelNotice" style="display:none"></div>
         <div class="info-grid" id="rInfoGrid"></div>
         <div id="rBoltons"></div>
         <div class="tips-box" id="rTips"></div>
@@ -1439,6 +1449,16 @@ function selectCountry(c) {
   const headEl = document.getElementById("rHeadline");
   headEl.textContent = z.headline;
   headEl.className = "result-headline " + z.headlineCls;
+
+  // Travel notice — remind agents customer should notify us before travelling
+  const noticeEl = document.getElementById("rTravelNotice");
+  const isEuZone = zoneKey === 'EU_RLAH' || zoneKey === 'PLAN_EU' || zoneKey === 'THREE_EU';
+  if (!isEuZone) {
+    noticeEl.style.display = 'flex';
+    noticeEl.innerHTML = `<span class="travel-notice-icon">&#9888;</span><div><strong>Remind the customer:</strong> They should contact us before travelling to ensure the best roaming rates are active on their line. Without this, standard per-use rates may apply which are significantly more expensive.</div>`;
+  } else {
+    noticeEl.style.display = 'none';
+  }
 
   // Info grid — Plan.com shows different rate info
   const grid = document.getElementById("rInfoGrid");
