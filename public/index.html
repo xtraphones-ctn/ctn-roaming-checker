@@ -42,36 +42,50 @@
     }
     .header h1 { font-size: 1.75rem; font-weight: 700; }
     .header p { color: rgba(255,255,255,.75); margin-top: 4px; font-size: .95rem; }
-    /* Network badge */
-    .network-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: rgba(255,255,255,.12);
-      border: 1px solid rgba(255,255,255,.2);
-      border-radius: 6px;
-      padding: 4px 12px;
-      font-size: .8rem;
-      color: rgba(255,255,255,.9);
-      margin-top: 12px;
+    /* Network selector */
+    .net-selector {
+      display: flex; gap: 12px; margin-top: 20px;
     }
-    .network-dot { width: 8px; height: 8px; border-radius: 50%; }
-    .network-dot.o2 { background: #00a0e1; }
-    .network-dot.vf { background: #e60000; }
-    /* Network toggle */
-    .net-toggle {
-      display: flex; align-items: center; justify-content: center; gap: 0;
-      background: rgba(255,255,255,.1); border-radius: 10px; padding: 4px;
-      width: fit-content; margin-top: 14px;
+    .net-card {
+      flex: 1; max-width: 220px; padding: 16px 20px; border: 2px solid rgba(255,255,255,.2);
+      border-radius: 12px; background: rgba(255,255,255,.06); cursor: pointer;
+      transition: all .25s; display: flex; align-items: center; gap: 14px;
+      position: relative;
     }
-    .net-btn {
-      padding: 8px 24px; border: none; border-radius: 8px; font-size: .85rem;
-      font-weight: 600; cursor: pointer; transition: all .2s;
-      background: transparent; color: rgba(255,255,255,.6); display: flex; align-items: center; gap: 6px;
+    .net-card:hover { background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.35); }
+    .net-card.selected-o2 {
+      background: rgba(0,160,225,.18); border-color: #00a0e1;
+      box-shadow: 0 0 0 1px #00a0e1, 0 4px 16px rgba(0,160,225,.3);
     }
-    .net-btn.active-o2 { background: #00a0e1; color: #fff; box-shadow: 0 2px 8px rgba(0,160,225,.3); }
-    .net-btn.active-vf { background: #e60000; color: #fff; box-shadow: 0 2px 8px rgba(230,0,0,.3); }
-    .net-btn:hover:not([class*="active"]) { color: rgba(255,255,255,.9); }
+    .net-card.selected-vf {
+      background: rgba(230,0,0,.18); border-color: #e60000;
+      box-shadow: 0 0 0 1px #e60000, 0 4px 16px rgba(230,0,0,.3);
+    }
+    .net-card-logo { height: 32px; filter: brightness(0) invert(1); opacity: .5; transition: all .25s; }
+    .net-card.selected-o2 .net-card-logo,
+    .net-card.selected-vf .net-card-logo { opacity: 1; }
+    .net-card-label { font-size: 1.2rem; font-weight: 700; color: rgba(255,255,255,.45); transition: color .25s; }
+    .net-card.selected-o2 .net-card-label { color: #fff; }
+    .net-card.selected-vf .net-card-label { color: #fff; }
+    .net-card-check {
+      position: absolute; top: 8px; right: 10px; width: 22px; height: 22px;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: .75rem; opacity: 0; transition: opacity .25s;
+    }
+    .net-card.selected-o2 .net-card-check { opacity: 1; background: #00a0e1; color: #fff; }
+    .net-card.selected-vf .net-card-check { opacity: 1; background: #e60000; color: #fff; }
+    .net-active-banner {
+      margin-top: 14px; padding: 8px 16px; border-radius: 8px; font-size: .9rem;
+      font-weight: 600; display: inline-flex; align-items: center; gap: 8px; transition: all .3s;
+    }
+    .net-active-banner.o2 { background: #00a0e1; color: #fff; }
+    .net-active-banner.vf { background: #e60000; color: #fff; }
+    @media (max-width: 600px) {
+      .net-selector { gap: 8px; }
+      .net-card { padding: 12px 14px; gap: 10px; }
+      .net-card-logo { height: 24px; }
+      .net-card-label { font-size: 1rem; }
+    }
     /* Nav */
     .site-nav { background: #fff; border-bottom: 1px solid var(--grey-200); }
     .nav-inner { display: flex; gap: 0; max-width: 900px; margin: 0 auto; padding: 0 20px; }
@@ -286,14 +300,19 @@
   <div class="container">
     <h1>Using your phone abroad</h1>
     <p>Check roaming charges and recommended add-ons before you travel</p>
-    <div class="net-toggle">
-      <button class="net-btn active-o2" data-net="o2"><span class="network-dot o2" style="display:inline-block"></span> O2</button>
-      <button class="net-btn" data-net="vf"><span class="network-dot vf" style="display:inline-block"></span> Vodafone</button>
+    <div class="net-selector">
+      <div class="net-card selected-o2" data-net="o2" role="button" tabindex="0" aria-label="Select O2 network">
+        <img src="card_o2.png" alt="O2" class="net-card-logo">
+        <span class="net-card-label">O2</span>
+        <span class="net-card-check" aria-hidden="true">&#10003;</span>
+      </div>
+      <div class="net-card" data-net="vf" role="button" tabindex="0" aria-label="Select Vodafone network">
+        <img src="card_vodafone.png" alt="Vodafone" class="net-card-logo">
+        <span class="net-card-label">Vodafone</span>
+        <span class="net-card-check" aria-hidden="true">&#10003;</span>
+      </div>
     </div>
-    <div style="display:flex;align-items:center;gap:16px;margin-top:14px">
-      <img src="card_o2.png" alt="O2" id="logoO2" style="height:28px;opacity:1;transition:opacity .2s">
-      <img src="card_vodafone.png" alt="Vodafone" id="logoVf" style="height:28px;opacity:.35;transition:opacity .2s">
-    </div>
+    <div class="net-active-banner o2" id="netBanner">Viewing rates for <strong>O2</strong></div>
   </div>
 </div>
 
@@ -960,15 +979,23 @@ let currentNet = 'o2';
 let lastCountry = null;
 
 // Network toggle
-document.querySelectorAll('.net-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.net-btn').forEach(b => { b.className = 'net-btn'; });
-    currentNet = btn.dataset.net;
-    btn.classList.add(currentNet === 'o2' ? 'active-o2' : 'active-vf');
-    document.getElementById('logoO2').style.opacity = currentNet === 'o2' ? '1' : '.35';
-    document.getElementById('logoVf').style.opacity = currentNet === 'vf' ? '1' : '.35';
-    // Re-render result if a country is selected
+function updateNetworkUI() {
+  document.querySelectorAll('.net-card').forEach(c => {
+    c.className = 'net-card' + (c.dataset.net === currentNet ? (currentNet === 'o2' ? ' selected-o2' : ' selected-vf') : '');
+  });
+  const banner = document.getElementById('netBanner');
+  const name = currentNet === 'o2' ? 'O2' : 'Vodafone';
+  banner.className = 'net-active-banner ' + currentNet;
+  banner.innerHTML = 'Viewing rates for <strong>' + name + '</strong>';
+}
+document.querySelectorAll('.net-card').forEach(card => {
+  card.addEventListener('click', () => {
+    currentNet = card.dataset.net;
+    updateNetworkUI();
     if (lastCountry) selectCountry(lastCountry);
+  });
+  card.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); card.click(); }
   });
 });
 

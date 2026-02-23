@@ -50,20 +50,50 @@
     }
     .nav-link:hover { color: var(--accent); }
     .nav-link.active { color: var(--accent); border-bottom-color: var(--accent); }
-    /* Network toggle */
-    .net-toggle {
-      display: flex; align-items: center; justify-content: center; gap: 0;
-      background: var(--grey-100); border-radius: 10px; padding: 4px;
-      width: fit-content; margin: 20px auto 0;
+    /* Network selector */
+    .net-selector {
+      display: flex; gap: 12px; margin: 20px 0 0;
     }
-    .net-btn {
-      padding: 10px 28px; border: none; border-radius: 8px; font-size: .9rem;
-      font-weight: 600; cursor: pointer; transition: all .2s;
-      background: transparent; color: var(--grey-600); display: flex; align-items: center; gap: 6px;
+    .net-card {
+      flex: 1; max-width: 220px; padding: 14px 18px; border: 2px solid var(--grey-200);
+      border-radius: 12px; background: #fff; cursor: pointer;
+      transition: all .25s; display: flex; align-items: center; gap: 14px;
+      position: relative;
     }
-    .net-btn.active-o2 { background: #00a0e1; color: #fff; box-shadow: 0 2px 8px rgba(0,160,225,.3); }
-    .net-btn.active-vf { background: #e60000; color: #fff; box-shadow: 0 2px 8px rgba(230,0,0,.3); }
-    .net-btn:hover:not([class*="active"]) { color: var(--grey-800); }
+    .net-card:hover { border-color: var(--grey-400); }
+    .net-card.selected-o2 {
+      background: #e8f6fc; border-color: #00a0e1;
+      box-shadow: 0 0 0 1px #00a0e1, 0 4px 16px rgba(0,160,225,.15);
+    }
+    .net-card.selected-vf {
+      background: #fce8e8; border-color: #e60000;
+      box-shadow: 0 0 0 1px #e60000, 0 4px 16px rgba(230,0,0,.15);
+    }
+    .net-card-logo { height: 28px; opacity: .4; transition: all .25s; }
+    .net-card.selected-o2 .net-card-logo,
+    .net-card.selected-vf .net-card-logo { opacity: 1; }
+    .net-card-label { font-size: 1.1rem; font-weight: 700; color: var(--grey-400); transition: color .25s; }
+    .net-card.selected-o2 .net-card-label { color: #00a0e1; }
+    .net-card.selected-vf .net-card-label { color: #e60000; }
+    .net-card-check {
+      position: absolute; top: 8px; right: 10px; width: 22px; height: 22px;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: .75rem; opacity: 0; transition: opacity .25s;
+    }
+    .net-card.selected-o2 .net-card-check { opacity: 1; background: #00a0e1; color: #fff; }
+    .net-card.selected-vf .net-card-check { opacity: 1; background: #e60000; color: #fff; }
+    .net-active-banner {
+      margin-top: 10px; margin-bottom: 4px; padding: 8px 16px; border-radius: 8px; font-size: .9rem;
+      font-weight: 600; display: inline-flex; align-items: center; gap: 8px; transition: all .3s;
+    }
+    .net-active-banner.o2 { background: #00a0e1; color: #fff; }
+    .net-active-banner.vf { background: #e60000; color: #fff; }
+    @media (max-width: 600px) {
+      .net-selector { gap: 8px; }
+      .net-card { padding: 10px 12px; gap: 10px; }
+      .net-card-logo { height: 22px; }
+      .net-card-label { font-size: .95rem; }
+    }
     /* Nav tabs */
     .tab-nav { display: flex; gap: 4px; padding: 24px 0 0; flex-wrap: wrap; }
     .tab-btn {
@@ -139,10 +169,19 @@
 
 <div class="container">
 
-  <div class="net-toggle">
-    <button class="net-btn active-o2" data-net="o2"><span class="network-dot o2" style="display:inline-block"></span> O2</button>
-    <button class="net-btn" data-net="vf"><span class="network-dot vf" style="display:inline-block"></span> Vodafone</button>
+  <div class="net-selector">
+    <div class="net-card selected-o2" data-net="o2" role="button" tabindex="0" aria-label="Select O2 network">
+      <img src="card_o2.png" alt="O2" class="net-card-logo">
+      <span class="net-card-label">O2</span>
+      <span class="net-card-check" aria-hidden="true">&#10003;</span>
+    </div>
+    <div class="net-card" data-net="vf" role="button" tabindex="0" aria-label="Select Vodafone network">
+      <img src="card_vodafone.png" alt="Vodafone" class="net-card-logo">
+      <span class="net-card-label">Vodafone</span>
+      <span class="net-card-check" aria-hidden="true">&#10003;</span>
+    </div>
   </div>
+  <div class="net-active-banner o2" id="netBanner">Viewing rates for <strong>O2</strong></div>
 
   <div class="tab-nav">
     <button class="tab-btn active" data-tab="topups">Data Top-Ups</button>
@@ -497,24 +536,35 @@
   let currentNet = 'o2';
 
   // Network toggle
-  document.querySelectorAll('.net-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.net-btn').forEach(b => { b.className = 'net-btn'; });
-      currentNet = btn.dataset.net;
-      btn.classList.add(currentNet === 'o2' ? 'active-o2' : 'active-vf');
+  function updateNetworkUI() {
+    document.querySelectorAll('.net-card').forEach(c => {
+      c.className = 'net-card' + (c.dataset.net === currentNet ? (currentNet === 'o2' ? ' selected-o2' : ' selected-vf') : '');
+    });
+    const banner = document.getElementById('netBanner');
+    const name = currentNet === 'o2' ? 'O2' : 'Vodafone';
+    banner.className = 'net-active-banner ' + currentNet;
+    banner.innerHTML = 'Viewing rates for <strong>' + name + '</strong>';
 
-      // Update header
-      document.getElementById('pageTitle').textContent = currentNet === 'o2'
-        ? 'O2 Bolt-Ons, Top-Ups & Pricing'
-        : 'Vodafone Bolt-Ons, Top-Ups & Pricing';
-      document.getElementById('netLabel').textContent = currentNet === 'o2' ? 'O2 Network' : 'Vodafone Network';
-      const dot = document.getElementById('netDot');
-      dot.className = 'network-dot ' + currentNet;
+    // Update header
+    document.getElementById('pageTitle').textContent = currentNet === 'o2'
+      ? 'O2 Bolt-Ons, Top-Ups & Pricing'
+      : 'Vodafone Bolt-Ons, Top-Ups & Pricing';
+    document.getElementById('netLabel').textContent = currentNet === 'o2' ? 'O2 Network' : 'Vodafone Network';
+    const dot = document.getElementById('netDot');
+    dot.className = 'network-dot ' + currentNet;
 
-      // Switch network-specific content
-      document.querySelectorAll('.net-content').forEach(el => {
-        el.classList.toggle('active', el.dataset.network === currentNet);
-      });
+    // Switch network-specific content
+    document.querySelectorAll('.net-content').forEach(el => {
+      el.classList.toggle('active', el.dataset.network === currentNet);
+    });
+  }
+  document.querySelectorAll('.net-card').forEach(card => {
+    card.addEventListener('click', () => {
+      currentNet = card.dataset.net;
+      updateNetworkUI();
+    });
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); card.click(); }
     });
   });
 
