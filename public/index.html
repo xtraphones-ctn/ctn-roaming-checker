@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Using Your Phone Abroad | Compare The Networks</title>
-  <meta name="description" content="Check roaming charges for your O2 mobile when travelling abroad. Search any destination to see daily rates, recommended bolt-ons and tips to stay in control.">
+  <meta name="description" content="Check roaming charges for O2 and Vodafone business mobile when travelling abroad. Search any destination to see daily rates, recommended bolt-ons and tips to stay in control.">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -55,7 +55,32 @@
       color: rgba(255,255,255,.9);
       margin-top: 12px;
     }
-    .network-dot { width: 8px; height: 8px; border-radius: 50%; background: #00a0e1; }
+    .network-dot { width: 8px; height: 8px; border-radius: 50%; }
+    .network-dot.o2 { background: #00a0e1; }
+    .network-dot.vf { background: #e60000; }
+    /* Network toggle */
+    .net-toggle {
+      display: flex; align-items: center; justify-content: center; gap: 0;
+      background: rgba(255,255,255,.1); border-radius: 10px; padding: 4px;
+      width: fit-content; margin-top: 14px;
+    }
+    .net-btn {
+      padding: 8px 24px; border: none; border-radius: 8px; font-size: .85rem;
+      font-weight: 600; cursor: pointer; transition: all .2s;
+      background: transparent; color: rgba(255,255,255,.6); display: flex; align-items: center; gap: 6px;
+    }
+    .net-btn.active-o2 { background: #00a0e1; color: #fff; box-shadow: 0 2px 8px rgba(0,160,225,.3); }
+    .net-btn.active-vf { background: #e60000; color: #fff; box-shadow: 0 2px 8px rgba(230,0,0,.3); }
+    .net-btn:hover:not([class*="active"]) { color: rgba(255,255,255,.9); }
+    /* Nav */
+    .site-nav { background: #fff; border-bottom: 1px solid var(--grey-200); }
+    .nav-inner { display: flex; gap: 0; max-width: 900px; margin: 0 auto; padding: 0 20px; }
+    .nav-link {
+      padding: 12px 20px; font-size: .88rem; font-weight: 600; color: var(--grey-600);
+      text-decoration: none; border-bottom: 2px solid transparent; transition: all .15s;
+    }
+    .nav-link:hover { color: var(--accent); }
+    .nav-link.active { color: var(--accent); border-bottom-color: var(--accent); }
     /* Search */
     .search-section { padding: 32px 0 16px; }
     .search-wrap {
@@ -261,10 +286,21 @@
   <div class="container">
     <h1>Using your phone abroad</h1>
     <p>Check roaming charges and recommended add-ons before you travel</p>
-    <div class="network-badge">
-      <span class="network-dot"></span>
-      O2 Network
+    <div class="net-toggle">
+      <button class="net-btn active-o2" data-net="o2"><span class="network-dot o2" style="display:inline-block"></span> O2</button>
+      <button class="net-btn" data-net="vf"><span class="network-dot vf" style="display:inline-block"></span> Vodafone</button>
     </div>
+    <div style="display:flex;align-items:center;gap:16px;margin-top:14px">
+      <img src="card_o2.png" alt="O2" id="logoO2" style="height:28px;opacity:1;transition:opacity .2s">
+      <img src="card_vodafone.png" alt="Vodafone" id="logoVf" style="height:28px;opacity:.35;transition:opacity .2s">
+    </div>
+  </div>
+</div>
+
+<div class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-link active">Roaming Checker</a>
+    <a href="bolt-ons.html" class="nav-link">Bolt-Ons &amp; Rates</a>
   </div>
 </div>
 
@@ -315,7 +351,7 @@
         <tr>
           <td><span class="result-zone zone-europe">Europe</span></td>
           <td><strong>No extra charge</strong></td>
-          <td>Use your UK allowance in the EU/EEA. Fair use applies.</td>
+          <td>Use your UK allowance in the EU/EEA. Fair use limit: 25GB data/month.</td>
         </tr>
         <tr>
           <td><span class="result-zone zone-wts">World Travel</span></td>
@@ -332,7 +368,7 @@
   </div>
 
   <div class="disclaimer">
-    <p>All prices shown exclude VAT. Roaming services, destinations and charges are subject to change. Fair use policies may apply. Daily roaming charges apply on days you use your phone abroad (calls, texts or data). Incoming SMS does not trigger a daily charge.</p>
+    <p>All prices shown exclude VAT. Roaming services, destinations and charges are subject to change. EU roaming is subject to a fair use policy — a data limit of 25GB per month applies while roaming in the EU/EEA. If exceeded, additional charges may apply. Daily roaming charges apply on days you use your phone abroad (calls, texts or data). Incoming SMS does not trigger a daily charge.</p>
     <p>If you are unsure which bolt-on suits your usage, contact us before you travel.</p>
     <div class="footer-meta">
       <span>Last updated: 17 February 2026</span>
@@ -562,7 +598,7 @@ const ZONES = {
     label: "Europe",
     cls: "zone-europe",
     headlineCls: "headline-good",
-    headline: "Good news — use your UK allowance here at no extra cost. Fair use policies apply.",
+    headline: "Good news — use your UK allowance here at no extra cost. A fair use limit of 25GB data per month applies while roaming in the EU.",
     dailyCharge: null,
     dailyLabel: "Included",
     dailyNote: "No daily charge — use your plan allowance"
@@ -596,35 +632,59 @@ const ZONES = {
   }
 };
 
-// ── BOLT-ON RECOMMENDATIONS BY ZONE (prices ex VAT from v6) ──
+// ── BOLT-ON RECOMMENDATIONS BY ZONE (prices ex VAT) ──
 const BOLTONS = {
-  EU_RLAH: [
-    {name:"Data Top Up 5GB", sku:"AIOATOP5GB", detail:"Extra UK data if you run low while roaming", price:"£5.50"},
-    {name:"Data Top Up 10GB", sku:"AIOATOP10GB", detail:"More data for heavy use abroad", price:"£8.00"},
-    {name:"Data Top Up 20GB", sku:"AIOATOP20GB", detail:"Best value for data-intensive travel", price:"£13.50"},
-  ],
-  TF_WORLD: [
-    {name:"Roaming Minutes & Data 250", sku:"AIOA250RMD", detail:"250 mins + 250MB — short trips, light usage", price:"£60.00"},
-    {name:"Roaming Minutes & Data 500", sku:"AIOA500RMD", detail:"500 mins + 500MB — moderate usage", price:"£90.00"},
-    {name:"Roaming Minutes & Data 1000", sku:"AIOA1000RMD", detail:"1000 mins + 1GB — heavier usage", price:"£120.00"},
-  ],
-  ROW_WTS: [
-    {name:"Roaming Minutes & Data 250", sku:"AIOA250RMD", detail:"250 mins + 250MB — short trips, light usage", price:"£60.00"},
-    {name:"Roaming Minutes & Data 500", sku:"AIOA500RMD", detail:"500 mins + 500MB — moderate usage", price:"£90.00"},
-    {name:"Roaming Minutes & Data 1000", sku:"AIOA1000RMD", detail:"1000 mins + 1GB — heavier usage", price:"£120.00"},
-  ],
-  ROW_STD: [
-    {name:"Roaming Minutes & Data 250", sku:"AIOA250RMD", detail:"250 mins + 250MB — essential for this destination", price:"£60.00"},
-    {name:"Roaming Minutes & Data 500", sku:"AIOA500RMD", detail:"500 mins + 500MB — recommended for a week+", price:"£90.00"},
-    {name:"Roaming Minutes & Data 1000", sku:"AIOA1000RMD", detail:"1000 mins + 1GB — best coverage for longer stays", price:"£120.00"},
-  ]
+  o2: {
+    EU_RLAH: [
+      {name:"Data Top Up 5GB", detail:"Extra UK data if you run low while roaming", price:"£5.50"},
+      {name:"Data Top Up 10GB", detail:"More data for heavy use abroad", price:"£8.00"},
+      {name:"Data Top Up 20GB", detail:"Best value for data-intensive travel", price:"£13.50"},
+    ],
+    TF_WORLD: [
+      {name:"Roaming Minutes & Data 250", detail:"250 mins + 250MB — short trips, light usage", price:"£60.00"},
+      {name:"Roaming Minutes & Data 500", detail:"500 mins + 500MB — moderate usage", price:"£90.00"},
+      {name:"Roaming Minutes & Data 1000", detail:"1000 mins + 1GB — heavier usage", price:"£120.00"},
+    ],
+    ROW_WTS: [
+      {name:"Roaming Minutes & Data 250", detail:"250 mins + 250MB — short trips, light usage", price:"£60.00"},
+      {name:"Roaming Minutes & Data 500", detail:"500 mins + 500MB — moderate usage", price:"£90.00"},
+      {name:"Roaming Minutes & Data 1000", detail:"1000 mins + 1GB — heavier usage", price:"£120.00"},
+    ],
+    ROW_STD: [
+      {name:"Roaming Minutes & Data 250", detail:"250 mins + 250MB — essential for this destination", price:"£60.00"},
+      {name:"Roaming Minutes & Data 500", detail:"500 mins + 500MB — recommended for a week+", price:"£90.00"},
+      {name:"Roaming Minutes & Data 1000", detail:"1000 mins + 1GB — best coverage for longer stays", price:"£120.00"},
+    ]
+  },
+  vf: {
+    EU_RLAH: [
+      {name:"Data Top Up 5GB", detail:"Extra UK data if you run low while roaming", price:"£6.50"},
+      {name:"Data Top Up 10GB", detail:"More data for heavy use abroad", price:"£9.00"},
+      {name:"Data Top Up 20GB", detail:"Best value for data-intensive travel", price:"£15.00"},
+    ],
+    TF_WORLD: [
+      {name:"Roaming Worldwide 250MB", detail:"Light data for short trips outside Europe", price:"£42.00"},
+      {name:"Roaming Worldwide 500MB", detail:"Moderate data for trips outside Europe", price:"£78.00"},
+      {name:"Roaming Worldwide 1GB", detail:"Heavier data for longer stays", price:"£140.00"},
+    ],
+    ROW_WTS: [
+      {name:"Roaming Worldwide 250MB", detail:"Light data for short trips outside Europe", price:"£42.00"},
+      {name:"Roaming Worldwide 500MB", detail:"Moderate data for trips outside Europe", price:"£78.00"},
+      {name:"Roaming Worldwide 1GB", detail:"Heavier data for longer stays", price:"£140.00"},
+    ],
+    ROW_STD: [
+      {name:"Roaming Worldwide 250MB", detail:"Essential data for this destination", price:"£42.00"},
+      {name:"Roaming Worldwide 500MB", detail:"Recommended for a week+", price:"£78.00"},
+      {name:"Roaming Worldwide 1GB", detail:"Best coverage for longer stays", price:"£140.00"},
+    ]
+  }
 };
 
 // ── TIPS BY ZONE ──
 const TIPS = {
   EU_RLAH: [
     "Enable Data Roaming in your phone settings before you travel.",
-    "Your UK calls, texts and data work as normal — fair use limits may apply.",
+    "Your UK calls, texts and data work as normal — a fair use limit of 25GB data per month applies while roaming.",
     "Use Wi-Fi where possible to save your data allowance.",
     "Download maps and media offline before you go.",
     "If you run low on data, add a Data Top Up rather than paying out-of-bundle rates."
@@ -652,6 +712,239 @@ const TIPS = {
   ]
 };
 
+// ── CITY / ALIAS LOOKUP ──
+// Maps common city names, abbreviations, alternate spellings → ISO2 code
+const ALIASES = {
+  // United Arab Emirates
+  "dubai":"AE","abu dhabi":"AE","sharjah":"AE","uae":"AE","ajman":"AE",
+  // United States
+  "usa":"US","america":"US","new york":"US","nyc":"US","los angeles":"US","la":"US",
+  "miami":"US","las vegas":"US","vegas":"US","orlando":"US","hawaii":"US","san francisco":"US",
+  "chicago":"US","boston":"US","washington":"US","seattle":"US","dallas":"US","houston":"US",
+  "atlanta":"US","denver":"US","san diego":"US","portland":"US","nashville":"US","austin":"US",
+  // Spain
+  "tenerife":"ES","majorca":"ES","mallorca":"ES","ibiza":"ES","lanzarote":"ES",
+  "fuerteventura":"ES","gran canaria":"ES","canary islands":"ES","canaries":"ES",
+  "benidorm":"ES","marbella":"ES","barcelona":"ES","madrid":"ES","malaga":"ES","alicante":"ES",
+  "menorca":"ES","costa del sol":"ES","costa brava":"ES","seville":"ES","palma":"ES",
+  // France
+  "paris":"FR","nice":"FR","lyon":"FR","marseille":"FR","bordeaux":"FR","toulouse":"FR",
+  "corsica":"FR","strasbourg":"FR","montpellier":"FR",
+  // Italy
+  "rome":"IT","milan":"IT","venice":"IT","florence":"IT","naples":"IT","sicily":"IT",
+  "sardinia":"IT","turin":"IT","amalfi":"IT","capri":"IT","como":"IT","verona":"IT","pisa":"IT",
+  // Greece
+  "athens":"GR","crete":"GR","santorini":"GR","mykonos":"GR","corfu":"GR","rhodes":"GR",
+  "zakynthos":"GR","zante":"GR","kos":"GR","kefalonia":"GR",
+  // Turkey
+  "istanbul":"TR","antalya":"TR","bodrum":"TR","fethiye":"TR","dalaman":"TR","marmaris":"TR",
+  "side":"TR","kusadasi":"TR","ankara":"TR","cappadocia":"TR","izmir":"TR",
+  // Portugal
+  "lisbon":"PT","porto":"PT","algarve":"PT","faro":"PT","madeira":"PT","azores":"PT","funchal":"PT",
+  // Thailand
+  "bangkok":"TH","phuket":"TH","pattaya":"TH","chiang mai":"TH","koh samui":"TH","krabi":"TH",
+  // Australia
+  "sydney":"AU","melbourne":"AU","brisbane":"AU","perth":"AU","gold coast":"AU","cairns":"AU",
+  "adelaide":"AU","canberra":"AU","darwin":"AU","hobart":"AU",
+  // Netherlands
+  "amsterdam":"NL","holland":"NL","rotterdam":"NL","the hague":"NL","eindhoven":"NL",
+  // Germany
+  "berlin":"DE","munich":"DE","frankfurt":"DE","hamburg":"DE","cologne":"DE","dusseldorf":"DE",
+  // Czech Republic
+  "prague":"CZ","czechia":"CZ",
+  // Croatia
+  "dubrovnik":"HR","split":"HR","zagreb":"HR",
+  // Hungary
+  "budapest":"HU",
+  // Austria
+  "vienna":"AT","salzburg":"AT","innsbruck":"AT",
+  // Poland
+  "warsaw":"PL","krakow":"PL","cracow":"PL","gdansk":"PL","wroclaw":"PL",
+  // Ireland
+  "dublin":"IE","cork":"IE",
+  // Denmark
+  "copenhagen":"DK",
+  // Sweden
+  "stockholm":"SE","gothenburg":"SE","malmo":"SE",
+  // Norway
+  "oslo":"NO","bergen":"NO",
+  // Finland
+  "helsinki":"FI","lapland":"FI",
+  // Belgium
+  "brussels":"BE","bruges":"BE","antwerp":"BE",
+  // Switzerland
+  "zurich":"CH","geneva":"CH","bern":"CH","lucerne":"CH","basel":"CH",
+  // Romania
+  "bucharest":"RO",
+  // Bulgaria
+  "sofia":"BG","sunny beach":"BG","varna":"BG",
+  // Cyprus
+  "nicosia":"CY","paphos":"CY","ayia napa":"CY","limassol":"CY","larnaca":"CY",
+  // Malta
+  "valletta":"MT","gozo":"MT",
+  // Iceland
+  "reykjavik":"IS",
+  // Canada
+  "toronto":"CA","vancouver":"CA","montreal":"CA","calgary":"CA","ottawa":"CA",
+  // Mexico
+  "cancun":"MX","mexico city":"MX","playa del carmen":"MX","cabo":"MX","tulum":"MX",
+  // Jamaica
+  "montego bay":"JM","kingston":"JM","negril":"JM",
+  // Dominican Republic
+  "punta cana":"DO","santo domingo":"DO",
+  // Cuba
+  "havana":"CU","varadero":"CU",
+  // Brazil
+  "rio":"BR","rio de janeiro":"BR","sao paulo":"BR",
+  // India
+  "delhi":"IN","mumbai":"IN","bombay":"IN","goa":"IN","bangalore":"IN","kolkata":"IN",
+  "chennai":"IN","jaipur":"IN","agra":"IN","hyderabad":"IN",
+  // Japan
+  "tokyo":"JP","osaka":"JP","kyoto":"JP",
+  // China
+  "beijing":"CN","shanghai":"CN","shenzhen":"CN","guangzhou":"CN",
+  // South Korea
+  "seoul":"KR","busan":"KR",
+  // Singapore
+  "changi":"SG",
+  // Indonesia
+  "bali":"ID","jakarta":"ID","lombok":"ID",
+  // Malaysia
+  "kuala lumpur":"MY","kl":"MY","langkawi":"MY","penang":"MY",
+  // Philippines
+  "manila":"PH","cebu":"PH","boracay":"PH",
+  // Vietnam
+  "hanoi":"VN","ho chi minh":"VN","saigon":"VN","da nang":"VN",
+  // Hong Kong
+  "hk":"HK",
+  // Egypt
+  "cairo":"EG","sharm el sheikh":"EG","sharm":"EG","hurghada":"EG","luxor":"EG",
+  // Morocco
+  "marrakech":"MA","marrakesh":"MA","casablanca":"MA","fez":"MA","tangier":"MA",
+  // South Africa
+  "cape town":"ZA","johannesburg":"ZA","joburg":"ZA","durban":"ZA","sa":"ZA",
+  // Kenya
+  "nairobi":"KE","mombasa":"KE",
+  // Tanzania
+  "zanzibar":"TZ","dar es salaam":"TZ","kilimanjaro":"TZ","serengeti":"TZ",
+  // Uganda
+  "kampala":"UG","entebbe":"UG",
+  // Nigeria
+  "lagos":"NG","abuja":"NG",
+  // Ghana
+  "accra":"GH",
+  // Israel
+  "tel aviv":"IL","jerusalem":"IL",
+  // Jordan
+  "amman":"JO","petra":"JO",
+  // Saudi Arabia
+  "riyadh":"SA","jeddah":"SA","mecca":"SA","medina":"SA",
+  // Qatar
+  "doha":"QA",
+  // Bahrain
+  "manama":"BH",
+  // Kuwait
+  "kuwait city":"KW",
+  // Oman
+  "muscat":"OM",
+  // Sri Lanka
+  "colombo":"LK",
+  // Maldives
+  "male":"MV",
+  // New Zealand
+  "auckland":"NZ","wellington":"NZ","queenstown":"NZ","christchurch":"NZ",
+  // Fiji
+  "nadi":"FJ","suva":"FJ",
+  // Argentina
+  "buenos aires":"AR",
+  // Colombia
+  "bogota":"CO","medellin":"CO","cartagena":"CO",
+  // Peru
+  "lima":"PE","cusco":"PE","machu picchu":"PE",
+  // Chile
+  "santiago":"CL",
+  // Russia
+  "moscow":"RU","st petersburg":"RU","saint petersburg":"RU",
+  // Georgia
+  "tbilisi":"GE","batumi":"GE",
+  // Serbia
+  "belgrade":"RS",
+  // Montenegro
+  "podgorica":"ME","kotor":"ME","budva":"ME",
+  // Albania
+  "tirana":"AL","saranda":"AL",
+  // North Macedonia
+  "skopje":"MK","macedonia":"MK",
+  // Bosnia
+  "sarajevo":"BA","mostar":"BA","bosnia":"BA",
+  // Pakistan
+  "islamabad":"PK","karachi":"PK","lahore":"PK",
+  // Bangladesh
+  "dhaka":"BD",
+  // Nepal
+  "kathmandu":"NP","everest":"NP",
+  // Ukraine
+  "kyiv":"UA","kiev":"UA","odessa":"UA",
+  // Lebanon
+  "beirut":"LB",
+  // Tunisia
+  "tunis":"TN",
+  // Barbados
+  "bridgetown":"BB",
+  // Trinidad
+  "port of spain":"TT","trinidad":"TT",
+  // Bermuda
+  "hamilton":"BM",
+  // Monaco
+  "monte carlo":"MC",
+  // Gibraltar
+  "the rock":"GI","gib":"GI",
+  // Luxembourg
+  "lux":"LU",
+  // Eswatini
+  "swaziland":"SZ",
+  // Taiwan
+  "taipei":"TW",
+  // Costa Rica
+  "san jose":"CR",
+  // Panama
+  "panama city":"PA",
+  // Ecuador
+  "quito":"EC","galapagos":"EC",
+  // Cambodia
+  "phnom penh":"KH","siem reap":"KH","angkor":"KH",
+  // Laos
+  "vientiane":"LA",
+  // Myanmar
+  "burma":"MM","yangon":"MM","rangoon":"MM",
+  // Mongolia
+  "ulaanbaatar":"MN",
+  // Ivory Coast
+  "cote d'ivoire":"CI","cote divoire":"CI","abidjan":"CI",
+  // Zimbabwe
+  "harare":"ZW","victoria falls":"ZW",
+  // Zambia
+  "lusaka":"ZM",
+  // Ethiopia
+  "addis ababa":"ET",
+  // Mozambique
+  "maputo":"MZ",
+  // Madagascar
+  "antananarivo":"MG",
+  // Mauritius
+  "port louis":"MU",
+  // Namibia
+  "windhoek":"NA",
+  // Botswana
+  "gaborone":"BW",
+  // Rwanda
+  "kigali":"RW",
+  // Senegal
+  "dakar":"SN",
+  // Cameroon
+  "douala":"CM","yaounde":"CM",
+};
+
 // ── POPULAR DESTINATIONS ──
 const POPULAR = ["ES","FR","US","TR","AE","GR","IT","PT","AU","TH"];
 
@@ -663,6 +956,21 @@ const acList = document.getElementById("autocomplete");
 const resultSection = document.getElementById("resultSection");
 const popularRow = document.getElementById("popularRow");
 let activeIdx = -1;
+let currentNet = 'o2';
+let lastCountry = null;
+
+// Network toggle
+document.querySelectorAll('.net-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.net-btn').forEach(b => { b.className = 'net-btn'; });
+    currentNet = btn.dataset.net;
+    btn.classList.add(currentNet === 'o2' ? 'active-o2' : 'active-vf');
+    document.getElementById('logoO2').style.opacity = currentNet === 'o2' ? '1' : '.35';
+    document.getElementById('logoVf').style.opacity = currentNet === 'vf' ? '1' : '.35';
+    // Re-render result if a country is selected
+    if (lastCountry) selectCountry(lastCountry);
+  });
+});
 
 // Build popular buttons
 POPULAR.forEach(iso => {
@@ -675,30 +983,61 @@ POPULAR.forEach(iso => {
   popularRow.appendChild(btn);
 });
 
-// Search
+// Search — matches country names, ISO codes, regions, AND city/alias names
 searchInput.addEventListener("input", () => {
   const q = searchInput.value.trim().toLowerCase();
   activeIdx = -1;
   if (q.length < 1) { acList.classList.remove("open"); return; }
-  const matches = COUNTRIES.filter(c =>
-    c.country.toLowerCase().includes(q) ||
-    c.iso2.toLowerCase() === q ||
-    (c.region && c.region.toLowerCase().includes(q))
-  ).slice(0, 8);
-  if (matches.length === 0) {
+
+  // Find countries matching by alias (city name, abbreviation, etc.)
+  const aliasHits = new Set();
+  const aliasLabels = {};  // iso2 → matched alias text
+  for (const [alias, iso2] of Object.entries(ALIASES)) {
+    if (alias.includes(q) || q.includes(alias)) {
+      aliasHits.add(iso2);
+      // Store the best (shortest containing) alias for display
+      if (!aliasLabels[iso2] || alias.length < aliasLabels[iso2].length) {
+        aliasLabels[iso2] = alias.charAt(0).toUpperCase() + alias.slice(1);
+      }
+    }
+  }
+
+  // Direct matches first, then alias matches (deduplicated)
+  const seen = new Set();
+  const matches = [];
+
+  // 1. Direct country/iso/region matches
+  COUNTRIES.forEach(c => {
+    if (c.country.toLowerCase().includes(q) || c.iso2.toLowerCase() === q ||
+        (c.region && c.region.toLowerCase().includes(q))) {
+      if (!seen.has(c.iso2)) { seen.add(c.iso2); matches.push({...c, _matchedAlias: null}); }
+    }
+  });
+
+  // 2. Alias matches (cities, abbreviations, alternate names)
+  aliasHits.forEach(iso2 => {
+    if (!seen.has(iso2)) {
+      const c = COUNTRIES.find(x => x.iso2 === iso2);
+      if (c) { seen.add(iso2); matches.push({...c, _matchedAlias: aliasLabels[iso2]}); }
+    }
+  });
+
+  const top = matches.slice(0, 8);
+
+  if (top.length === 0) {
     acList.innerHTML = '<div class="ac-item" style="color:var(--grey-400)">No results found</div>';
     acList.classList.add("open");
     return;
   }
-  acList.innerHTML = matches.map((c, i) =>
+  acList.innerHTML = top.map((c, i) =>
     `<div class="ac-item" data-idx="${i}" role="option">`+
     `<span class="flag">${c.flag}</span>`+
-    `<span>${c.country}</span>`+
+    `<span>${c.country}${c._matchedAlias ? ' <small style="color:var(--grey-400)">(' + c._matchedAlias + ')</small>' : ''}</span>`+
     `<span class="region">${c.region}</span>`+
     `</div>`
   ).join("");
   acList.querySelectorAll(".ac-item").forEach((el, i) => {
-    el.addEventListener("click", () => selectCountry(matches[i]));
+    el.addEventListener("click", () => selectCountry(top[i]));
   });
   acList.classList.add("open");
 });
@@ -726,10 +1065,11 @@ document.addEventListener("click", (e) => {
 
 // Select country and render result
 function selectCountry(c) {
+  lastCountry = c;
   searchInput.value = c.country;
   acList.classList.remove("open");
   const z = ZONES[c.zone];
-  const boltons = BOLTONS[c.zone] || [];
+  const boltons = (BOLTONS[currentNet] && BOLTONS[currentNet][c.zone]) || [];
   const tips = TIPS[c.zone] || [];
 
   document.getElementById("rFlag").textContent = c.flag;

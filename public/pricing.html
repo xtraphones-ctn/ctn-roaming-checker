@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>O2 Business Mobile Plans & Pricing | Compare The Networks</title>
   <meta name="description" content="O2 SIM-only business mobile plans from Compare The Networks. Flexible contract terms with EU roaming included. All prices exclude VAT.">
+  <meta name="robots" content="noindex, nofollow">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -37,7 +38,23 @@
       background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2);
       border-radius: 6px; padding: 4px 12px; font-size: .8rem; color: rgba(255,255,255,.9); margin-top: 12px;
     }
-    .network-dot { width: 8px; height: 8px; border-radius: 50%; background: #00a0e1; }
+    .network-dot { width: 8px; height: 8px; border-radius: 50%; }
+    .network-dot.o2 { background: #00a0e1; }
+    .network-dot.vf { background: #e60000; }
+    /* Network toggle */
+    .net-toggle {
+      display: flex; align-items: center; justify-content: center; gap: 0;
+      background: var(--grey-100); border-radius: 10px; padding: 4px;
+      width: fit-content; margin: 0 auto 16px;
+    }
+    .net-btn {
+      padding: 10px 28px; border: none; border-radius: 8px; font-size: .9rem;
+      font-weight: 600; cursor: pointer; transition: all .2s;
+      background: transparent; color: var(--grey-600); display: flex; align-items: center; gap: 6px;
+    }
+    .net-btn.active-o2 { background: #00a0e1; color: #fff; box-shadow: 0 2px 8px rgba(0,160,225,.3); }
+    .net-btn.active-vf { background: #e60000; color: #fff; box-shadow: 0 2px 8px rgba(230,0,0,.3); }
+    .net-btn:hover:not([class*="active"]) { color: var(--grey-800); }
     .usp-bar { display: flex; flex-wrap: wrap; gap: 24px; padding: 20px 0; justify-content: center; }
     .usp-item { display: flex; align-items: center; gap: 8px; font-size: .88rem; color: var(--grey-600); }
     .usp-icon { width: 28px; height: 28px; border-radius: 50%; background: var(--success-bg); color: var(--success); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: .85rem; }
@@ -88,14 +105,6 @@
       cursor: pointer; text-decoration: none; transition: opacity .2s;
     }
     .plan-cta:hover { opacity: .9; }
-    .page-links { display: flex; gap: 16px; flex-wrap: wrap; padding: 8px 0 24px; }
-    .page-link {
-      display: inline-flex; align-items: center; gap: 6px; padding: 10px 20px;
-      background: #fff; border: 1px solid var(--grey-200); border-radius: 8px;
-      font-size: .88rem; color: var(--accent); text-decoration: none; font-weight: 500;
-      transition: all .2s;
-    }
-    .page-link:hover { border-color: var(--accent); background: var(--accent-light); }
     .disclaimer {
       padding: 24px 0; font-size: .78rem; color: var(--grey-400); border-top: 1px solid var(--grey-100);
     }
@@ -106,9 +115,9 @@
 
 <div class="header">
   <div class="container">
-    <h1>O2 Business Mobile Plans</h1>
+    <h1 id="pageTitle">O2 Business Mobile Plans</h1>
     <p>SIM-only plans with EU roaming included. All prices exclude VAT.</p>
-    <div class="network-badge"><span class="network-dot"></span> O2 Network</div>
+    <div class="network-badge"><span class="network-dot o2" id="netDot"></span> <span id="netLabel">O2 Network</span></div>
   </div>
 </div>
 
@@ -120,9 +129,9 @@
     <div class="usp-item"><div class="usp-icon">&check;</div> Flexible contract terms</div>
   </div>
 
-  <div class="page-links">
-    <a href="index.html" class="page-link">&#127758; Roaming checker</a>
-    <a href="bolt-ons.html" class="page-link">&#128229; Bolt-ons & top-ups</a>
+  <div class="net-toggle">
+    <button class="net-btn active-o2" data-net="o2"><span class="network-dot o2" style="width:8px;height:8px;border-radius:50%;display:inline-block"></span> O2</button>
+    <button class="net-btn" data-net="vf"><span class="network-dot vf" style="width:8px;height:8px;border-radius:50%;display:inline-block"></span> Vodafone</button>
   </div>
 
   <div class="term-toggle">
@@ -140,6 +149,35 @@
     <div class="plan-grid" id="mbbPlans"></div>
   </div>
 
+  <!-- OOB Quick Reference -->
+  <div class="plans-section" style="padding-top:8px">
+    <h2>Out-of-Bundle &amp; Roaming Rates</h2>
+    <div style="background:#fff;border:1px solid var(--grey-200);border-radius:var(--radius);padding:20px;margin-bottom:8px">
+      <table style="width:100%;border-collapse:collapse;font-size:.88rem">
+        <tr style="border-bottom:1px solid var(--grey-100)">
+          <td style="padding:8px 0;color:var(--grey-600)">Data (exceeding allowance)</td>
+          <td style="padding:8px 0;font-weight:700;color:var(--accent);text-align:right">&pound;0.026 per MB</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--grey-100)">
+          <td style="padding:8px 0;color:var(--grey-600)">MMS (picture / video)</td>
+          <td style="padding:8px 0;font-weight:700;color:var(--accent);text-align:right">&pound;0.66 per message</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--grey-100)">
+          <td style="padding:8px 0;color:var(--grey-600)">084 / 087 / 09 numbers</td>
+          <td style="padding:8px 0;font-weight:700;color:var(--accent);text-align:right">&pound;0.79/min access charge</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--grey-100)">
+          <td style="padding:8px 0;color:var(--grey-600)">EU roaming</td>
+          <td style="padding:8px 0;font-weight:700;color:var(--success);text-align:right">Included</td>
+        </tr>
+        <tr>
+          <td style="padding:8px 0;color:var(--grey-600)">Worldwide roaming</td>
+          <td style="padding:8px 0;font-weight:700;color:var(--accent);text-align:right">&pound;5.00 per day</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
   <div id="contact" style="padding:24px 0 32px">
     <div style="background:#fff;border:1px solid var(--grey-200);border-radius:var(--radius);padding:24px;text-align:center;">
       <h2 style="font-size:1.15rem;margin-bottom:8px">Get a quote</h2>
@@ -149,52 +187,70 @@
   </div>
 
   <div class="disclaimer">
-    <p>All prices exclude VAT. Plans are subject to annual price adjustments (CPI + 3.9%). Fair use policies apply to unlimited allowances. EU roaming included on all plans. Worldwide daily roaming at &pound;5.00/day (ex VAT) on days you use your phone abroad outside Europe.</p>
+    <p>All prices exclude VAT. These are minimum sell prices (£200+ profit per line guaranteed). Agents may sell higher for handsets, buyouts, or bespoke deals. Plans are subject to annual price adjustments (CPI + 3.9%). Fair use policies apply to unlimited allowances. EU roaming included on all plans. Worldwide daily roaming at &pound;5.00/day (ex VAT) on days you use your phone abroad outside Europe.</p>
     <div class="footer-meta">
       <span>Effective from: 20 February 2026</span>
-      <span>Version: CTN-O2-RETAIL-20260220-v1</span>
+      <span>Version: CTN-RETAIL-20260220-v2</span>
     </div>
   </div>
 </div>
 
 <script>
-// Buy prices (Giacom) — NOT shown to customer
-// These are used to calculate sell prices dynamically
-const PLANS = {
-  voice: [
-    {name:"Low User",data:"1GB",mins:"500 minutes",texts:"Unlimited texts",buy:5.25,featured:false},
-    {name:"Standard",data:"2GB",mins:"Unlimited minutes",texts:"Unlimited texts",buy:6.25,featured:false},
-    {name:"5GB",data:"5GB",mins:"Unlimited minutes",texts:"Unlimited texts",buy:7.50,featured:false},
-    {name:"25GB",data:"25GB",mins:"Unlimited minutes",texts:"Unlimited texts",buy:9.00,featured:true},
-    {name:"50GB",data:"50GB",mins:"Unlimited minutes",texts:"Unlimited texts",buy:10.00,featured:false},
-    {name:"Unlimited",data:"Unlimited",mins:"Unlimited minutes",texts:"Unlimited texts",buy:12.00,featured:false},
-  ],
-  mbb: [
-    {name:"MBB",data:"1GB",buy:4.50},
-    {name:"MBB",data:"3GB",buy:6.50},
-    {name:"MBB",data:"10GB",buy:9.00},
-    {name:"MBB",data:"30GB",buy:10.00},
-    {name:"MBB",data:"50GB",buy:11.00},
-    {name:"MBB",data:"100GB",buy:14.00},
-  ]
+// Sell prices only — no cost data in source
+// All prices guarantee minimum £200 profit per line over contract term
+const NETWORKS = {
+  o2: {
+    label: "O2 Network", title: "O2 Business Mobile Plans", color: "#00a0e1",
+    voice: [
+      {name:"Low User",data:"1GB",mins:"500 minutes",texts:"Unlimited texts",p24:"13.50",p36:"11.00",featured:false},
+      {name:"Standard",data:"2GB",mins:"Unlimited minutes",texts:"Unlimited texts",p24:"15.00",p36:"12.00",featured:false},
+      {name:"5GB",data:"5GB",mins:"Unlimited minutes",texts:"Unlimited texts",p24:"16.50",p36:"13.50",featured:false},
+      {name:"25GB",data:"25GB",mins:"Unlimited minutes",texts:"Unlimited texts",p24:"18.00",p36:"15.00",featured:true},
+      {name:"50GB",data:"50GB",mins:"Unlimited minutes",texts:"Unlimited texts",p24:"19.00",p36:"16.00",featured:false},
+      {name:"Unlimited",data:"Unlimited",mins:"Unlimited minutes",texts:"Unlimited texts",p24:"21.00",p36:"18.00",featured:false},
+    ],
+    mbb: [
+      {name:"MBB",data:"1GB",p24:"13.50",p36:"10.50"},
+      {name:"MBB",data:"3GB",p24:"15.50",p36:"12.50"},
+      {name:"MBB",data:"10GB",p24:"18.00",p36:"15.00"},
+      {name:"MBB",data:"30GB",p24:"19.00",p36:"16.00"},
+      {name:"MBB",data:"50GB",p24:"20.00",p36:"17.00"},
+      {name:"MBB",data:"100GB",p24:"23.00",p36:"20.00"},
+    ]
+  },
+  vf: {
+    label: "Vodafone Network", title: "Vodafone Business Mobile Plans", color: "#e60000",
+    voice: [
+      {name:"Low User",data:"500MB",mins:"500 minutes",texts:"Unlimited texts",p24:"14.00",p36:"11.00",featured:false},
+      {name:"Standard",data:"Calls & Texts",mins:"Unlimited minutes",texts:"Unlimited texts",p24:"15.00",p36:"12.00",featured:false},
+      {name:"5GB",data:"5GB",mins:"Unlimited minutes",texts:"Unlimited texts",p24:"18.00",p36:"15.00",featured:false},
+      {name:"10GB",data:"10GB",mins:"Unlimited minutes",texts:"Unlimited texts",p24:"20.00",p36:"17.00",featured:true},
+      {name:"20GB",data:"20GB",mins:"Unlimited minutes",texts:"Unlimited texts",p24:"25.00",p36:"22.00",featured:false},
+      {name:"Unlimited",data:"Unlimited",mins:"Unlimited minutes",texts:"Unlimited texts",p24:"27.50",p36:"25.00",featured:false},
+    ],
+    mbb: [
+      {name:"MBB",data:"1GB",p24:"13.50",p36:"10.50"},
+      {name:"MBB",data:"3GB",p24:"15.50",p36:"12.50"},
+      {name:"MBB",data:"10GB",p24:"17.50",p36:"15.00"},
+      {name:"MBB",data:"20GB",p24:"24.00",p36:"21.50"},
+      {name:"MBB",data:"Unlimited",p24:"28.00",p36:"25.50"},
+    ]
+  }
 };
 
-const TARGET_PROFIT = 200; // £200 per line over contract
-
-function sellPrice(buy, termMonths) {
-  const markup = TARGET_PROFIT / termMonths;
-  const raw = buy + markup;
-  // Round to nearest £0.50
-  return (Math.round(raw * 2) / 2).toFixed(2);
-}
-
 let currentTerm = 24;
+let currentNet = 'o2';
 
 function render() {
-  // Voice plans
+  const net = NETWORKS[currentNet];
+  document.getElementById('pageTitle').textContent = net.title;
+  document.getElementById('netLabel').textContent = net.label;
+  const dot = document.getElementById('netDot');
+  dot.className = 'network-dot ' + currentNet;
+
   const vEl = document.getElementById('voicePlans');
-  vEl.innerHTML = PLANS.voice.map(p => {
-    const price = sellPrice(p.buy, currentTerm);
+  vEl.innerHTML = net.voice.map(p => {
+    const price = currentTerm === 24 ? p.p24 : p.p36;
     return `
     <div class="plan-card${p.featured?' featured':''}">
       <div class="plan-data">${p.data}</div>
@@ -210,10 +266,9 @@ function render() {
     </div>`;
   }).join('');
 
-  // MBB plans
   const mEl = document.getElementById('mbbPlans');
-  mEl.innerHTML = PLANS.mbb.map(p => {
-    const price = sellPrice(p.buy, currentTerm);
+  mEl.innerHTML = net.mbb.map(p => {
+    const price = currentTerm === 24 ? p.p24 : p.p36;
     return `
     <div class="plan-card">
       <div class="plan-data">${p.data}</div>
@@ -229,12 +284,20 @@ function render() {
   }).join('');
 }
 
-// Term toggle
 document.querySelectorAll('.term-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.term-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     currentTerm = parseInt(btn.dataset.term);
+    render();
+  });
+});
+
+document.querySelectorAll('.net-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.net-btn').forEach(b => { b.className = 'net-btn'; });
+    currentNet = btn.dataset.net;
+    btn.classList.add(currentNet === 'o2' ? 'active-o2' : 'active-vf');
     render();
   });
 });
