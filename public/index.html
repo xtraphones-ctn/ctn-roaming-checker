@@ -729,7 +729,7 @@ const ZONES = {
     label: "World Travel",
     cls: "zone-wts",
     headlineCls: "headline-ok",
-    headline: "A daily roaming charge of £5.00 (ex VAT) applies on days you use your phone in this destination. You can then use your UK allowance as normal.",
+    headline: "A daily roaming charge of £5.00 (ex VAT) applies on days you use your phone. This gives the customer 500MB data, 100 minutes and 50 texts per day. Only charged on days they actually use their phone abroad.",
     dailyCharge: 5.00,
     dailyLabel: "£5.00/day",
     dailyNote: "Charged per day of use (calls, texts or data)"
@@ -738,7 +738,7 @@ const ZONES = {
     label: "World Travel",
     cls: "zone-wts",
     headlineCls: "headline-ok",
-    headline: "A daily roaming charge of £5.00 (ex VAT) applies on days you use your phone in this destination. You can then use your UK allowance as normal.",
+    headline: "A daily roaming charge of £5.00 (ex VAT) applies on days you use your phone. This gives the customer 500MB data, 100 minutes and 50 texts per day. Only charged on days they actually use their phone abroad.",
     dailyCharge: 5.00,
     dailyLabel: "£5.00/day",
     dailyNote: "Charged per day of use (calls, texts or data)"
@@ -1306,13 +1306,13 @@ function updateOverviewTable() {
       </tr>
       <tr>
         <td><span class="result-zone zone-wts">World Travel</span></td>
-        <td><strong>&pound;5.00 per day</strong></td>
-        <td>Charged on days you use your phone. Access your UK allowance.</td>
+        <td><strong>&pound;5.00/day</strong> (ex VAT)</td>
+        <td>500MB data + 100 mins + 50 texts per day. Only charged on days you use your phone.</td>
       </tr>
       <tr>
         <td><span class="result-zone zone-standard">Standard Rates</span></td>
-        <td>Per-minute / per-MB rates</td>
-        <td>Not covered by daily services. A roaming bolt-on is recommended.</td>
+        <td>&pound;1.90/min &middot; &pound;0.75/MB</td>
+        <td>Not covered by daily services. Very expensive without a bolt-on.</td>
       </tr>
     `;
   }
@@ -1563,18 +1563,68 @@ function selectCountry(c) {
       `;
     }
   } else {
-    grid.innerHTML = `
-      <div class="info-box">
-        <h4>Daily charge</h4>
-        <div class="value">${z.dailyLabel} <small>(ex VAT)</small></div>
-        <div class="note">${z.dailyNote}</div>
-      </div>
-      <div class="info-box">
-        <h4>Out-of-bundle data</h4>
-        <div class="value">£0.026/MB <small>(ex VAT)</small></div>
-        <div class="note">Approx £26.62 per GB if you exceed your allowance</div>
-      </div>
-    `;
+    // O2 / Vodafone — differentiate EU vs World Travel vs Standard
+    if (zoneKey === 'EU_RLAH') {
+      grid.innerHTML = `
+        <div class="info-box">
+          <h4>Daily charge</h4>
+          <div class="value">${z.dailyLabel}</div>
+          <div class="note">${z.dailyNote}</div>
+        </div>
+        <div class="info-box">
+          <h4>Out-of-bundle data</h4>
+          <div class="value">£0.026/MB <small>(ex VAT)</small></div>
+          <div class="note">Approx £26.62 per GB if you exceed your allowance</div>
+        </div>
+      `;
+    } else if (zoneKey === 'TF_WORLD' || zoneKey === 'ROW_WTS') {
+      grid.innerHTML = `
+        <div class="info-box">
+          <h4>Daily charge</h4>
+          <div class="value">£5.00/day <small>(ex VAT)</small></div>
+          <div class="note">Only charged on days the customer uses their phone</div>
+        </div>
+        <div class="info-box">
+          <h4>Data allowance</h4>
+          <div class="value">500MB/day</div>
+          <div class="note">Resets each day. Out-of-bundle: £0.75/MB</div>
+        </div>
+        <div class="info-box">
+          <h4>Calls</h4>
+          <div class="value">100 mins/day</div>
+          <div class="note">Making and receiving calls. Over limit: £1.90/min</div>
+        </div>
+        <div class="info-box">
+          <h4>Texts</h4>
+          <div class="value">50 texts/day</div>
+          <div class="note">SMS sent per day. Over limit: 50p/text</div>
+        </div>
+      `;
+    } else {
+      // ROW_STD — standard rates, no daily service
+      grid.innerHTML = `
+        <div class="info-box">
+          <h4>Daily charge</h4>
+          <div class="value">${z.dailyLabel}</div>
+          <div class="note">${z.dailyNote}</div>
+        </div>
+        <div class="info-box">
+          <h4>Out-of-bundle data</h4>
+          <div class="value">£0.75/MB <small>(ex VAT)</small></div>
+          <div class="note">Very expensive — approx £768 per GB. Bolt-on essential!</div>
+        </div>
+        <div class="info-box">
+          <h4>Calls</h4>
+          <div class="value">£1.90/min <small>(ex VAT)</small></div>
+          <div class="note">Making and receiving calls</div>
+        </div>
+        <div class="info-box">
+          <h4>Texts</h4>
+          <div class="value">50p/text <small>(ex VAT)</small></div>
+          <div class="note">Per SMS sent</div>
+        </div>
+      `;
+    }
   }
 
   // Bolt-ons
