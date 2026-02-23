@@ -729,7 +729,7 @@ const ZONES = {
     label: "World Travel",
     cls: "zone-wts",
     headlineCls: "headline-ok",
-    headline: "A daily roaming charge of £5.00 (ex VAT) applies on days you use your phone. This gives the customer 500MB data, 100 minutes and 50 texts per day. Only charged on days they actually use their phone abroad.",
+    headline: "A daily roaming charge of £5.00 (ex VAT) applies on days you use your phone. The customer can then use their full UK plan allowance — data, calls and texts — as if they were at home. Fair use of 25GB data/month applies. Only charged on days they actually use their phone abroad.",
     dailyCharge: 5.00,
     dailyLabel: "£5.00/day",
     dailyNote: "Charged per day of use (calls, texts or data)"
@@ -738,7 +738,7 @@ const ZONES = {
     label: "World Travel",
     cls: "zone-wts",
     headlineCls: "headline-ok",
-    headline: "A daily roaming charge of £5.00 (ex VAT) applies on days you use your phone. This gives the customer 500MB data, 100 minutes and 50 texts per day. Only charged on days they actually use their phone abroad.",
+    headline: "A daily roaming charge of £5.00 (ex VAT) applies on days you use your phone. The customer can then use their full UK plan allowance — data, calls and texts — as if they were at home. Fair use of 25GB data/month applies. Only charged on days they actually use their phone abroad.",
     dailyCharge: 5.00,
     dailyLabel: "£5.00/day",
     dailyNote: "Charged per day of use (calls, texts or data)"
@@ -1307,12 +1307,12 @@ function updateOverviewTable() {
       <tr>
         <td><span class="result-zone zone-wts">World Travel</span></td>
         <td><strong>&pound;5.00/day</strong> (ex VAT)</td>
-        <td>500MB data + 100 mins + 50 texts per day. Only charged on days you use your phone.</td>
+        <td>Use your full UK plan allowance abroad. 25GB data fair use. Only charged on days you use your phone.</td>
       </tr>
       <tr>
         <td><span class="result-zone zone-standard">Standard Rates</span></td>
-        <td>&pound;1.90/min &middot; &pound;0.75/MB</td>
-        <td>Not covered by daily services. Very expensive without a bolt-on.</td>
+        <td>Per-minute / per-MB rates</td>
+        <td>Not covered by daily services. A roaming bolt-on is strongly recommended.</td>
       </tr>
     `;
   }
@@ -1585,19 +1585,19 @@ function selectCountry(c) {
           <div class="note">Only charged on days the customer uses their phone</div>
         </div>
         <div class="info-box">
-          <h4>Data allowance</h4>
-          <div class="value">500MB/day</div>
-          <div class="note">Resets each day. Out-of-bundle: £0.75/MB</div>
+          <h4>What they get</h4>
+          <div class="value">Full UK allowance</div>
+          <div class="note">Their plan's data, calls &amp; texts — as if at home</div>
         </div>
         <div class="info-box">
-          <h4>Calls</h4>
-          <div class="value">100 mins/day</div>
-          <div class="note">Making and receiving calls. Over limit: £1.90/min</div>
+          <h4>Data fair use</h4>
+          <div class="value">25GB/month</div>
+          <div class="note">Fair use cap while roaming. OOB data: £0.026/MB</div>
         </div>
         <div class="info-box">
-          <h4>Texts</h4>
-          <div class="value">50 texts/day</div>
-          <div class="note">SMS sent per day. Over limit: 50p/text</div>
+          <h4>Calls &amp; texts</h4>
+          <div class="value">Use UK allowance</div>
+          <div class="note">Call back to UK and within the country. Receive calls free.</div>
         </div>
       `;
     } else {
@@ -1609,19 +1609,19 @@ function selectCountry(c) {
           <div class="note">${z.dailyNote}</div>
         </div>
         <div class="info-box">
-          <h4>Out-of-bundle data</h4>
-          <div class="value">£0.75/MB <small>(ex VAT)</small></div>
-          <div class="note">Very expensive — approx £768 per GB. Bolt-on essential!</div>
+          <h4>Data</h4>
+          <div class="value">Very expensive</div>
+          <div class="note">Standard roaming rates apply — bolt-on essential!</div>
         </div>
         <div class="info-box">
           <h4>Calls</h4>
-          <div class="value">£1.90/min <small>(ex VAT)</small></div>
-          <div class="note">Making and receiving calls</div>
+          <div class="value">Standard rates</div>
+          <div class="note">Per-minute charges for making and receiving calls</div>
         </div>
         <div class="info-box">
-          <h4>Texts</h4>
-          <div class="value">50p/text <small>(ex VAT)</small></div>
-          <div class="note">Per SMS sent</div>
+          <h4>Recommendation</h4>
+          <div class="value">Add a bolt-on</div>
+          <div class="note">Contact us before travelling to this destination</div>
         </div>
       `;
     }
