@@ -122,12 +122,32 @@
       background: var(--grey-50); border: 1px solid var(--grey-100);
       border-radius: 10px; gap: 16px; transition: border-color .2s;
     }
+    .bolton-row.has-countries {
+      grid-template-rows: auto auto;
+    }
+    .bolton-row.has-countries .bolton-countries-wrap {
+      grid-column: 1 / -1;
+    }
     .bolton-row:hover { border-color: var(--accent); }
     @media (max-width: 640px) {
       .bolton-row { grid-template-columns: 1fr; gap: 8px; }
     }
     .bolton-name { font-weight: 700; font-size: .95rem; }
     .bolton-desc { font-size: .85rem; color: var(--grey-600); margin-top: 2px; }
+    .bolton-countries-toggle {
+      display: inline-block; margin-top: 6px; font-size: .8rem; color: var(--accent);
+      cursor: pointer; font-weight: 600; user-select: none;
+    }
+    .bolton-countries-toggle:hover { text-decoration: underline; }
+    .bolton-countries-list {
+      display: none; margin-top: 8px; padding: 10px 14px; background: #fff;
+      border: 1px solid var(--grey-200); border-radius: 8px; font-size: .8rem;
+      color: var(--grey-600); line-height: 1.7; column-count: 2; column-gap: 20px;
+    }
+    .bolton-countries-list.open { display: block; }
+    @media (min-width: 641px) {
+      .bolton-countries-list { column-count: 3; }
+    }
     .bolton-allowance { font-size: .85rem; font-weight: 600; color: var(--primary); }
     .bolton-price { font-size: 1.2rem; font-weight: 700; color: var(--accent); text-align: right; }
     .bolton-price small { display: block; font-size: .72rem; font-weight: 400; color: var(--grey-400); }
@@ -249,40 +269,92 @@
       <!-- O2 International -->
       <div class="net-content active" data-network="o2">
         <div class="bolton-grid">
-          <div class="bolton-row">
+          <div class="bolton-row has-countries">
             <div><div class="bolton-name">International Caller Add-On</div><div class="bolton-desc">Reduced international calling rates from the UK (destination-based).</div></div>
             <div class="bolton-allowance">Reduced rates</div>
             <div class="bolton-price">&pound;3.50<small>ex VAT / month</small></div>
+            <div class="bolton-countries-wrap">
+              <span class="bolton-countries-toggle" onclick="this.nextElementSibling.classList.toggle('open');this.textContent=this.nextElementSibling.classList.contains('open')?'Hide destinations \u25B2':'View included destinations \u25BC'">View included destinations &#x25BC;</span>
+              <div class="bolton-countries-list">
+                Reduced per-minute rates apply to calls from the UK to landlines and mobiles in the following countries. Two rate groups apply:<br><br>
+                <strong>Group 1 (lower rate):</strong> Austria, Belgium, Bulgaria, Canada, Croatia, Cyprus, Czech Republic, Denmark, Estonia, Finland, France, Germany, Gibraltar, Greece, Guernsey, Hungary, Iceland, Ireland, Isle of Man, Italy, Jersey, Latvia, Liechtenstein, Lithuania, Luxembourg, Malta, Monaco, Netherlands, Norway, Poland, Portugal, Romania, San Marino, Slovakia, Slovenia, Spain, Sweden, Switzerland, USA, Australia, New Zealand<br><br>
+                <strong>Group 2 (standard rate):</strong> All other international destinations
+              </div>
+            </div>
           </div>
-          <div class="bolton-row">
-            <div><div class="bolton-name">Int. Minutes Europe 500</div><div class="bolton-desc">Calls from the UK to European destinations.</div></div>
+          <div class="bolton-row has-countries">
+            <div><div class="bolton-name">Int. Minutes Europe 500</div><div class="bolton-desc">500 inclusive minutes calling from the UK to European destinations.</div></div>
             <div class="bolton-allowance">500 minutes</div>
             <div class="bolton-price">&pound;5.50<small>ex VAT / month</small></div>
+            <div class="bolton-countries-wrap">
+              <span class="bolton-countries-toggle" onclick="this.nextElementSibling.classList.toggle('open');this.textContent=this.nextElementSibling.classList.contains('open')?'Hide countries \u25B2':'View included countries \u25BC'">View included countries &#x25BC;</span>
+              <div class="bolton-countries-list">
+                Austria, Belgium, Bulgaria, Croatia, Cyprus, Czech Republic, Denmark, Estonia, Finland, France, French Guiana, Germany, Gibraltar, Greece, Guadeloupe, Guernsey, Hungary, Iceland, Ireland, Isle of Man, Italy, Jersey, Latvia, Liechtenstein, Lithuania, Luxembourg, Malta, Martinique, Mayotte, Monaco, Netherlands, Norway, Poland, Portugal, Reunion, Romania, Saint Martin, San Marino, Slovakia, Slovenia, Spain, Sweden, Switzerland
+              </div>
+            </div>
           </div>
-          <div class="bolton-row">
-            <div><div class="bolton-name">Int. Minutes Europe 1000</div><div class="bolton-desc">Higher-volume calling to Europe from the UK.</div></div>
+          <div class="bolton-row has-countries">
+            <div><div class="bolton-name">Int. Minutes Europe 1000</div><div class="bolton-desc">1,000 inclusive minutes calling from the UK to European destinations.</div></div>
             <div class="bolton-allowance">1,000 minutes</div>
             <div class="bolton-price">&pound;10.00<small>ex VAT / month</small></div>
+            <div class="bolton-countries-wrap">
+              <span class="bolton-countries-toggle" onclick="this.nextElementSibling.classList.toggle('open');this.textContent=this.nextElementSibling.classList.contains('open')?'Hide countries \u25B2':'View included countries \u25BC'">View included countries &#x25BC;</span>
+              <div class="bolton-countries-list">
+                Austria, Belgium, Bulgaria, Croatia, Cyprus, Czech Republic, Denmark, Estonia, Finland, France, French Guiana, Germany, Gibraltar, Greece, Guadeloupe, Guernsey, Hungary, Iceland, Ireland, Isle of Man, Italy, Jersey, Latvia, Liechtenstein, Lithuania, Luxembourg, Malta, Martinique, Mayotte, Monaco, Netherlands, Norway, Poland, Portugal, Reunion, Romania, Saint Martin, San Marino, Slovakia, Slovenia, Spain, Sweden, Switzerland
+              </div>
+            </div>
           </div>
-          <div class="bolton-row">
-            <div><div class="bolton-name">Int. Minutes Worldwide 500</div><div class="bolton-desc">Calls from the UK to worldwide destinations.</div></div>
+          <div class="bolton-row has-countries">
+            <div><div class="bolton-name">Int. Minutes Worldwide 500</div><div class="bolton-desc">500 inclusive minutes calling from the UK to worldwide destinations.</div></div>
             <div class="bolton-allowance">500 minutes</div>
             <div class="bolton-price">&pound;30.00<small>ex VAT / month</small></div>
+            <div class="bolton-countries-wrap">
+              <span class="bolton-countries-toggle" onclick="this.nextElementSibling.classList.toggle('open');this.textContent=this.nextElementSibling.classList.contains('open')?'Hide countries \u25B2':'View included countries \u25BC'">View included countries &#x25BC;</span>
+              <div class="bolton-countries-list">
+                <strong>Europe:</strong> Austria, Belgium, Bulgaria, Croatia, Cyprus, Czech Republic, Denmark, Estonia, Finland, France, Germany, Gibraltar, Greece, Guernsey, Hungary, Iceland, Ireland, Isle of Man, Italy, Jersey, Latvia, Liechtenstein, Lithuania, Luxembourg, Malta, Monaco, Netherlands, Norway, Poland, Portugal, Romania, San Marino, Slovakia, Slovenia, Spain, Sweden, Switzerland<br><br>
+                <strong>Americas:</strong> Canada, USA, Argentina, Brazil, Chile, Colombia, Costa Rica, Dominican Republic, Ecuador, El Salvador, Guatemala, Honduras, Jamaica, Mexico, Nicaragua, Panama, Paraguay, Peru, Puerto Rico, Trinidad and Tobago, Uruguay<br><br>
+                <strong>Asia &amp; Middle East:</strong> Bahrain, Bangladesh, China, Hong Kong, India, Indonesia, Israel, Japan, Jordan, Kuwait, Macau, Malaysia, Oman, Pakistan, Philippines, Qatar, Saudi Arabia, Singapore, South Korea, Sri Lanka, Taiwan, Thailand, Turkey, UAE, Vietnam<br><br>
+                <strong>Africa:</strong> Egypt, Ghana, Kenya, Morocco, South Africa<br><br>
+                <strong>Oceania:</strong> Australia, New Zealand
+              </div>
+            </div>
           </div>
-          <div class="bolton-row">
-            <div><div class="bolton-name">Int. Minutes Worldwide 1000</div><div class="bolton-desc">Higher-volume worldwide calling from the UK.</div></div>
+          <div class="bolton-row has-countries">
+            <div><div class="bolton-name">Int. Minutes Worldwide 1000</div><div class="bolton-desc">1,000 inclusive minutes calling from the UK to worldwide destinations.</div></div>
             <div class="bolton-allowance">1,000 minutes</div>
             <div class="bolton-price">&pound;48.00<small>ex VAT / month</small></div>
+            <div class="bolton-countries-wrap">
+              <span class="bolton-countries-toggle" onclick="this.nextElementSibling.classList.toggle('open');this.textContent=this.nextElementSibling.classList.contains('open')?'Hide countries \u25B2':'View included countries \u25BC'">View included countries &#x25BC;</span>
+              <div class="bolton-countries-list">
+                <strong>Europe:</strong> Austria, Belgium, Bulgaria, Croatia, Cyprus, Czech Republic, Denmark, Estonia, Finland, France, Germany, Gibraltar, Greece, Guernsey, Hungary, Iceland, Ireland, Isle of Man, Italy, Jersey, Latvia, Liechtenstein, Lithuania, Luxembourg, Malta, Monaco, Netherlands, Norway, Poland, Portugal, Romania, San Marino, Slovakia, Slovenia, Spain, Sweden, Switzerland<br><br>
+                <strong>Americas:</strong> Canada, USA, Argentina, Brazil, Chile, Colombia, Costa Rica, Dominican Republic, Ecuador, El Salvador, Guatemala, Honduras, Jamaica, Mexico, Nicaragua, Panama, Paraguay, Peru, Puerto Rico, Trinidad and Tobago, Uruguay<br><br>
+                <strong>Asia &amp; Middle East:</strong> Bahrain, Bangladesh, China, Hong Kong, India, Indonesia, Israel, Japan, Jordan, Kuwait, Macau, Malaysia, Oman, Pakistan, Philippines, Qatar, Saudi Arabia, Singapore, South Korea, Sri Lanka, Taiwan, Thailand, Turkey, UAE, Vietnam<br><br>
+                <strong>Africa:</strong> Egypt, Ghana, Kenya, Morocco, South Africa<br><br>
+                <strong>Oceania:</strong> Australia, New Zealand
+              </div>
+            </div>
           </div>
-          <div class="bolton-row">
+          <div class="bolton-row has-countries">
             <div><div class="bolton-name">International SMS 250</div><div class="bolton-desc">Texts from the UK to international destinations.</div></div>
             <div class="bolton-allowance">250 SMS</div>
             <div class="bolton-price">&pound;6.00<small>ex VAT / month</small></div>
+            <div class="bolton-countries-wrap">
+              <span class="bolton-countries-toggle" onclick="this.nextElementSibling.classList.toggle('open');this.textContent=this.nextElementSibling.classList.contains('open')?'Hide countries \u25B2':'View included countries \u25BC'">View included countries &#x25BC;</span>
+              <div class="bolton-countries-list">
+                Covers SMS sent from the UK to all international destinations. Standard international SMS rates apply to any country not included in your plan allowance.
+              </div>
+            </div>
           </div>
-          <div class="bolton-row">
+          <div class="bolton-row has-countries">
             <div><div class="bolton-name">International SMS 500</div><div class="bolton-desc">Higher-volume international texting from the UK.</div></div>
             <div class="bolton-allowance">500 SMS</div>
             <div class="bolton-price">&pound;12.00<small>ex VAT / month</small></div>
+            <div class="bolton-countries-wrap">
+              <span class="bolton-countries-toggle" onclick="this.nextElementSibling.classList.toggle('open');this.textContent=this.nextElementSibling.classList.contains('open')?'Hide countries \u25B2':'View included countries \u25BC'">View included countries &#x25BC;</span>
+              <div class="bolton-countries-list">
+                Covers SMS sent from the UK to all international destinations. Standard international SMS rates apply to any country not included in your plan allowance.
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -290,35 +362,83 @@
       <!-- Vodafone International -->
       <div class="net-content" data-network="vf">
         <div class="bolton-grid">
-          <div class="bolton-row">
-            <div><div class="bolton-name">International Saver 100</div><div class="bolton-desc">Budget pack for calling key international destinations from the UK.</div></div>
+          <div class="bolton-row has-countries">
+            <div><div class="bolton-name">International Saver 100</div><div class="bolton-desc">100 inclusive minutes calling key international destinations from the UK.</div></div>
             <div class="bolton-allowance">100 minutes</div>
             <div class="bolton-price">&pound;3.50<small>ex VAT / month</small></div>
+            <div class="bolton-countries-wrap">
+              <span class="bolton-countries-toggle" onclick="this.nextElementSibling.classList.toggle('open');this.textContent=this.nextElementSibling.classList.contains('open')?'Hide countries \u25B2':'View included countries \u25BC'">View included countries &#x25BC;</span>
+              <div class="bolton-countries-list">
+                Austria, Belgium, Bulgaria, Canada, Croatia, Cyprus, Czech Republic, Denmark, Estonia, Finland, France, Germany, Gibraltar, Greece, Guernsey, Hungary, Iceland, Ireland, Isle of Man, Italy, Jersey, Latvia, Liechtenstein, Lithuania, Luxembourg, Malta, Monaco, Netherlands, Norway, Poland, Portugal, Romania, San Marino, Slovakia, Slovenia, Spain, Sweden, Switzerland, USA, Australia
+              </div>
+            </div>
           </div>
-          <div class="bolton-row">
-            <div><div class="bolton-name">International Saver 500</div><div class="bolton-desc">Higher-volume calling to popular international destinations.</div></div>
+          <div class="bolton-row has-countries">
+            <div><div class="bolton-name">International Saver 500</div><div class="bolton-desc">500 inclusive minutes calling popular international destinations from the UK.</div></div>
             <div class="bolton-allowance">500 minutes</div>
             <div class="bolton-price">&pound;7.00<small>ex VAT / month</small></div>
+            <div class="bolton-countries-wrap">
+              <span class="bolton-countries-toggle" onclick="this.nextElementSibling.classList.toggle('open');this.textContent=this.nextElementSibling.classList.contains('open')?'Hide countries \u25B2':'View included countries \u25BC'">View included countries &#x25BC;</span>
+              <div class="bolton-countries-list">
+                Austria, Belgium, Bulgaria, Canada, Croatia, Cyprus, Czech Republic, Denmark, Estonia, Finland, France, Germany, Gibraltar, Greece, Guernsey, Hungary, Iceland, Ireland, Isle of Man, Italy, Jersey, Latvia, Liechtenstein, Lithuania, Luxembourg, Malta, Monaco, Netherlands, Norway, Poland, Portugal, Romania, San Marino, Slovakia, Slovenia, Spain, Sweden, Switzerland, USA, Australia
+              </div>
+            </div>
           </div>
-          <div class="bolton-row">
-            <div><div class="bolton-name">International World 100</div><div class="bolton-desc">Calls from the UK to worldwide destinations.</div></div>
+          <div class="bolton-row has-countries">
+            <div><div class="bolton-name">International World 100</div><div class="bolton-desc">100 inclusive minutes calling worldwide destinations from the UK.</div></div>
             <div class="bolton-allowance">100 minutes</div>
             <div class="bolton-price">&pound;22.00<small>ex VAT / month</small></div>
+            <div class="bolton-countries-wrap">
+              <span class="bolton-countries-toggle" onclick="this.nextElementSibling.classList.toggle('open');this.textContent=this.nextElementSibling.classList.contains('open')?'Hide countries \u25B2':'View included countries \u25BC'">View included countries &#x25BC;</span>
+              <div class="bolton-countries-list">
+                <strong>Europe:</strong> Austria, Belgium, Bulgaria, Croatia, Cyprus, Czech Republic, Denmark, Estonia, Finland, France, Germany, Gibraltar, Greece, Guernsey, Hungary, Iceland, Ireland, Isle of Man, Italy, Jersey, Latvia, Liechtenstein, Lithuania, Luxembourg, Malta, Monaco, Netherlands, Norway, Poland, Portugal, Romania, San Marino, Slovakia, Slovenia, Spain, Sweden, Switzerland<br><br>
+                <strong>Americas:</strong> Canada, USA, Argentina, Brazil, Chile, Colombia, Costa Rica, Dominican Republic, Ecuador, El Salvador, Guatemala, Honduras, Jamaica, Mexico, Nicaragua, Panama, Paraguay, Peru, Puerto Rico, Trinidad and Tobago, Uruguay<br><br>
+                <strong>Asia &amp; Middle East:</strong> Bahrain, Bangladesh, China, Hong Kong, India, Indonesia, Israel, Japan, Jordan, Kuwait, Macau, Malaysia, Oman, Pakistan, Philippines, Qatar, Saudi Arabia, Singapore, South Korea, Sri Lanka, Taiwan, Thailand, Turkey, UAE, Vietnam<br><br>
+                <strong>Africa:</strong> Egypt, Ghana, Kenya, Morocco, South Africa<br><br>
+                <strong>Oceania:</strong> Australia, New Zealand
+              </div>
+            </div>
           </div>
-          <div class="bolton-row">
-            <div><div class="bolton-name">International World 500</div><div class="bolton-desc">Higher-volume worldwide calling from the UK.</div></div>
+          <div class="bolton-row has-countries">
+            <div><div class="bolton-name">International World 500</div><div class="bolton-desc">500 inclusive minutes calling worldwide destinations from the UK.</div></div>
             <div class="bolton-allowance">500 minutes</div>
             <div class="bolton-price">&pound;70.00<small>ex VAT / month</small></div>
+            <div class="bolton-countries-wrap">
+              <span class="bolton-countries-toggle" onclick="this.nextElementSibling.classList.toggle('open');this.textContent=this.nextElementSibling.classList.contains('open')?'Hide countries \u25B2':'View included countries \u25BC'">View included countries &#x25BC;</span>
+              <div class="bolton-countries-list">
+                <strong>Europe:</strong> Austria, Belgium, Bulgaria, Croatia, Cyprus, Czech Republic, Denmark, Estonia, Finland, France, Germany, Gibraltar, Greece, Guernsey, Hungary, Iceland, Ireland, Isle of Man, Italy, Jersey, Latvia, Liechtenstein, Lithuania, Luxembourg, Malta, Monaco, Netherlands, Norway, Poland, Portugal, Romania, San Marino, Slovakia, Slovenia, Spain, Sweden, Switzerland<br><br>
+                <strong>Americas:</strong> Canada, USA, Argentina, Brazil, Chile, Colombia, Costa Rica, Dominican Republic, Ecuador, El Salvador, Guatemala, Honduras, Jamaica, Mexico, Nicaragua, Panama, Paraguay, Peru, Puerto Rico, Trinidad and Tobago, Uruguay<br><br>
+                <strong>Asia &amp; Middle East:</strong> Bahrain, Bangladesh, China, Hong Kong, India, Indonesia, Israel, Japan, Jordan, Kuwait, Macau, Malaysia, Oman, Pakistan, Philippines, Qatar, Saudi Arabia, Singapore, South Korea, Sri Lanka, Taiwan, Thailand, Turkey, UAE, Vietnam<br><br>
+                <strong>Africa:</strong> Egypt, Ghana, Kenya, Morocco, South Africa<br><br>
+                <strong>Oceania:</strong> Australia, New Zealand
+              </div>
+            </div>
           </div>
-          <div class="bolton-row">
-            <div><div class="bolton-name">International World 1000</div><div class="bolton-desc">Maximum worldwide calling package from the UK.</div></div>
+          <div class="bolton-row has-countries">
+            <div><div class="bolton-name">International World 1000</div><div class="bolton-desc">1,000 inclusive minutes calling worldwide destinations from the UK.</div></div>
             <div class="bolton-allowance">1,000 minutes</div>
             <div class="bolton-price">&pound;140.00<small>ex VAT / month</small></div>
+            <div class="bolton-countries-wrap">
+              <span class="bolton-countries-toggle" onclick="this.nextElementSibling.classList.toggle('open');this.textContent=this.nextElementSibling.classList.contains('open')?'Hide countries \u25B2':'View included countries \u25BC'">View included countries &#x25BC;</span>
+              <div class="bolton-countries-list">
+                <strong>Europe:</strong> Austria, Belgium, Bulgaria, Croatia, Cyprus, Czech Republic, Denmark, Estonia, Finland, France, Germany, Gibraltar, Greece, Guernsey, Hungary, Iceland, Ireland, Isle of Man, Italy, Jersey, Latvia, Liechtenstein, Lithuania, Luxembourg, Malta, Monaco, Netherlands, Norway, Poland, Portugal, Romania, San Marino, Slovakia, Slovenia, Spain, Sweden, Switzerland<br><br>
+                <strong>Americas:</strong> Canada, USA, Argentina, Brazil, Chile, Colombia, Costa Rica, Dominican Republic, Ecuador, El Salvador, Guatemala, Honduras, Jamaica, Mexico, Nicaragua, Panama, Paraguay, Peru, Puerto Rico, Trinidad and Tobago, Uruguay<br><br>
+                <strong>Asia &amp; Middle East:</strong> Bahrain, Bangladesh, China, Hong Kong, India, Indonesia, Israel, Japan, Jordan, Kuwait, Macau, Malaysia, Oman, Pakistan, Philippines, Qatar, Saudi Arabia, Singapore, South Korea, Sri Lanka, Taiwan, Thailand, Turkey, UAE, Vietnam<br><br>
+                <strong>Africa:</strong> Egypt, Ghana, Kenya, Morocco, South Africa<br><br>
+                <strong>Oceania:</strong> Australia, New Zealand
+              </div>
+            </div>
           </div>
-          <div class="bolton-row">
+          <div class="bolton-row has-countries">
             <div><div class="bolton-name">International SMS 100</div><div class="bolton-desc">Texts from the UK to international destinations.</div></div>
             <div class="bolton-allowance">100 SMS</div>
             <div class="bolton-price">&pound;3.50<small>ex VAT / month</small></div>
+            <div class="bolton-countries-wrap">
+              <span class="bolton-countries-toggle" onclick="this.nextElementSibling.classList.toggle('open');this.textContent=this.nextElementSibling.classList.contains('open')?'Hide countries \u25B2':'View included countries \u25BC'">View included countries &#x25BC;</span>
+              <div class="bolton-countries-list">
+                Covers SMS sent from the UK to all international destinations. Standard international SMS rates apply to any country not included in your plan allowance.
+              </div>
+            </div>
           </div>
         </div>
       </div>
