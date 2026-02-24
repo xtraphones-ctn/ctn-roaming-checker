@@ -10,7 +10,7 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
       --primary: #1a2b4a;
-      --accent: #0066cc;
+      --accent: #00a0e1;
       --accent-light: #e8f2ff;
       --success: #0a8a3e;
       --success-bg: #e6f7ed;
@@ -30,7 +30,7 @@
       color: var(--grey-800); background: var(--grey-50); line-height: 1.6;
     }
     .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
-    .header { background: var(--primary); color: #fff; padding: 32px 0; }
+    .header { background: var(--primary); color: #fff; padding: 32px 0; transition: background .3s; }
     .header h1 { font-size: 1.75rem; font-weight: 700; }
     .header p { color: rgba(255,255,255,.75); margin-top: 4px; font-size: .95rem; }
     .network-badge {
@@ -69,7 +69,7 @@
       font-weight: 600; cursor: pointer; transition: all .2s;
       background: transparent; color: var(--grey-600);
     }
-    .term-btn.active { background: var(--accent); color: #fff; box-shadow: 0 2px 8px rgba(0,102,204,.3); }
+    .term-btn.active { background: var(--accent); color: #fff; box-shadow: 0 2px 8px color-mix(in srgb, var(--accent) 30%, transparent); }
     .term-btn:hover:not(.active) { color: var(--grey-800); }
     /* Plan cards */
     .plans-section { padding: 0 0 32px; }
@@ -102,9 +102,123 @@
     .plan-cta {
       display: block; margin-top: 12px; padding: 10px; background: var(--accent);
       color: #fff; border: none; border-radius: 8px; font-size: .88rem; font-weight: 600;
-      cursor: pointer; text-decoration: none; transition: opacity .2s;
+      cursor: pointer; text-decoration: none; transition: opacity .2s; width: 100%;
     }
     .plan-cta:hover { opacity: .9; }
+    /* Lead capture form */
+    .quote-form-section {
+      padding: 24px 0 32px;
+    }
+    .quote-form-card {
+      background: #fff; border: 2px solid var(--accent); border-radius: var(--radius);
+      padding: 32px; box-shadow: var(--shadow);
+    }
+    .quote-form-header {
+      text-align: center; margin-bottom: 24px;
+    }
+    .quote-form-header h2 {
+      font-size: 1.3rem; font-weight: 700; margin-bottom: 4px;
+    }
+    .quote-form-header p {
+      font-size: .9rem; color: var(--grey-600);
+    }
+    .quote-form {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    }
+    .form-group { display: flex; flex-direction: column; gap: 4px; }
+    .form-group.full-width { grid-column: 1 / -1; }
+    .form-group label {
+      font-size: .82rem; font-weight: 600; color: var(--grey-600);
+    }
+    .form-group label .required { color: #e60000; }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      padding: 10px 12px; border: 1px solid var(--grey-200); border-radius: 8px;
+      font-size: .9rem; font-family: inherit; color: var(--grey-800);
+      transition: border-color .2s; background: #fff;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 15%, transparent);
+    }
+    .form-group input.invalid,
+    .form-group select.invalid {
+      border-color: #e60000;
+    }
+    .form-group textarea { resize: vertical; min-height: 70px; }
+    .form-submit-row { grid-column: 1 / -1; text-align: center; margin-top: 8px; }
+    .form-submit-btn {
+      display: inline-block; padding: 14px 48px; background: var(--accent);
+      color: #fff; border: none; border-radius: 8px; font-size: 1rem; font-weight: 700;
+      cursor: pointer; transition: opacity .2s;
+    }
+    .form-submit-btn:hover { opacity: .9; }
+    .form-submit-btn:disabled { opacity: .5; cursor: not-allowed; }
+    .form-success {
+      display: none; text-align: center; padding: 32px;
+    }
+    .form-success.visible { display: block; }
+    .form-success .tick {
+      width: 56px; height: 56px; border-radius: 50%; background: var(--success-bg);
+      color: var(--success); display: inline-flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; font-weight: 700; margin-bottom: 12px;
+    }
+    .form-success h3 { font-size: 1.15rem; margin-bottom: 4px; }
+    .form-success p { font-size: .9rem; color: var(--grey-600); }
+    .form-error {
+      display: none; color: #e60000; font-size: .85rem; text-align: center;
+      margin-top: 8px;
+    }
+    .form-error.visible { display: block; }
+    .interested-in-badge {
+      background: var(--accent-light); color: var(--accent); padding: 6px 16px;
+      border-radius: 8px; font-size: .85rem; font-weight: 600; display: inline-block;
+      margin-bottom: 8px; transition: all .3s;
+    }
+    /* Roaming info button */
+    .info-trigger {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 15px; height: 15px; border-radius: 50%;
+      background: var(--grey-200); color: var(--grey-600);
+      font-size: .6rem; font-weight: 700; cursor: pointer;
+      border: none; padding: 0; margin-left: 4px; vertical-align: middle;
+      transition: background .2s, color .2s; font-family: inherit; line-height: 1;
+    }
+    .info-trigger:hover { background: var(--accent); color: #fff; }
+    /* Roaming info modal */
+    .roaming-modal-backdrop {
+      display: none; position: fixed; inset: 0; background: rgba(0,0,0,.4);
+      z-index: 1000; align-items: center; justify-content: center;
+    }
+    .roaming-modal-backdrop.open { display: flex; }
+    .roaming-modal {
+      background: #fff; border-radius: var(--radius); padding: 28px 24px;
+      max-width: 480px; width: 90%; box-shadow: 0 8px 32px rgba(0,0,0,.18);
+      position: relative;
+    }
+    .roaming-modal h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 12px; }
+    .roaming-modal p { font-size: .88rem; color: var(--grey-600); margin-bottom: 10px; line-height: 1.6; }
+    .roaming-modal ul { list-style: none; margin: 0 0 16px; padding: 0; }
+    .roaming-modal ul li {
+      font-size: .85rem; color: var(--grey-600); padding: 6px 0 6px 22px;
+      position: relative; border-bottom: 1px solid var(--grey-100);
+    }
+    .roaming-modal ul li:last-child { border-bottom: none; }
+    .roaming-modal ul li::before {
+      content: "\2713"; position: absolute; left: 0; color: var(--success); font-weight: 700;
+    }
+    .roaming-modal-close {
+      position: absolute; top: 12px; right: 16px; background: none;
+      border: none; font-size: 1.2rem; color: var(--grey-400); cursor: pointer;
+      padding: 4px; line-height: 1;
+    }
+    .roaming-modal-close:hover { color: var(--grey-800); }
+    @media (max-width: 600px) {
+      .quote-form { grid-template-columns: 1fr; }
+      .quote-form-card { padding: 20px; }
+    }
     .disclaimer {
       padding: 24px 0; font-size: .78rem; color: var(--grey-400); border-top: 1px solid var(--grey-100);
     }
@@ -113,7 +227,7 @@
 </head>
 <body>
 
-<div class="header">
+<div class="header" id="pageHeader">
   <div class="container">
     <h1 id="pageTitle">O2 Business Mobile Plans</h1>
     <p>SIM-only plans with EU roaming included. All prices exclude VAT.</p>
@@ -178,16 +292,85 @@
     </div>
   </div>
 
-  <div id="contact" style="padding:24px 0 32px">
-    <div style="background:#fff;border:1px solid var(--grey-200);border-radius:var(--radius);padding:24px;text-align:center;">
-      <h2 style="font-size:1.15rem;margin-bottom:8px">Get a quote</h2>
-      <p style="font-size:.9rem;color:var(--grey-600);margin-bottom:4px">Call us on <strong>01743 598025</strong> or email <strong>sales@comparethenetworks.com</strong></p>
-      <p style="font-size:.82rem;color:var(--grey-400)">Multi-line discounts available. We'll tailor a package to your business.</p>
+  <!-- Lead Capture Form -->
+  <div id="contact" class="quote-form-section">
+    <div class="quote-form-card">
+      <div class="quote-form-header">
+        <h2>Get a Quote</h2>
+        <p>Fill in your details and we'll call you with a tailored package.</p>
+        <div id="interestedBadge" class="interested-in-badge" style="display:none;margin-top:12px"></div>
+      </div>
+
+      <form id="quoteForm" class="quote-form" novalidate>
+        <div class="form-group">
+          <label>Business Name <span class="required">*</span></label>
+          <input type="text" id="fBusiness" required placeholder="e.g. Acme Ltd">
+        </div>
+        <div class="form-group">
+          <label>Contact Name <span class="required">*</span></label>
+          <input type="text" id="fContact" required placeholder="e.g. John Smith">
+        </div>
+        <div class="form-group">
+          <label>Phone Number <span class="required">*</span></label>
+          <input type="tel" id="fPhone" required placeholder="e.g. 07700 900000">
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="fEmail" placeholder="e.g. john@acme.co.uk">
+        </div>
+        <div class="form-group">
+          <label>Number of Lines</label>
+          <input type="number" id="fLines" min="1" max="500" value="1" placeholder="1">
+        </div>
+        <div class="form-group">
+          <label>Current Network</label>
+          <select id="fNetwork">
+            <option value="">— Select —</option>
+            <option value="O2">O2</option>
+            <option value="Vodafone">Vodafone</option>
+            <option value="Three">Three</option>
+            <option value="EE">EE</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <input type="hidden" id="fInterested" value="">
+        <div class="form-group full-width">
+          <label>Notes</label>
+          <textarea id="fNotes" placeholder="Anything else we should know? (e.g. contract end date, handset requirements)"></textarea>
+        </div>
+        <div class="form-submit-row">
+          <button type="submit" class="form-submit-btn" id="submitBtn">Request a Quote</button>
+          <div id="formError" class="form-error"></div>
+        </div>
+      </form>
+
+      <div id="formSuccess" class="form-success">
+        <div class="tick">&#10003;</div>
+        <h3>Thanks! We've received your enquiry.</h3>
+        <p>A member of our team will call you shortly.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Worldwide Roaming Info Modal -->
+  <div class="roaming-modal-backdrop" id="roamingModal">
+    <div class="roaming-modal">
+      <button class="roaming-modal-close" onclick="document.getElementById('roamingModal').classList.remove('open')">&times;</button>
+      <h3>Worldwide Daily Roaming</h3>
+      <p>Use your phone abroad outside Europe for a simple daily fee. You're only charged on days you actually use your phone.</p>
+      <ul>
+        <li><strong>&pound;5.00 per day</strong> (ex VAT) when you make/receive calls, send texts or use data</li>
+        <li>No charge on days you don't use your phone</li>
+        <li>Covers 80+ destinations worldwide</li>
+        <li>Use your UK allowance &mdash; calls, texts &amp; data come out of your plan</li>
+        <li>EU roaming is already included at no extra cost on all plans</li>
+      </ul>
+      <p style="font-size:.8rem;color:var(--grey-400);margin-bottom:0">Fair use applies. Contact us for specific country availability.</p>
     </div>
   </div>
 
   <div class="disclaimer">
-    <p>All prices exclude VAT. These are minimum sell prices (£200+ profit per line guaranteed). Agents may sell higher for handsets, buyouts, or bespoke deals. Plans are subject to annual price adjustments (CPI + 3.9%). Fair use policies apply to unlimited allowances. EU roaming included on all plans. Worldwide daily roaming at &pound;5.00/day (ex VAT) on days you use your phone abroad outside Europe.</p>
+    <p>All prices exclude VAT. These are minimum sell prices (&pound;200+ profit per line guaranteed). Agents may sell higher for handsets, buyouts, or bespoke deals. Plans are subject to annual price adjustments (CPI + 3.9%). Fair use policies apply to unlimited allowances. EU roaming included on all plans. Worldwide daily roaming at &pound;5.00/day (ex VAT) on days you use your phone abroad outside Europe.</p>
     <div class="footer-meta">
       <span>Effective from: 20 February 2026</span>
       <span>Version: CTN-RETAIL-20260220-v2</span>
@@ -200,7 +383,7 @@
 // All prices guarantee minimum £200 profit per line over contract term
 const NETWORKS = {
   o2: {
-    label: "O2 Network", title: "O2 Business Mobile Plans", color: "#00a0e1",
+    label: "O2 Network", title: "O2 Business Mobile Plans", color: "#00a0e1", headerBg: "#162a48",
     voice: [
       {name:"Low User",data:"1GB",mins:"500 minutes",texts:"Unlimited texts",p24:"13.50",p36:"11.00",featured:false},
       {name:"Standard",data:"2GB",mins:"Unlimited minutes",texts:"Unlimited texts",p24:"15.00",p36:"12.00",featured:false},
@@ -219,7 +402,7 @@ const NETWORKS = {
     ]
   },
   vf: {
-    label: "Vodafone Network", title: "Vodafone Business Mobile Plans", color: "#e60000",
+    label: "Vodafone Network", title: "Vodafone Business Mobile Plans", color: "#e60000", headerBg: "#2a1620",
     voice: [
       {name:"Low User",data:"500MB",mins:"500 minutes",texts:"Unlimited texts",p24:"14.00",p36:"11.00",featured:false},
       {name:"Standard",data:"Calls & Texts",mins:"Unlimited minutes",texts:"Unlimited texts",p24:"15.00",p36:"12.00",featured:false},
@@ -238,19 +421,47 @@ const NETWORKS = {
   }
 };
 
+const SUPABASE_URL = 'https://lltkqyrqjbafirtntpru.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxsdGtxeXJxamJhZmlydG50cHJ1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc5ODQzMzAsImV4cCI6MjA4MzU2MDMzMH0.sonTwk_UbixdABX0wNFTvThixECYjQhfYlkckJZ807k';
+
 let currentTerm = 24;
 let currentNet = 'o2';
 
+function selectPlan(planDesc) {
+  document.getElementById('fInterested').value = planDesc;
+  const badge = document.getElementById('interestedBadge');
+  badge.textContent = planDesc;
+  badge.style.display = 'inline-block';
+  document.getElementById('contact').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
 function render() {
   const net = NETWORKS[currentNet];
+
+  // Update accent color for the whole page
+  document.documentElement.style.setProperty('--accent', net.color);
+  document.documentElement.style.setProperty('--accent-light', net.color + '18');
+
+  // Update header background
+  document.getElementById('pageHeader').style.background = net.headerBg;
+
   document.getElementById('pageTitle').textContent = net.title;
   document.getElementById('netLabel').textContent = net.label;
   const dot = document.getElementById('netDot');
-  dot.className = 'network-dot ' + currentNet;
+  dot.className = 'network-dot ' + (currentNet === 'o2' ? 'o2' : 'vf');
+
+  // Update term toggle button shadow to match accent
+  document.querySelectorAll('.term-btn.active').forEach(b => {
+    b.style.background = net.color;
+    b.style.boxShadow = '0 2px 8px ' + net.color + '4d';
+  });
+
+  const netName = currentNet === 'o2' ? 'O2' : 'Vodafone';
 
   const vEl = document.getElementById('voicePlans');
   vEl.innerHTML = net.voice.map(p => {
     const price = currentTerm === 24 ? p.p24 : p.p36;
+    const planDesc = netName + ' ' + p.data + ' ' + currentTerm + 'm @ \u00A3' + price + '/mo';
     return `
     <div class="plan-card${p.featured?' featured':''}">
       <div class="plan-data">${p.data}</div>
@@ -259,16 +470,17 @@ function render() {
         <li>${p.mins}</li>
         <li>${p.texts}</li>
         <li>EU roaming included</li>
-        <li>Worldwide daily roaming</li>
+        <li>Worldwide daily roaming <button class="info-trigger" onclick="event.stopPropagation();document.getElementById('roamingModal').classList.add('open')" title="More info">i</button></li>
       </ul>
       <div class="plan-price">&pound;${price}<small>per month (ex VAT) &middot; ${currentTerm} months</small></div>
-      <a href="#contact" class="plan-cta">Get a quote</a>
+      <button class="plan-cta" onclick="selectPlan('${planDesc.replace(/'/g, "\\'")}')">Get a quote</button>
     </div>`;
   }).join('');
 
   const mEl = document.getElementById('mbbPlans');
   mEl.innerHTML = net.mbb.map(p => {
     const price = currentTerm === 24 ? p.p24 : p.p36;
+    const planDesc = netName + ' MBB ' + p.data + ' ' + currentTerm + 'm @ \u00A3' + price + '/mo';
     return `
     <div class="plan-card">
       <div class="plan-data">${p.data}</div>
@@ -276,23 +488,15 @@ function render() {
       <ul class="plan-features">
         <li>Data only</li>
         <li>EU roaming included</li>
-        <li>Worldwide daily roaming</li>
+        <li>Worldwide daily roaming <button class="info-trigger" onclick="event.stopPropagation();document.getElementById('roamingModal').classList.add('open')" title="More info">i</button></li>
       </ul>
       <div class="plan-price">&pound;${price}<small>per month (ex VAT) &middot; ${currentTerm} months</small></div>
-      <a href="#contact" class="plan-cta">Get a quote</a>
+      <button class="plan-cta" onclick="selectPlan('${planDesc.replace(/'/g, "\\'")}')">Get a quote</button>
     </div>`;
   }).join('');
 }
 
-document.querySelectorAll('.term-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.term-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    currentTerm = parseInt(btn.dataset.term);
-    render();
-  });
-});
-
+// Network toggle
 document.querySelectorAll('.net-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.net-btn').forEach(b => { b.className = 'net-btn'; });
@@ -300,6 +504,104 @@ document.querySelectorAll('.net-btn').forEach(btn => {
     btn.classList.add(currentNet === 'o2' ? 'active-o2' : 'active-vf');
     render();
   });
+});
+
+// Term toggle
+document.querySelectorAll('.term-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.term-btn').forEach(b => {
+      b.classList.remove('active');
+      b.style.background = '';
+      b.style.boxShadow = '';
+    });
+    btn.classList.add('active');
+    currentTerm = parseInt(btn.dataset.term);
+    render();
+  });
+});
+
+// Form submission
+document.getElementById('quoteForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const btn = document.getElementById('submitBtn');
+  const errorEl = document.getElementById('formError');
+  errorEl.classList.remove('visible');
+  errorEl.textContent = '';
+
+  // Clear previous invalid states
+  this.querySelectorAll('.invalid').forEach(el => el.classList.remove('invalid'));
+
+  // Gather values
+  const business = document.getElementById('fBusiness').value.trim();
+  const contact = document.getElementById('fContact').value.trim();
+  const phone = document.getElementById('fPhone').value.trim();
+  const email = document.getElementById('fEmail').value.trim();
+  const lines = parseInt(document.getElementById('fLines').value) || 1;
+  const network = document.getElementById('fNetwork').value;
+  const interested = document.getElementById('fInterested').value;
+  const notes = document.getElementById('fNotes').value.trim();
+
+  // Validate required fields
+  let valid = true;
+  if (!business) { document.getElementById('fBusiness').classList.add('invalid'); valid = false; }
+  if (!contact) { document.getElementById('fContact').classList.add('invalid'); valid = false; }
+  if (!phone) { document.getElementById('fPhone').classList.add('invalid'); valid = false; }
+  if (phone && phone.replace(/\D/g, '').length < 10) { document.getElementById('fPhone').classList.add('invalid'); valid = false; }
+  if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { document.getElementById('fEmail').classList.add('invalid'); valid = false; }
+
+  if (!valid) {
+    errorEl.textContent = 'Please fill in all required fields correctly.';
+    errorEl.classList.add('visible');
+    return;
+  }
+
+  // Disable button
+  btn.disabled = true;
+  btn.textContent = 'Submitting...';
+
+  try {
+    const payload = {
+      p_customer_name: contact,
+      p_phone_number: phone,
+      p_business_name: business || null,
+      p_email: email || null,
+      p_number_of_lines: lines,
+      p_current_network: network || null,
+      p_interested_in: interested || null,
+      p_notes: notes || null
+    };
+
+    const res = await fetch(SUPABASE_URL + '/rest/v1/rpc/submit_website_lead', {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=representation'
+      },
+      body: JSON.stringify(payload)
+    });
+
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.message || 'Submission failed. Please try again.');
+    }
+
+    // Success
+    document.getElementById('quoteForm').style.display = 'none';
+    document.getElementById('formSuccess').classList.add('visible');
+
+  } catch (err) {
+    errorEl.textContent = err.message || 'Something went wrong. Please call us on 01743 598025.';
+    errorEl.classList.add('visible');
+    btn.disabled = false;
+    btn.textContent = 'Request a Quote';
+  }
+});
+
+// Close roaming modal on backdrop click
+document.getElementById('roamingModal').addEventListener('click', function(e) {
+  if (e.target === this) this.classList.remove('open');
 });
 
 render();
