@@ -5,6 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Travel eSIM — Buy Instant Data for Your Trip | Compare The Networks</title>
   <meta name="description" content="Buy a travel eSIM for instant mobile data abroad. Choose from 150+ countries, pay online and receive your eSIM QR code by email in minutes.">
+  <meta property="og:title" content="Travel eSIM — Buy Instant Data for Your Trip">
+  <meta property="og:description" content="Buy a travel eSIM for instant mobile data abroad. 150+ countries, instant delivery by email.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://ctn-roaming-checker.pages.dev/esim">
+  <meta property="og:image" content="https://comparethenetworks.com/wp-content/uploads/2023/01/ctn-logo.png">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Travel eSIM — Buy Instant Data for Your Trip">
+  <meta name="twitter:description" content="Buy a travel eSIM for instant mobile data abroad. 150+ countries, instant delivery by email.">
   <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -83,12 +91,41 @@
       font-size: .85rem; cursor: pointer; transition: all .15s; color: var(--grey-800);
     }
     .pill:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
+    /* How it works */
+    .how-it-works { padding: 32px 0 16px; }
+    .how-it-works h2 { font-size: 1.15rem; margin-bottom: 16px; }
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .step {
+      background: #fff; border: 1px solid var(--grey-200); border-radius: var(--radius);
+      padding: 20px; text-align: center;
+    }
+    .step-num {
+      width: 32px; height: 32px; border-radius: 50%; background: var(--accent);
+      color: #fff; display: inline-flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: .9rem; margin-bottom: 10px;
+    }
+    .step h3 { font-size: .95rem; margin-bottom: 6px; color: var(--primary); }
+    .step p { font-size: .83rem; color: var(--grey-600); }
+    /* Compatibility note */
+    .compat-note {
+      background: var(--warn-bg); border: 1px solid #fdd; border-radius: var(--radius);
+      padding: 12px 16px; font-size: .83rem; color: var(--warn); margin-top: 16px;
+      display: flex; align-items: flex-start; gap: 8px;
+    }
+    .compat-note strong { white-space: nowrap; }
     /* Packages */
     .packages-section { padding: 16px 0 32px; display: none; }
     .packages-section.visible { display: block; }
-    .packages-header { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+    .packages-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
     .packages-header h2 { font-size: 1.15rem; }
     .packages-header .flag { font-size: 1.5rem; }
+    /* Filter bar */
+    .filter-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; align-items: center; }
+    .filter-bar label { font-size: .82rem; font-weight: 600; color: var(--grey-600); }
+    .filter-bar select {
+      padding: 6px 10px; border: 1px solid var(--grey-200); border-radius: 6px;
+      font-size: .85rem; background: #fff; cursor: pointer;
+    }
     .pkg-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
     .pkg-card {
       background: #fff; border: 2px solid var(--grey-200); border-radius: var(--radius);
@@ -174,6 +211,7 @@
     @media (max-width: 600px) {
       .header h1 { font-size: 1.35rem; }
       .pkg-grid { grid-template-columns: 1fr; }
+      .steps { grid-template-columns: 1fr; }
       .nav-link { padding: 12px 14px; font-size: .82rem; }
       .footer-inner { flex-direction: column; text-align: center; }
     }
@@ -189,9 +227,9 @@
 
 <div class="site-nav">
   <div class="nav-inner">
-    <a href="index.html" class="nav-link">Roaming Checker</a>
-    <a href="bolt-ons.html" class="nav-link">Bolt-Ons &amp; Rates</a>
-    <a href="esim.html" class="nav-link active">Travel eSIM</a>
+    <a href="/" class="nav-link">Roaming Checker</a>
+    <a href="bolt-ons" class="nav-link">Bolt-Ons &amp; Rates</a>
+    <a href="esim" class="nav-link active">Travel eSIM</a>
   </div>
 </div>
 
@@ -219,6 +257,32 @@
     </div>
   </div>
 
+  <!-- HOW IT WORKS -->
+  <div class="how-it-works" id="howItWorks">
+    <h2>How It Works</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Choose a Package</h3>
+        <p>Search your destination and pick a data plan that suits your trip.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>Pay Securely</h3>
+        <p>Complete checkout via Stripe. Your payment is protected with 3D Secure.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>Scan &amp; Connect</h3>
+        <p>Receive your eSIM QR code by email within minutes. Scan it and you're online.</p>
+      </div>
+    </div>
+    <div class="compat-note">
+      <span>&#9888;&#65039;</span>
+      <span><strong>eSIM compatible device required.</strong> Most iPhones (XS and newer), Samsung Galaxy S20+, Google Pixel 3+ and other recent smartphones support eSIM. Check your device settings for "Add eSIM" or "Add Cellular Plan" before purchasing.</span>
+    </div>
+  </div>
+
   <!-- LOADING -->
   <div class="loading" id="loadingState" style="display:none;">
     <div class="loading-spinner"></div>
@@ -230,6 +294,28 @@
     <div class="packages-header">
       <span class="flag" id="pkgFlag"></span>
       <h2 id="pkgTitle">Packages</h2>
+    </div>
+    <div class="filter-bar" id="filterBar" style="display:none;">
+      <label>Filter:</label>
+      <select id="filterData">
+        <option value="all">All data sizes</option>
+        <option value="small">1 - 3 GB</option>
+        <option value="medium">5 - 10 GB</option>
+        <option value="large">20 GB+</option>
+        <option value="unlimited">Unlimited</option>
+      </select>
+      <select id="filterDuration">
+        <option value="all">All durations</option>
+        <option value="5">5 days</option>
+        <option value="10">10 days</option>
+        <option value="15">15 days</option>
+        <option value="30">30 days</option>
+      </select>
+      <select id="filterSort">
+        <option value="price-asc">Price: low to high</option>
+        <option value="price-desc">Price: high to low</option>
+        <option value="data-desc">Most data first</option>
+      </select>
     </div>
     <div class="pkg-grid" id="pkgGrid"></div>
   </div>
@@ -276,7 +362,10 @@
     <div class="success-icon">✅</div>
     <h2>Payment Successful!</h2>
     <p>Your eSIM is being activated. You'll receive an email with your QR code and setup instructions within a few minutes.</p>
-    <a href="esim.html" class="success-link">Buy Another eSIM</a>
+    <p style="font-size:.9rem;color:var(--grey-600);margin-bottom:20px;">If you don't receive an email within 10 minutes, check your spam folder or contact <a href="mailto:support@comparethenetworks.com" style="color:var(--accent);">support@comparethenetworks.com</a></p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+      <a href="esim" class="success-link">Buy Another eSIM</a>
+    </div>
   </div>
 
   <!-- CANCELLED -->
@@ -284,7 +373,7 @@
     <div class="success-icon">↩️</div>
     <h2>Payment Cancelled</h2>
     <p>No worries — your payment was not processed. You can try again whenever you're ready.</p>
-    <a href="esim.html" class="success-link" style="background: var(--accent);">Try Again</a>
+    <a href="esim" class="success-link" style="background: var(--accent);">Try Again</a>
   </div>
 </div>
 
@@ -367,6 +456,7 @@ const searchSection = document.getElementById('searchSection');
   const params = new URLSearchParams(window.location.search);
   if (params.get('payment') === 'success') {
     searchSection.style.display = 'none';
+    document.getElementById('howItWorks').style.display = 'none';
     successSection.classList.add('visible');
     return;
   }
@@ -439,7 +529,7 @@ async function selectCountry(name, iso, flag) {
 
     if (!res.ok) {
       loadingState.style.display = 'none';
-      pkgGrid.innerHTML = `<div class="no-packages">${data.error || 'Failed to load packages.'}</div>`;
+      pkgGrid.innerHTML = `<div class="no-packages">${esc(data.error || 'Failed to load packages.')}</div>`;
       packagesSection.classList.add('visible');
       return;
     }
@@ -455,23 +545,16 @@ async function selectCountry(name, iso, flag) {
 
     pkgFlag.textContent = flag;
     pkgTitle.textContent = `eSIM Packages for ${name}`;
-    pkgGrid.innerHTML = packages.map((p, i) =>
-      `<div class="pkg-card" data-idx="${i}">
-        <div class="pkg-name">${esc(p.name)}</div>
-        <div class="pkg-details">
-          <span class="pkg-detail">📶 ${p.dataGb}GB</span>
-          <span class="pkg-detail">📅 ${p.durationDays} days</span>
-        </div>
-        <div class="pkg-price">£${p.priceGbp.toFixed(2)} <small>GBP</small></div>
-        <button class="pkg-select-btn" type="button">Select</button>
-      </div>`
-    ).join('');
-    packagesSection.classList.add('visible');
 
-    // Attach click handlers
-    pkgGrid.querySelectorAll('.pkg-card').forEach(card => {
-      card.addEventListener('click', () => selectPackage(parseInt(card.dataset.idx)));
-    });
+    // Show filters if 8+ packages
+    const filterBar = document.getElementById('filterBar');
+    filterBar.style.display = packages.length >= 8 ? 'flex' : 'none';
+    document.getElementById('filterData').value = 'all';
+    document.getElementById('filterDuration').value = 'all';
+    document.getElementById('filterSort').value = 'price-asc';
+
+    renderPackages();
+    packagesSection.classList.add('visible');
   } catch (err) {
     loadingState.style.display = 'none';
     pkgGrid.innerHTML = '<div class="no-packages">Network error. Please try again.</div>';
@@ -479,10 +562,63 @@ async function selectCountry(name, iso, flag) {
   }
 }
 
+// ── Render packages with filtering ──
+function renderPackages() {
+  const dataFilter = document.getElementById('filterData').value;
+  const durFilter = document.getElementById('filterDuration').value;
+  const sortBy = document.getElementById('filterSort').value;
+
+  let filtered = packages.filter(p => {
+    if (dataFilter !== 'all') {
+      const gb = p.dataGb;
+      const nameLC = (p.name || '').toLowerCase();
+      const isUnlimited = nameLC.includes('unlimited') || gb >= 900;
+      if (dataFilter === 'small' && (gb < 1 || gb > 3 || isUnlimited)) return false;
+      if (dataFilter === 'medium' && (gb < 5 || gb > 10 || isUnlimited)) return false;
+      if (dataFilter === 'large' && (gb < 20 || isUnlimited)) return false;
+      if (dataFilter === 'unlimited' && !isUnlimited) return false;
+    }
+    if (durFilter !== 'all' && p.durationDays !== parseInt(durFilter)) return false;
+    return true;
+  });
+
+  if (sortBy === 'price-desc') filtered.sort((a, b) => b.priceGbp - a.priceGbp);
+  else if (sortBy === 'data-desc') filtered.sort((a, b) => b.dataGb - a.dataGb);
+  else filtered.sort((a, b) => a.priceGbp - b.priceGbp);
+
+  if (filtered.length === 0) {
+    pkgGrid.innerHTML = '<div class="no-packages">No packages match your filters. Try adjusting them.</div>';
+    return;
+  }
+
+  pkgGrid.innerHTML = filtered.map(p => {
+    const origIdx = packages.indexOf(p);
+    const sel = selectedPackage === p ? ' selected' : '';
+    return `<div class="pkg-card${sel}" data-idx="${origIdx}">
+      <div class="pkg-name">${esc(p.name)}</div>
+      <div class="pkg-details">
+        <span class="pkg-detail">📶 ${p.dataGb >= 900 ? 'Unlimited' : p.dataGb + 'GB'}</span>
+        <span class="pkg-detail">📅 ${p.durationDays} days</span>
+      </div>
+      <div class="pkg-price">£${p.priceGbp.toFixed(2)} <small>GBP</small></div>
+      <button class="pkg-select-btn" type="button">${sel ? 'Selected' : 'Select'}</button>
+    </div>`;
+  }).join('');
+
+  pkgGrid.querySelectorAll('.pkg-card').forEach(card => {
+    card.addEventListener('click', () => selectPackage(parseInt(card.dataset.idx)));
+  });
+}
+
+// Attach filter listeners
+['filterData', 'filterDuration', 'filterSort'].forEach(id => {
+  document.getElementById(id).addEventListener('change', renderPackages);
+});
+
 // ── Select package ──
 function selectPackage(idx) {
   selectedPackage = packages[idx];
-  pkgGrid.querySelectorAll('.pkg-card').forEach((c, i) => c.classList.toggle('selected', i === idx));
+  pkgGrid.querySelectorAll('.pkg-card').forEach(c => c.classList.toggle('selected', parseInt(c.dataset.idx) === idx));
 
   // Update order summary
   document.getElementById('sumPkg').textContent = selectedPackage.name;
