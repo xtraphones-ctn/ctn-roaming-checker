@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Travel eSIM — Buy Instant Data for Your Trip | Compare The Networks</title>
+  <meta name="description" content="Buy a travel eSIM for instant mobile data abroad. Choose from 150+ countries, pay online and receive your eSIM QR code by email in minutes.">
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --primary: #1a2b4a;
+      --accent: #0066cc;
+      --accent-light: #e8f2ff;
+      --success: #0a8a3e;
+      --success-bg: #e6f7ed;
+      --warn: #c45500;
+      --warn-bg: #fff4e6;
+      --danger: #c4001a;
+      --danger-bg: #ffeaed;
+      --grey-50: #f8f9fb;
+      --grey-100: #eef0f4;
+      --grey-200: #dde1e8;
+      --grey-400: #9ba3b2;
+      --grey-600: #5c6370;
+      --grey-800: #2d3341;
+      --radius: 12px;
+      --shadow: 0 1px 3px rgba(0,0,0,.08), 0 4px 12px rgba(0,0,0,.04);
+      --shadow-lg: 0 4px 16px rgba(0,0,0,.12);
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+      color: var(--grey-800); background: var(--grey-50); line-height: 1.6;
+    }
+    .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+    /* Header */
+    .header { background: var(--primary); color: #fff; padding: 24px 0; }
+    .header h1 { font-size: 1.75rem; font-weight: 700; }
+    .header p { color: rgba(255,255,255,.75); margin-top: 4px; font-size: .95rem; }
+    /* Nav */
+    .site-nav { background: #fff; border-bottom: 1px solid var(--grey-200); }
+    .nav-inner { display: flex; gap: 0; max-width: 900px; margin: 0 auto; padding: 0 20px; }
+    .nav-link {
+      padding: 12px 20px; font-size: .88rem; font-weight: 600; color: var(--grey-600);
+      text-decoration: none; border-bottom: 2px solid transparent; transition: all .15s;
+    }
+    .nav-link:hover { color: var(--accent); }
+    .nav-link.active { color: var(--accent); border-bottom-color: var(--accent); }
+    /* Search */
+    .search-section { padding: 32px 0 16px; }
+    .search-section h2 { font-size: 1.15rem; margin-bottom: 12px; }
+    .search-wrap { position: relative; max-width: 560px; }
+    .search-wrap svg {
+      position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
+      color: var(--grey-400); pointer-events: none;
+    }
+    .search-input {
+      width: 100%; padding: 14px 16px 14px 48px; border: 2px solid var(--grey-200);
+      border-radius: var(--radius); font-size: 1.05rem; background: #fff;
+      transition: border-color .2s; outline: none;
+    }
+    .search-input:focus { border-color: var(--accent); }
+    .search-input::placeholder { color: var(--grey-400); }
+    /* Autocomplete */
+    .autocomplete {
+      position: absolute; top: calc(100% + 4px); left: 0; right: 0;
+      background: #fff; border: 1px solid var(--grey-200); border-radius: var(--radius);
+      box-shadow: var(--shadow-lg); max-height: 280px; overflow-y: auto; z-index: 100; display: none;
+    }
+    .autocomplete.open { display: block; }
+    .ac-item {
+      padding: 10px 16px; cursor: pointer; display: flex; align-items: center; gap: 10px;
+      font-size: .95rem; transition: background .1s;
+    }
+    .ac-item:hover, .ac-item.highlighted { background: var(--accent-light); }
+    .ac-flag { font-size: 1.3rem; }
+    /* Popular pills */
+    .popular { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+    .popular-label { font-size: .8rem; color: var(--grey-600); text-transform: uppercase; font-weight: 600; letter-spacing: .03em; margin-bottom: 4px; width: 100%; }
+    .pill {
+      display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px;
+      background: #fff; border: 1px solid var(--grey-200); border-radius: 999px;
+      font-size: .85rem; cursor: pointer; transition: all .15s; color: var(--grey-800);
+    }
+    .pill:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
+    /* Packages */
+    .packages-section { padding: 16px 0 32px; display: none; }
+    .packages-section.visible { display: block; }
+    .packages-header { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+    .packages-header h2 { font-size: 1.15rem; }
+    .packages-header .flag { font-size: 1.5rem; }
+    .pkg-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+    .pkg-card {
+      background: #fff; border: 2px solid var(--grey-200); border-radius: var(--radius);
+      padding: 20px; transition: all .2s; cursor: pointer;
+    }
+    .pkg-card:hover { border-color: var(--accent); box-shadow: var(--shadow); }
+    .pkg-card.selected { border-color: var(--accent); background: var(--accent-light); box-shadow: 0 0 0 1px var(--accent); }
+    .pkg-name { font-weight: 700; font-size: 1rem; margin-bottom: 8px; color: var(--primary); }
+    .pkg-details { display: flex; gap: 16px; margin-bottom: 12px; font-size: .85rem; color: var(--grey-600); }
+    .pkg-detail { display: flex; align-items: center; gap: 4px; }
+    .pkg-price { font-size: 1.35rem; font-weight: 700; color: var(--accent); }
+    .pkg-price small { font-size: .75rem; font-weight: 400; color: var(--grey-600); }
+    .pkg-select-btn {
+      margin-top: 12px; width: 100%; padding: 10px; border: 2px solid var(--accent);
+      border-radius: 8px; background: transparent; color: var(--accent); font-weight: 600;
+      font-size: .9rem; cursor: pointer; transition: all .15s;
+    }
+    .pkg-select-btn:hover { background: var(--accent); color: #fff; }
+    .pkg-card.selected .pkg-select-btn { background: var(--accent); color: #fff; }
+    /* Loading */
+    .loading { text-align: center; padding: 40px; color: var(--grey-600); }
+    .loading-spinner {
+      width: 32px; height: 32px; border: 3px solid var(--grey-200);
+      border-top-color: var(--accent); border-radius: 50%; animation: spin .8s linear infinite;
+      margin: 0 auto 12px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .no-packages { text-align: center; padding: 40px; color: var(--grey-600); }
+    /* Checkout form */
+    .checkout-section { padding: 0 0 40px; display: none; }
+    .checkout-section.visible { display: block; }
+    .checkout-card {
+      background: #fff; border: 1px solid var(--grey-200); border-radius: var(--radius);
+      padding: 24px; box-shadow: var(--shadow);
+    }
+    .checkout-card h2 { font-size: 1.15rem; margin-bottom: 16px; }
+    .form-row { margin-bottom: 16px; }
+    .form-row label { display: block; font-size: .85rem; font-weight: 600; margin-bottom: 4px; color: var(--grey-600); }
+    .form-row input {
+      width: 100%; padding: 12px 14px; border: 2px solid var(--grey-200);
+      border-radius: 8px; font-size: .95rem; outline: none; transition: border-color .2s;
+    }
+    .form-row input:focus { border-color: var(--accent); }
+    .hp-field { position: absolute; left: -9999px; opacity: 0; height: 0; width: 0; }
+    .order-summary {
+      background: var(--grey-50); border: 1px solid var(--grey-200);
+      border-radius: 8px; padding: 16px; margin: 20px 0;
+    }
+    .order-summary h3 { font-size: .9rem; text-transform: uppercase; color: var(--grey-600); margin-bottom: 8px; letter-spacing: .03em; }
+    .summary-row { display: flex; justify-content: space-between; font-size: .9rem; margin-bottom: 4px; }
+    .summary-row.total { font-weight: 700; font-size: 1.05rem; border-top: 1px solid var(--grey-200); padding-top: 8px; margin-top: 8px; }
+    .pay-btn {
+      width: 100%; padding: 14px; background: var(--accent); color: #fff; border: none;
+      border-radius: 8px; font-size: 1.05rem; font-weight: 700; cursor: pointer;
+      transition: background .15s;
+    }
+    .pay-btn:hover { background: #0052a3; }
+    .pay-btn:disabled { opacity: .6; cursor: not-allowed; }
+    .form-error { color: var(--danger); font-size: .85rem; margin-top: 8px; }
+    /* Success state */
+    .success-section {
+      display: none; text-align: center; padding: 60px 20px;
+    }
+    .success-section.visible { display: block; }
+    .success-icon { font-size: 3rem; margin-bottom: 16px; }
+    .success-section h2 { font-size: 1.5rem; color: var(--success); margin-bottom: 8px; }
+    .success-section p { color: var(--grey-600); font-size: 1rem; max-width: 500px; margin: 0 auto 20px; }
+    .success-link {
+      display: inline-block; padding: 12px 24px; background: var(--accent); color: #fff;
+      border-radius: 8px; text-decoration: none; font-weight: 600;
+    }
+    /* Cancelled state */
+    .cancelled-section { display: none; text-align: center; padding: 60px 20px; }
+    .cancelled-section.visible { display: block; }
+    .cancelled-section h2 { font-size: 1.5rem; color: var(--warn); margin-bottom: 8px; }
+    .cancelled-section p { color: var(--grey-600); max-width: 500px; margin: 0 auto 20px; }
+    /* Footer */
+    .footer { background: #fff; border-top: 1px solid var(--grey-200); padding: 24px 0; margin-top: 40px; }
+    .footer-inner { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; font-size: .82rem; color: var(--grey-600); }
+    .trust-signals { display: flex; gap: 16px; flex-wrap: wrap; }
+    .trust-signal { display: flex; align-items: center; gap: 4px; }
+    /* Responsive */
+    @media (max-width: 600px) {
+      .header h1 { font-size: 1.35rem; }
+      .pkg-grid { grid-template-columns: 1fr; }
+      .nav-link { padding: 12px 14px; font-size: .82rem; }
+      .footer-inner { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+<div class="header">
+  <div class="container">
+    <h1>Travel eSIM — Buy Instant Data for Your Trip</h1>
+    <p>Choose your destination, pick a data package and get connected in minutes</p>
+  </div>
+</div>
+
+<div class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-link">Roaming Checker</a>
+    <a href="bolt-ons.html" class="nav-link">Bolt-Ons &amp; Rates</a>
+    <a href="esim.html" class="nav-link active">Travel eSIM</a>
+  </div>
+</div>
+
+<!-- SEARCH -->
+<div class="container">
+  <div class="search-section" id="searchSection">
+    <h2>Where are you travelling?</h2>
+    <div class="search-wrap">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      <input type="text" class="search-input" id="countrySearch" placeholder="Search a country..." autocomplete="off">
+      <div class="autocomplete" id="autocomplete"></div>
+    </div>
+    <div class="popular">
+      <div class="popular-label">Popular destinations</div>
+      <button class="pill" data-country="Spain" data-iso="ES" data-flag="🇪🇸">🇪🇸 Spain</button>
+      <button class="pill" data-country="France" data-iso="FR" data-flag="🇫🇷">🇫🇷 France</button>
+      <button class="pill" data-country="United States" data-iso="US" data-flag="🇺🇸">🇺🇸 USA</button>
+      <button class="pill" data-country="Turkey" data-iso="TR" data-flag="🇹🇷">🇹🇷 Turkey</button>
+      <button class="pill" data-country="Thailand" data-iso="TH" data-flag="🇹🇭">🇹🇭 Thailand</button>
+      <button class="pill" data-country="Greece" data-iso="GR" data-flag="🇬🇷">🇬🇷 Greece</button>
+      <button class="pill" data-country="Italy" data-iso="IT" data-flag="🇮🇹">🇮🇹 Italy</button>
+      <button class="pill" data-country="Portugal" data-iso="PT" data-flag="🇵🇹">🇵🇹 Portugal</button>
+      <button class="pill" data-country="Australia" data-iso="AU" data-flag="🇦🇺">🇦🇺 Australia</button>
+      <button class="pill" data-country="Japan" data-iso="JP" data-flag="🇯🇵">🇯🇵 Japan</button>
+    </div>
+  </div>
+
+  <!-- LOADING -->
+  <div class="loading" id="loadingState" style="display:none;">
+    <div class="loading-spinner"></div>
+    <div>Searching packages...</div>
+  </div>
+
+  <!-- PACKAGES -->
+  <div class="packages-section" id="packagesSection">
+    <div class="packages-header">
+      <span class="flag" id="pkgFlag"></span>
+      <h2 id="pkgTitle">Packages</h2>
+    </div>
+    <div class="pkg-grid" id="pkgGrid"></div>
+  </div>
+
+  <!-- CHECKOUT FORM -->
+  <div class="checkout-section" id="checkoutSection">
+    <div class="checkout-card">
+      <h2>Complete Your Order</h2>
+      <form id="checkoutForm" novalidate>
+        <div class="form-row">
+          <label for="custName">Full Name</label>
+          <input type="text" id="custName" required placeholder="John Smith">
+        </div>
+        <div class="form-row">
+          <label for="custEmail">Email Address</label>
+          <input type="email" id="custEmail" required placeholder="john@example.com">
+        </div>
+        <!-- Honeypot -->
+        <div class="hp-field" aria-hidden="true">
+          <label for="website">Website</label>
+          <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+        </div>
+
+        <div class="order-summary" id="orderSummary">
+          <h3>Order Summary</h3>
+          <div class="summary-row"><span id="sumPkg">-</span><span id="sumDest">-</span></div>
+          <div class="summary-row"><span>Data</span><span id="sumData">-</span></div>
+          <div class="summary-row"><span>Duration</span><span id="sumDuration">-</span></div>
+          <div class="summary-row total"><span>Total</span><span id="sumTotal">-</span></div>
+        </div>
+
+        <div style="margin-bottom:16px;">
+          <div class="cf-turnstile" data-sitekey="0x4AAAAAACaE00A0y-V8x0Wz" data-callback="onTurnstileSuccess" data-expired-callback="onTurnstileExpired"></div>
+        </div>
+
+        <button type="submit" class="pay-btn" id="payBtn" disabled>Pay Now</button>
+        <div class="form-error" id="formError" style="display:none;"></div>
+      </form>
+    </div>
+  </div>
+
+  <!-- SUCCESS -->
+  <div class="success-section" id="successSection">
+    <div class="success-icon">✅</div>
+    <h2>Payment Successful!</h2>
+    <p>Your eSIM is being activated. You'll receive an email with your QR code and setup instructions within a few minutes.</p>
+    <a href="esim.html" class="success-link">Buy Another eSIM</a>
+  </div>
+
+  <!-- CANCELLED -->
+  <div class="cancelled-section" id="cancelledSection">
+    <div class="success-icon">↩️</div>
+    <h2>Payment Cancelled</h2>
+    <p>No worries — your payment was not processed. You can try again whenever you're ready.</p>
+    <a href="esim.html" class="success-link" style="background: var(--accent);">Try Again</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="trust-signals">
+        <span class="trust-signal">🔒 Secure checkout via Stripe</span>
+        <span class="trust-signal">⚡ Instant delivery by email</span>
+        <span class="trust-signal">🌍 150+ countries supported</span>
+      </div>
+      <div>Need help? <a href="mailto:support@comparethenetworks.com" style="color:var(--accent);text-decoration:none;">support@comparethenetworks.com</a></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const API_BASE = 'https://ctn-dash.pages.dev/api';
+
+// ── Country list with ISO2 + flags ──
+const COUNTRIES = [
+  {name:'Afghanistan',iso:'AF',flag:'🇦🇫'},{name:'Albania',iso:'AL',flag:'🇦🇱'},{name:'Algeria',iso:'DZ',flag:'🇩🇿'},
+  {name:'Argentina',iso:'AR',flag:'🇦🇷'},{name:'Australia',iso:'AU',flag:'🇦🇺'},{name:'Austria',iso:'AT',flag:'🇦🇹'},
+  {name:'Bahrain',iso:'BH',flag:'🇧🇭'},{name:'Bangladesh',iso:'BD',flag:'🇧🇩'},{name:'Belgium',iso:'BE',flag:'🇧🇪'},
+  {name:'Bosnia',iso:'BA',flag:'🇧🇦'},{name:'Brazil',iso:'BR',flag:'🇧🇷'},{name:'Bulgaria',iso:'BG',flag:'🇧🇬'},
+  {name:'Cambodia',iso:'KH',flag:'🇰🇭'},{name:'Canada',iso:'CA',flag:'🇨🇦'},{name:'Chile',iso:'CL',flag:'🇨🇱'},
+  {name:'China',iso:'CN',flag:'🇨🇳'},{name:'Colombia',iso:'CO',flag:'🇨🇴'},{name:'Costa Rica',iso:'CR',flag:'🇨🇷'},
+  {name:'Croatia',iso:'HR',flag:'🇭🇷'},{name:'Cuba',iso:'CU',flag:'🇨🇺'},{name:'Cyprus',iso:'CY',flag:'🇨🇾'},
+  {name:'Czech Republic',iso:'CZ',flag:'🇨🇿'},{name:'Denmark',iso:'DK',flag:'🇩🇰'},{name:'Dominican Republic',iso:'DO',flag:'🇩🇴'},
+  {name:'Egypt',iso:'EG',flag:'🇪🇬'},{name:'Estonia',iso:'EE',flag:'🇪🇪'},{name:'Finland',iso:'FI',flag:'🇫🇮'},
+  {name:'France',iso:'FR',flag:'🇫🇷'},{name:'Germany',iso:'DE',flag:'🇩🇪'},{name:'Greece',iso:'GR',flag:'🇬🇷'},
+  {name:'Hong Kong',iso:'HK',flag:'🇭🇰'},{name:'Hungary',iso:'HU',flag:'🇭🇺'},{name:'Iceland',iso:'IS',flag:'🇮🇸'},
+  {name:'India',iso:'IN',flag:'🇮🇳'},{name:'Indonesia',iso:'ID',flag:'🇮🇩'},{name:'Ireland',iso:'IE',flag:'🇮🇪'},
+  {name:'Israel',iso:'IL',flag:'🇮🇱'},{name:'Italy',iso:'IT',flag:'🇮🇹'},{name:'Jamaica',iso:'JM',flag:'🇯🇲'},
+  {name:'Japan',iso:'JP',flag:'🇯🇵'},{name:'Jordan',iso:'JO',flag:'🇯🇴'},{name:'Kenya',iso:'KE',flag:'🇰🇪'},
+  {name:'Kuwait',iso:'KW',flag:'🇰🇼'},{name:'Laos',iso:'LA',flag:'🇱🇦'},{name:'Latvia',iso:'LV',flag:'🇱🇻'},
+  {name:'Lebanon',iso:'LB',flag:'🇱🇧'},{name:'Lithuania',iso:'LT',flag:'🇱🇹'},{name:'Luxembourg',iso:'LU',flag:'🇱🇺'},
+  {name:'Macao',iso:'MO',flag:'🇲🇴'},{name:'Malaysia',iso:'MY',flag:'🇲🇾'},{name:'Malta',iso:'MT',flag:'🇲🇹'},
+  {name:'Mexico',iso:'MX',flag:'🇲🇽'},{name:'Monaco',iso:'MC',flag:'🇲🇨'},{name:'Montenegro',iso:'ME',flag:'🇲🇪'},
+  {name:'Morocco',iso:'MA',flag:'🇲🇦'},{name:'Myanmar',iso:'MM',flag:'🇲🇲'},{name:'Nepal',iso:'NP',flag:'🇳🇵'},
+  {name:'Netherlands',iso:'NL',flag:'🇳🇱'},{name:'New Zealand',iso:'NZ',flag:'🇳🇿'},{name:'Nigeria',iso:'NG',flag:'🇳🇬'},
+  {name:'North Macedonia',iso:'MK',flag:'🇲🇰'},{name:'Norway',iso:'NO',flag:'🇳🇴'},{name:'Oman',iso:'OM',flag:'🇴🇲'},
+  {name:'Pakistan',iso:'PK',flag:'🇵🇰'},{name:'Panama',iso:'PA',flag:'🇵🇦'},{name:'Peru',iso:'PE',flag:'🇵🇪'},
+  {name:'Philippines',iso:'PH',flag:'🇵🇭'},{name:'Poland',iso:'PL',flag:'🇵🇱'},{name:'Portugal',iso:'PT',flag:'🇵🇹'},
+  {name:'Puerto Rico',iso:'PR',flag:'🇵🇷'},{name:'Qatar',iso:'QA',flag:'🇶🇦'},{name:'Romania',iso:'RO',flag:'🇷🇴'},
+  {name:'Russia',iso:'RU',flag:'🇷🇺'},{name:'Saudi Arabia',iso:'SA',flag:'🇸🇦'},{name:'Serbia',iso:'RS',flag:'🇷🇸'},
+  {name:'Singapore',iso:'SG',flag:'🇸🇬'},{name:'Slovakia',iso:'SK',flag:'🇸🇰'},{name:'Slovenia',iso:'SI',flag:'🇸🇮'},
+  {name:'South Africa',iso:'ZA',flag:'🇿🇦'},{name:'South Korea',iso:'KR',flag:'🇰🇷'},{name:'Spain',iso:'ES',flag:'🇪🇸'},
+  {name:'Sri Lanka',iso:'LK',flag:'🇱🇰'},{name:'Sweden',iso:'SE',flag:'🇸🇪'},{name:'Switzerland',iso:'CH',flag:'🇨🇭'},
+  {name:'Taiwan',iso:'TW',flag:'🇹🇼'},{name:'Thailand',iso:'TH',flag:'🇹🇭'},{name:'Turkey',iso:'TR',flag:'🇹🇷'},
+  {name:'UAE',iso:'AE',flag:'🇦🇪'},{name:'Ukraine',iso:'UA',flag:'🇺🇦'},{name:'United Kingdom',iso:'GB',flag:'🇬🇧'},
+  {name:'United States',iso:'US',flag:'🇺🇸'},{name:'Vietnam',iso:'VN',flag:'🇻🇳'},
+];
+
+// ── State ──
+let selectedCountry = null;
+let packages = [];
+let selectedPackage = null;
+let turnstileToken = null;
+
+// ── DOM refs ──
+const searchInput = document.getElementById('countrySearch');
+const acList = document.getElementById('autocomplete');
+const loadingState = document.getElementById('loadingState');
+const packagesSection = document.getElementById('packagesSection');
+const pkgGrid = document.getElementById('pkgGrid');
+const pkgFlag = document.getElementById('pkgFlag');
+const pkgTitle = document.getElementById('pkgTitle');
+const checkoutSection = document.getElementById('checkoutSection');
+const checkoutForm = document.getElementById('checkoutForm');
+const payBtn = document.getElementById('payBtn');
+const formError = document.getElementById('formError');
+const successSection = document.getElementById('successSection');
+const cancelledSection = document.getElementById('cancelledSection');
+const searchSection = document.getElementById('searchSection');
+
+// ── Check payment status on load ──
+(function checkPaymentStatus() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('payment') === 'success') {
+    searchSection.style.display = 'none';
+    successSection.classList.add('visible');
+    return;
+  }
+  if (params.get('payment') === 'cancelled') {
+    cancelledSection.classList.add('visible');
+  }
+})();
+
+// ── Turnstile callbacks ──
+window.onTurnstileSuccess = function(token) { turnstileToken = token; updatePayBtn(); };
+window.onTurnstileExpired = function() { turnstileToken = null; updatePayBtn(); };
+
+// ── Search / Autocomplete ──
+let hlIndex = -1;
+
+searchInput.addEventListener('input', function() {
+  const q = this.value.trim().toLowerCase();
+  if (q.length < 1) { acList.classList.remove('open'); return; }
+  const matches = COUNTRIES.filter(c => c.name.toLowerCase().includes(q) || c.iso.toLowerCase() === q).slice(0, 10);
+  if (matches.length === 0) { acList.classList.remove('open'); return; }
+  hlIndex = -1;
+  acList.innerHTML = matches.map((c, i) =>
+    `<div class="ac-item" data-idx="${i}" data-name="${c.name}" data-iso="${c.iso}" data-flag="${c.flag}">`
+    + `<span class="ac-flag">${c.flag}</span><span>${c.name}</span></div>`
+  ).join('');
+  acList.classList.add('open');
+  acList.querySelectorAll('.ac-item').forEach(el => {
+    el.addEventListener('click', () => selectCountry(el.dataset.name, el.dataset.iso, el.dataset.flag));
+  });
+});
+
+searchInput.addEventListener('keydown', function(e) {
+  const items = acList.querySelectorAll('.ac-item');
+  if (!items.length) return;
+  if (e.key === 'ArrowDown') { e.preventDefault(); hlIndex = Math.min(hlIndex + 1, items.length - 1); updateHL(items); }
+  else if (e.key === 'ArrowUp') { e.preventDefault(); hlIndex = Math.max(hlIndex - 1, 0); updateHL(items); }
+  else if (e.key === 'Enter' && hlIndex >= 0) { e.preventDefault(); items[hlIndex].click(); }
+});
+
+function updateHL(items) {
+  items.forEach((el, i) => el.classList.toggle('highlighted', i === hlIndex));
+  if (items[hlIndex]) items[hlIndex].scrollIntoView({ block: 'nearest' });
+}
+
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.search-wrap')) acList.classList.remove('open');
+});
+
+// ── Popular destination pills ──
+document.querySelectorAll('.pill').forEach(pill => {
+  pill.addEventListener('click', () => selectCountry(pill.dataset.country, pill.dataset.iso, pill.dataset.flag));
+});
+
+// ── Select country & fetch packages ──
+async function selectCountry(name, iso, flag) {
+  selectedCountry = { name, iso, flag };
+  selectedPackage = null;
+  searchInput.value = `${flag} ${name}`;
+  acList.classList.remove('open');
+
+  // Reset UI
+  packagesSection.classList.remove('visible');
+  checkoutSection.classList.remove('visible');
+  loadingState.style.display = 'block';
+  formError.style.display = 'none';
+
+  try {
+    const res = await fetch(`${API_BASE}/esim-packages?country=${encodeURIComponent(iso)}`);
+    const data = await res.json();
+
+    if (!res.ok) {
+      loadingState.style.display = 'none';
+      pkgGrid.innerHTML = `<div class="no-packages">${data.error || 'Failed to load packages.'}</div>`;
+      packagesSection.classList.add('visible');
+      return;
+    }
+
+    packages = data.packages || [];
+    loadingState.style.display = 'none';
+
+    if (packages.length === 0) {
+      pkgGrid.innerHTML = '<div class="no-packages">No eSIM packages available for this destination yet.</div>';
+      packagesSection.classList.add('visible');
+      return;
+    }
+
+    pkgFlag.textContent = flag;
+    pkgTitle.textContent = `eSIM Packages for ${name}`;
+    pkgGrid.innerHTML = packages.map((p, i) =>
+      `<div class="pkg-card" data-idx="${i}">
+        <div class="pkg-name">${esc(p.name)}</div>
+        <div class="pkg-details">
+          <span class="pkg-detail">📶 ${p.dataGb}GB</span>
+          <span class="pkg-detail">📅 ${p.durationDays} days</span>
+        </div>
+        <div class="pkg-price">£${p.priceGbp.toFixed(2)} <small>GBP</small></div>
+        <button class="pkg-select-btn" type="button">Select</button>
+      </div>`
+    ).join('');
+    packagesSection.classList.add('visible');
+
+    // Attach click handlers
+    pkgGrid.querySelectorAll('.pkg-card').forEach(card => {
+      card.addEventListener('click', () => selectPackage(parseInt(card.dataset.idx)));
+    });
+  } catch (err) {
+    loadingState.style.display = 'none';
+    pkgGrid.innerHTML = '<div class="no-packages">Network error. Please try again.</div>';
+    packagesSection.classList.add('visible');
+  }
+}
+
+// ── Select package ──
+function selectPackage(idx) {
+  selectedPackage = packages[idx];
+  pkgGrid.querySelectorAll('.pkg-card').forEach((c, i) => c.classList.toggle('selected', i === idx));
+
+  // Update order summary
+  document.getElementById('sumPkg').textContent = selectedPackage.name;
+  document.getElementById('sumDest').textContent = selectedCountry.name;
+  document.getElementById('sumData').textContent = selectedPackage.dataGb + 'GB';
+  document.getElementById('sumDuration').textContent = selectedPackage.durationDays + ' days';
+  document.getElementById('sumTotal').textContent = '£' + selectedPackage.priceGbp.toFixed(2);
+
+  payBtn.textContent = `Pay Now — £${selectedPackage.priceGbp.toFixed(2)}`;
+  checkoutSection.classList.add('visible');
+  updatePayBtn();
+
+  // Scroll to checkout
+  checkoutSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ── Update pay button state ──
+function updatePayBtn() {
+  const name = document.getElementById('custName').value.trim();
+  const email = document.getElementById('custEmail').value.trim();
+  payBtn.disabled = !(selectedPackage && name && email && turnstileToken);
+}
+
+document.getElementById('custName').addEventListener('input', updatePayBtn);
+document.getElementById('custEmail').addEventListener('input', updatePayBtn);
+
+// ── Form submit ──
+checkoutForm.addEventListener('submit', async function(e) {
+  e.preventDefault();
+  if (payBtn.disabled) return;
+
+  const name = document.getElementById('custName').value.trim();
+  const email = document.getElementById('custEmail').value.trim();
+  const honeypot = document.getElementById('website').value;
+
+  // Basic email validation
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    showError('Please enter a valid email address.');
+    return;
+  }
+
+  formError.style.display = 'none';
+  payBtn.disabled = true;
+  payBtn.textContent = 'Processing...';
+
+  try {
+    const res = await fetch(`${API_BASE}/esim-checkout-public`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        packageId: selectedPackage.id,
+        packageName: selectedPackage.name,
+        destination: selectedCountry.name,
+        priceGbp: selectedPackage.priceGbp,
+        dataGb: selectedPackage.dataGb,
+        durationDays: selectedPackage.durationDays,
+        customerName: name,
+        customerEmail: email,
+        turnstileToken: turnstileToken,
+        website: honeypot,
+      }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok || !data.success) {
+      showError(data.error || 'Something went wrong. Please try again.');
+      payBtn.disabled = false;
+      payBtn.textContent = `Pay Now — £${selectedPackage.priceGbp.toFixed(2)}`;
+      return;
+    }
+
+    // Redirect to Stripe Checkout
+    if (data.checkoutUrl) {
+      window.location.href = data.checkoutUrl;
+    }
+  } catch (err) {
+    showError('Network error. Please check your connection and try again.');
+    payBtn.disabled = false;
+    payBtn.textContent = `Pay Now — £${selectedPackage.priceGbp.toFixed(2)}`;
+  }
+});
+
+function showError(msg) {
+  formError.textContent = msg;
+  formError.style.display = 'block';
+}
+
+function esc(str) {
+  const d = document.createElement('div');
+  d.textContent = str;
+  return d.innerHTML;
+}
+</script>
+</body>
+</html>
