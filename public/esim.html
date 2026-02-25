@@ -597,7 +597,7 @@ function renderPackages() {
     return `<div class="pkg-card${sel}" data-idx="${origIdx}">
       <div class="pkg-name">${esc(p.name)}</div>
       <div class="pkg-details">
-        <span class="pkg-detail">📶 ${p.dataGb >= 900 ? 'Unlimited' : p.dataGb + 'GB'}</span>
+        <span class="pkg-detail">📶 ${isUnlimitedPkg(p) ? 'Unlimited' : p.dataGb + 'GB'}</span>
         <span class="pkg-detail">📅 ${p.durationDays} days</span>
       </div>
       <div class="pkg-price">£${p.priceGbp.toFixed(2)} <small>GBP</small></div>
@@ -623,7 +623,7 @@ function selectPackage(idx) {
   // Update order summary
   document.getElementById('sumPkg').textContent = selectedPackage.name;
   document.getElementById('sumDest').textContent = selectedCountry.name;
-  document.getElementById('sumData').textContent = selectedPackage.dataGb + 'GB';
+  document.getElementById('sumData').textContent = isUnlimitedPkg(selectedPackage) ? 'Unlimited' : selectedPackage.dataGb + 'GB';
   document.getElementById('sumDuration').textContent = selectedPackage.durationDays + ' days';
   document.getElementById('sumTotal').textContent = '£' + selectedPackage.priceGbp.toFixed(2);
 
@@ -686,7 +686,7 @@ checkoutForm.addEventListener('submit', async function(e) {
 
     if (!res.ok || !data.success) {
       showError(data.error || 'Something went wrong. Please try again.');
-      payBtn.disabled = false;
+      resetTurnstile();
       payBtn.textContent = `Pay Now — £${selectedPackage.priceGbp.toFixed(2)}`;
       return;
     }
@@ -697,7 +697,7 @@ checkoutForm.addEventListener('submit', async function(e) {
     }
   } catch (err) {
     showError('Network error. Please check your connection and try again.');
-    payBtn.disabled = false;
+    resetTurnstile();
     payBtn.textContent = `Pay Now — £${selectedPackage.priceGbp.toFixed(2)}`;
   }
 });
@@ -711,6 +711,19 @@ function esc(str) {
   const d = document.createElement('div');
   d.textContent = str;
   return d.innerHTML;
+}
+
+function isUnlimitedPkg(p) {
+  return (p.name || '').toLowerCase().includes('unlimited');
+}
+
+function resetTurnstile() {
+  turnstileToken = null;
+  if (window.turnstile) {
+    const widget = document.querySelector('.cf-turnstile');
+    if (widget) turnstile.reset(widget);
+  }
+  updatePayBtn();
 }
 </script>
 </body>
