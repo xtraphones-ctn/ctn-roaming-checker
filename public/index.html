@@ -737,13 +737,13 @@ const ZONES = {
     dailyNote: "No daily charge — use your plan allowance"
   },
   TF_WORLD: {
-    label: "World Travel",
-    cls: "zone-wts",
-    headlineCls: "headline-ok",
-    headline: "A daily roaming charge of £5.00 (ex VAT) applies on days you use your phone. The customer can then use their full UK plan allowance — data, calls and texts — as if they were at home. Fair use of 25GB data/month applies. Only charged on days they actually use their phone abroad.",
-    dailyCharge: 5.00,
-    dailyLabel: "£5.00/day",
-    dailyNote: "Charged per day of use (calls, texts or data)"
+    label: "TravelFree Worldwide",
+    cls: "zone-europe",
+    headlineCls: "headline-good",
+    headline: "Good news — this destination is included in the TravelFree service at no extra daily charge. The customer can use their UK plan allowance — data, calls and texts — as if they were at home. A fair use limit of 25GB data per month applies while roaming.",
+    dailyCharge: null,
+    dailyLabel: "Included",
+    dailyNote: "No daily charge — included in TravelFree service"
   },
   ROW_WTS: {
     label: "World Travel",
@@ -839,9 +839,9 @@ const BOLTONS = {
       {name:"Data Top Up 20GB", detail:"Best value for data-intensive travel", price:"£13.50"},
     ],
     TF_WORLD: [
-      {name:"Roaming Minutes & Data 250", detail:"250 mins + 250MB — short trips, light usage", price:"£60.00"},
-      {name:"Roaming Minutes & Data 500", detail:"500 mins + 500MB — moderate usage", price:"£90.00"},
-      {name:"Roaming Minutes & Data 1000", detail:"1000 mins + 1GB — heavier usage", price:"£120.00"},
+      {name:"Data Top Up 5GB", detail:"Extra UK data if you run low while roaming", price:"£5.50"},
+      {name:"Data Top Up 10GB", detail:"More data for heavy use abroad", price:"£8.00"},
+      {name:"Data Top Up 20GB", detail:"Best value for data-intensive travel", price:"£13.50"},
     ],
     ROW_WTS: [
       {name:"Roaming Minutes & Data 250", detail:"250 mins + 250MB — short trips, light usage", price:"£60.00"},
@@ -861,9 +861,9 @@ const BOLTONS = {
       {name:"Data Top Up 20GB", detail:"Best value for data-intensive travel", price:"£15.00"},
     ],
     TF_WORLD: [
-      {name:"Roaming Worldwide 250MB", detail:"Light data for short trips outside Europe", price:"£42.00"},
-      {name:"Roaming Worldwide 500MB", detail:"Moderate data for trips outside Europe", price:"£78.00"},
-      {name:"Roaming Worldwide 1GB", detail:"Heavier data for longer stays", price:"£140.00"},
+      {name:"Data Top Up 5GB", detail:"Extra UK data if you run low while roaming", price:"£6.50"},
+      {name:"Data Top Up 10GB", detail:"More data for heavy use abroad", price:"£9.00"},
+      {name:"Data Top Up 20GB", detail:"Best value for data-intensive travel", price:"£15.00"},
     ],
     ROW_WTS: [
       {name:"Roaming Worldwide 250MB", detail:"Light data for short trips outside Europe", price:"£42.00"},
@@ -931,11 +931,11 @@ const TIPS = {
     "If you run low on data, add a Data Top Up rather than paying out-of-bundle rates."
   ],
   TF_WORLD: [
-    "The daily charge only applies on days you make calls, send texts or use data.",
-    "Enable Data Roaming and restart your device after landing if it does not connect.",
-    "Consider a Roaming Minutes & Data bolt-on for predictable spend.",
-    "Use Wi-Fi calling and messaging apps where available.",
-    "Turn off background app refresh to reduce unexpected data usage."
+    "This destination is included in TravelFree — no daily roaming charge applies.",
+    "Enable Data Roaming in your phone settings before you travel.",
+    "Your UK calls, texts and data work as normal — a fair use limit of 25GB data per month applies while roaming.",
+    "Use Wi-Fi where possible to save your data allowance.",
+    "If you run low on data, add a Data Top Up rather than paying out-of-bundle rates."
   ],
   ROW_WTS: [
     "The £5.00/day charge only applies on days you make calls, send texts or use data.",
@@ -1598,7 +1598,30 @@ function selectCountry(c) {
           <div class="note">Approx £26.62 per GB if you exceed your allowance</div>
         </div>
       `;
-    } else if (zoneKey === 'TF_WORLD' || zoneKey === 'ROW_WTS') {
+    } else if (zoneKey === 'TF_WORLD') {
+      grid.innerHTML = `
+        <div class="info-box">
+          <h4>Daily charge</h4>
+          <div class="value">Included</div>
+          <div class="note">No daily charge — part of TravelFree service</div>
+        </div>
+        <div class="info-box">
+          <h4>What they get</h4>
+          <div class="value">Full UK allowance</div>
+          <div class="note">Their plan's data, calls &amp; texts — as if at home</div>
+        </div>
+        <div class="info-box">
+          <h4>Data fair use</h4>
+          <div class="value">25GB/month</div>
+          <div class="note">Fair use cap while roaming. OOB data: £0.026/MB</div>
+        </div>
+        <div class="info-box">
+          <h4>Calls &amp; texts</h4>
+          <div class="value">Use UK allowance</div>
+          <div class="note">Call back to UK and within the country. Receive calls free.</div>
+        </div>
+      `;
+    } else if (zoneKey === 'ROW_WTS') {
       grid.innerHTML = `
         <div class="info-box">
           <h4>Daily charge</h4>
