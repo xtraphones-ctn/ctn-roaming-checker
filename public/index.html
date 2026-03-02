@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Using Your Phone Abroad | Compare The Networks</title>
-  <meta name="description" content="Check roaming charges for O2 and Vodafone business mobile when travelling abroad. Search any destination to see daily rates, recommended bolt-ons and tips to stay in control.">
+  <meta name="description" content="Check roaming charges for O2, Vodafone, EE, plan.com and Three business mobile when travelling abroad. Search any destination to see daily rates, recommended bolt-ons and tips to stay in control.">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -82,6 +82,10 @@
     .net-card.selected-three .net-card-logo { opacity: 1; }
     .net-card.selected-three .net-card-label { color: #fff; }
     .net-card.selected-three .net-card-check { opacity: 1; background: #ff0064; color: #fff; }
+    .net-card.selected-ee { background: rgba(0,182,160,.18); border-color: #00b6a0; box-shadow: 0 0 0 1px #00b6a0, 0 4px 16px rgba(0,182,160,.3); }
+    .net-card.selected-ee .net-card-logo { opacity: 1; filter: none; }
+    .net-card.selected-ee .net-card-label { color: #fff; }
+    .net-card.selected-ee .net-card-check { opacity: 1; background: #00b6a0; color: #fff; }
     .net-active-banner {
       margin-top: 14px; padding: 8px 16px; border-radius: 8px; font-size: .9rem;
       font-weight: 600; display: inline-flex; align-items: center; gap: 8px; transition: all .3s;
@@ -90,6 +94,7 @@
     .net-active-banner.vf { background: #e60000; color: #fff; }
     .net-active-banner.plan { background: #00c878; color: #fff; }
     .net-active-banner.three { background: #ff0064; color: #fff; }
+    .net-active-banner.ee { background: #00b6a0; color: #fff; }
     @media (max-width: 600px) {
       .net-selector { gap: 8px; }
       .net-card { padding: 12px 14px; gap: 10px; }
@@ -332,6 +337,11 @@
       </div>
       <div class="net-card" data-net="plan" role="button" tabindex="0" aria-label="Select Plan.com network">
         <span class="net-card-label" style="font-size:1.1rem">plan.com</span>
+        <span class="net-card-check" aria-hidden="true">&#10003;</span>
+      </div>
+      <div class="net-card" data-net="ee" role="button" tabindex="0" aria-label="Select EE network">
+        <img src="card_ee.png" alt="EE" class="net-card-logo" style="height:28px">
+        <span class="net-card-label">EE</span>
         <span class="net-card-check" aria-hidden="true">&#10003;</span>
       </div>
       <div class="net-card" data-net="three" role="button" tabindex="0" aria-label="Select Three Business network">
@@ -715,7 +725,30 @@ const THREE_ZONES = {
   // Everything else → THREE_STD
 };
 
+// ── EE ZONE OVERRIDES ──
+// EE_EU = Europe Zone (£2.00/day ex VAT), EE_ROW = Rest of World (£6.85/day ex VAT),
+// EE_STD = Standard rates (not covered — per-use charges)
+const EE_ZONES = {
+  // Europe Zone — 37 destinations (£2.00/day)
+  AT:"EE_EU",BE:"EE_EU",BG:"EE_EU",HR:"EE_EU",CY:"EE_EU",CZ:"EE_EU",
+  DK:"EE_EU",EE:"EE_EU",FI:"EE_EU",FR:"EE_EU",DE:"EE_EU",GI:"EE_EU",
+  GR:"EE_EU",GP:"EE_EU",GG:"EE_EU",HU:"EE_EU",IS:"EE_EU",IE:"EE_EU",
+  IM:"EE_EU",IT:"EE_EU",JE:"EE_EU",LV:"EE_EU",LI:"EE_EU",LT:"EE_EU",
+  LU:"EE_EU",MT:"EE_EU",MQ:"EE_EU",NL:"EE_EU",NO:"EE_EU",PL:"EE_EU",
+  PT:"EE_EU",RO:"EE_EU",SK:"EE_EU",SI:"EE_EU",ES:"EE_EU",SE:"EE_EU",
+  CH:"EE_EU",
+  // Rest of World — 24 destinations (£6.85/day)
+  US:"EE_ROW",CA:"EE_ROW",AU:"EE_ROW",NZ:"EE_ROW",TR:"EE_ROW",IN:"EE_ROW",
+  AE:"EE_ROW",ZA:"EE_ROW",TH:"EE_ROW",MX:"EE_ROW",BR:"EE_ROW",JP:"EE_ROW",
+  CN:"EE_ROW",HK:"EE_ROW",SG:"EE_ROW",ID:"EE_ROW",EG:"EE_ROW",MA:"EE_ROW",
+  KE:"EE_ROW",NG:"EE_ROW",SA:"EE_ROW",QA:"EE_ROW",IL:"EE_ROW",PK:"EE_ROW",
+  // Everything else → EE_STD
+};
+
 function getZoneForCountry(c) {
+  if (currentNet === 'ee') {
+    return EE_ZONES[c.iso2] || 'EE_STD';
+  }
   if (currentNet === 'plan') {
     return PLAN_ZONES[c.iso2] || 'PLAN_STD';
   }
@@ -827,6 +860,34 @@ const ZONES = {
     dailyCharge: null,
     dailyLabel: "Not available",
     dailyNote: "No daily service — pay-per-use standard rates"
+  },
+  // ── EE ZONES ──
+  EE_EU: {
+    label: "Europe Zone",
+    cls: "zone-europe",
+    headlineCls: "headline-ok",
+    headline: "EE roaming is NOT included in the plan. A daily charge of £2.00 (ex VAT) applies on days the customer uses their phone abroad. They can use their UK data, calls and texts. Only charged on days they make calls, send texts or use data.",
+    dailyCharge: 2.00,
+    dailyLabel: "£2.00/day",
+    dailyNote: "Charged per day of use (ex VAT)"
+  },
+  EE_ROW: {
+    label: "Rest of World",
+    cls: "zone-wts",
+    headlineCls: "headline-ok",
+    headline: "EE roaming is NOT included in the plan. A daily charge of £6.85 (ex VAT) applies on days the customer uses their phone abroad. They can use their UK data, calls and texts. Only charged on days they make calls, send texts or use data.",
+    dailyCharge: 6.85,
+    dailyLabel: "£6.85/day",
+    dailyNote: "Charged per day of use (ex VAT)"
+  },
+  EE_STD: {
+    label: "Not Covered",
+    cls: "zone-standard",
+    headlineCls: "headline-caution",
+    headline: "This destination is not covered by EE roaming zones. Standard per-use rates apply which can be very expensive. The customer should contact us before travelling to this destination.",
+    dailyCharge: null,
+    dailyLabel: "Not available",
+    dailyNote: "No daily service — standard per-use rates apply"
   }
 };
 
@@ -893,6 +954,17 @@ const BOLTONS = {
       {name:"Global Data 2GB", detail:"Monthly data bolt-on — heavier usage", price:"£90/month"},
       {name:"Global Minutes 100", detail:"100 mins for calls made/received outside EU", price:"£35/month"},
       {name:"Global Minutes 200", detail:"200 mins for calls made/received outside EU", price:"£60/month"},
+    ]
+  },
+  ee: {
+    EE_EU: [
+      {name:"No bolt-on needed", detail:"£2.00/day (ex VAT) is charged automatically on days the customer uses their phone", price:"£2.00/day"},
+    ],
+    EE_ROW: [
+      {name:"No bolt-on needed", detail:"£6.85/day (ex VAT) is charged automatically on days the customer uses their phone", price:"£6.85/day"},
+    ],
+    EE_STD: [
+      {name:"Contact us before travelling", detail:"This destination is not in an EE roaming zone — standard per-use rates apply which can be expensive", price:"Varies"},
     ]
   },
   three: {
@@ -972,6 +1044,28 @@ const TIPS = {
     "Keep Data Roaming OFF unless you have a bolt-on applied.",
     "Use Wi-Fi calling and messaging apps wherever possible.",
     "Contact us before you travel — we can help find the right bolt-on for your trip."
+  ],
+  // ── EE TIPS ──
+  EE_EU: [
+    "EE plans do NOT include roaming — a £2.00/day charge applies on days the customer uses their phone.",
+    "The customer can use their UK data, calls and texts while abroad.",
+    "The daily charge only applies when they make/receive calls, send texts or use data.",
+    "Enable Data Roaming in phone settings before travelling.",
+    "Use Wi-Fi where possible to avoid triggering the daily charge."
+  ],
+  EE_ROW: [
+    "EE plans do NOT include roaming — a £6.85/day charge applies on days the customer uses their phone.",
+    "The customer can use their UK data, calls and texts while abroad.",
+    "The daily charge only applies when they make/receive calls, send texts or use data.",
+    "Turn off background app refresh and auto-updates to control when the daily charge kicks in.",
+    "Use Wi-Fi calling and messaging apps where available to save on roaming."
+  ],
+  EE_STD: [
+    "This destination is NOT covered by EE roaming zones — standard per-use rates apply.",
+    "Standard rates can be very expensive. Contact us before the customer travels.",
+    "Keep Data Roaming switched OFF unless absolutely necessary.",
+    "Use Wi-Fi calling and messaging apps wherever possible.",
+    "Consider whether the customer actually needs mobile data at this destination."
   ],
   // ── THREE BUSINESS TIPS ──
   THREE_EU: [
@@ -1252,8 +1346,8 @@ let currentNet = 'o2';
 let lastCountry = null;
 
 // Network toggle
-const NET_NAMES = {o2:'O2', vf:'Vodafone', plan:'plan.com', three:'Three Business'};
-const NET_CLS = {o2:'selected-o2', vf:'selected-vf', plan:'selected-plan', three:'selected-three'};
+const NET_NAMES = {o2:'O2', vf:'Vodafone', ee:'EE', plan:'plan.com', three:'Three Business'};
+const NET_CLS = {o2:'selected-o2', vf:'selected-vf', ee:'selected-ee', plan:'selected-plan', three:'selected-three'};
 function updateNetworkUI() {
   document.querySelectorAll('.net-card').forEach(c => {
     c.className = 'net-card' + (c.dataset.net === currentNet ? ' ' + NET_CLS[currentNet] : '');
@@ -1283,6 +1377,24 @@ function updateOverviewTable() {
         <td><span class="result-zone zone-standard">Standard Rates</span></td>
         <td>&pound;1.40/min &middot; &pound;6.00/MB</td>
         <td>No daily service available. Global Data or Global Minutes bolt-on recommended.</td>
+      </tr>
+    `;
+  } else if (currentNet === 'ee') {
+    tbody.innerHTML = `
+      <tr>
+        <td><span class="result-zone zone-europe">Europe Zone</span></td>
+        <td><strong>&pound;2.00/day</strong> (ex VAT)</td>
+        <td>Use your UK data, calls &amp; texts. Charged on days you use your phone. 37 destinations.</td>
+      </tr>
+      <tr>
+        <td><span class="result-zone zone-wts">Rest of World</span></td>
+        <td><strong>&pound;6.85/day</strong> (ex VAT)</td>
+        <td>Use your UK data, calls &amp; texts. Charged on days you use your phone. 24 destinations.</td>
+      </tr>
+      <tr>
+        <td><span class="result-zone zone-standard">Not Covered</span></td>
+        <td>Standard per-use rates</td>
+        <td>Not in an EE roaming zone. Contact us before travelling.</td>
       </tr>
     `;
   } else if (currentNet === 'three') {
@@ -1453,7 +1565,7 @@ function selectCountry(c) {
 
   // Travel notice — remind agents customer should notify us before travelling
   const noticeEl = document.getElementById("rTravelNotice");
-  const isEuZone = zoneKey === 'EU_RLAH' || zoneKey === 'PLAN_EU' || zoneKey === 'THREE_EU';
+  const isEuZone = zoneKey === 'EU_RLAH' || zoneKey === 'PLAN_EU' || zoneKey === 'THREE_EU' || zoneKey === 'EE_EU';
   if (!isEuZone) {
     noticeEl.style.display = 'flex';
     noticeEl.innerHTML = `<span class="travel-notice-icon">&#9888;</span><div><strong>Remind the customer:</strong> They should contact us before travelling to ensure the best roaming rates are active on their line. Without this, standard per-use rates may apply which are significantly more expensive.</div>`;
@@ -1508,6 +1620,77 @@ function selectCountry(c) {
           <h4>With Daily Traveller</h4>
           <div class="value">${zoneKey === 'PLAN_DT' ? 'From £5/day' : 'Not available'}</div>
           <div class="note">${zoneKey === 'PLAN_DT' ? '500MB + 100 mins + 50 texts per day' : 'Use Global Data/Minutes bolt-on instead'}</div>
+        </div>
+      `;
+    }
+  } else if (currentNet === 'ee') {
+    if (zoneKey === 'EE_EU') {
+      grid.innerHTML = `
+        <div class="info-box">
+          <h4>Daily charge</h4>
+          <div class="value">£2.00/day <small>(ex VAT)</small></div>
+          <div class="note">Only charged on days the customer uses their phone</div>
+        </div>
+        <div class="info-box">
+          <h4>What they get</h4>
+          <div class="value">UK allowance</div>
+          <div class="note">Their plan's data, calls &amp; texts work as normal</div>
+        </div>
+        <div class="info-box">
+          <h4>Roaming included?</h4>
+          <div class="value" style="color:var(--danger)">No</div>
+          <div class="note">EE plans do NOT include roaming — daily charge applies</div>
+        </div>
+        <div class="info-box">
+          <h4>Destinations</h4>
+          <div class="value">37 countries</div>
+          <div class="note">EU/EEA + Switzerland, Guernsey, Jersey, Isle of Man</div>
+        </div>
+      `;
+    } else if (zoneKey === 'EE_ROW') {
+      grid.innerHTML = `
+        <div class="info-box">
+          <h4>Daily charge</h4>
+          <div class="value">£6.85/day <small>(ex VAT)</small></div>
+          <div class="note">Only charged on days the customer uses their phone</div>
+        </div>
+        <div class="info-box">
+          <h4>What they get</h4>
+          <div class="value">UK allowance</div>
+          <div class="note">Their plan's data, calls &amp; texts work as normal</div>
+        </div>
+        <div class="info-box">
+          <h4>Roaming included?</h4>
+          <div class="value" style="color:var(--danger)">No</div>
+          <div class="note">EE plans do NOT include roaming — daily charge applies</div>
+        </div>
+        <div class="info-box">
+          <h4>Destinations</h4>
+          <div class="value">24 countries</div>
+          <div class="note">Popular worldwide destinations inc. USA, Australia, UAE</div>
+        </div>
+      `;
+    } else {
+      grid.innerHTML = `
+        <div class="info-box">
+          <h4>Daily charge</h4>
+          <div class="value">${z.dailyLabel}</div>
+          <div class="note">${z.dailyNote}</div>
+        </div>
+        <div class="info-box">
+          <h4>Data</h4>
+          <div class="value">Very expensive</div>
+          <div class="note">Standard per-use roaming rates — contact us before travelling</div>
+        </div>
+        <div class="info-box">
+          <h4>Roaming included?</h4>
+          <div class="value" style="color:var(--danger)">No</div>
+          <div class="note">EE plans do NOT include roaming at this destination</div>
+        </div>
+        <div class="info-box">
+          <h4>Recommendation</h4>
+          <div class="value">Contact us</div>
+          <div class="note">Customer should speak to us before travelling here</div>
         </div>
       `;
     }

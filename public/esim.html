@@ -13,50 +13,98 @@
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Travel eSIM — Buy Instant Data for Your Trip">
   <meta name="twitter:description" content="Buy a travel eSIM for instant mobile data abroad. 150+ countries, instant delivery by email.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --primary: #1a2b4a;
-      --accent: #0066cc;
-      --accent-light: #e8f2ff;
+      --primary: #0f1f3d;
+      --primary-mid: #1a2f5a;
+      --accent: #00b4a0;
+      --accent-dark: #009688;
+      --accent-light: #e6f9f7;
+      --blue: #0066cc;
+      --blue-light: #e8f2ff;
       --success: #0a8a3e;
       --success-bg: #e6f7ed;
       --warn: #c45500;
-      --warn-bg: #fff4e6;
+      --warn-bg: #fff8f0;
       --danger: #c4001a;
-      --danger-bg: #ffeaed;
-      --grey-50: #f8f9fb;
+      --grey-50: #f7f8fb;
       --grey-100: #eef0f4;
       --grey-200: #dde1e8;
       --grey-400: #9ba3b2;
       --grey-600: #5c6370;
       --grey-800: #2d3341;
-      --radius: 12px;
-      --shadow: 0 1px 3px rgba(0,0,0,.08), 0 4px 12px rgba(0,0,0,.04);
-      --shadow-lg: 0 4px 16px rgba(0,0,0,.12);
+      --radius: 14px;
+      --radius-sm: 10px;
+      --shadow: 0 1px 3px rgba(0,0,0,.06), 0 6px 16px rgba(0,0,0,.04);
+      --shadow-md: 0 4px 12px rgba(0,0,0,.08), 0 1px 3px rgba(0,0,0,.04);
+      --shadow-lg: 0 8px 30px rgba(0,0,0,.12);
     }
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       color: var(--grey-800); background: var(--grey-50); line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
     }
-    .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
-    /* Header */
-    .header { background: var(--primary); color: #fff; padding: 24px 0; }
-    .header h1 { font-size: 1.75rem; font-weight: 700; }
-    .header p { color: rgba(255,255,255,.75); margin-top: 4px; font-size: .95rem; }
-    /* Nav */
-    .site-nav { background: #fff; border-bottom: 1px solid var(--grey-200); }
-    .nav-inner { display: flex; gap: 0; max-width: 900px; margin: 0 auto; padding: 0 20px; }
+    .container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+
+    /* ── Header / Hero ── */
+    .hero {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-mid) 50%, #1a3a6a 100%);
+      color: #fff; padding: 0; position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(circle at 80% 20%, rgba(0,180,160,.15) 0%, transparent 60%),
+                  radial-gradient(circle at 20% 80%, rgba(0,102,204,.1) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero-top {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 0; position: relative; z-index: 1;
+    }
+    .logo { height: 48px; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.15);
+      border-radius: 999px; padding: 6px 14px; font-size: .78rem; font-weight: 500;
+      color: rgba(255,255,255,.85); backdrop-filter: blur(4px);
+    }
+    .hero-content {
+      padding: 32px 0 48px; position: relative; z-index: 1; max-width: 600px;
+    }
+    .hero h1 {
+      font-size: 2.2rem; font-weight: 800; line-height: 1.15;
+      letter-spacing: -.02em; margin-bottom: 12px;
+    }
+    .hero h1 span { color: var(--accent); }
+    .hero p {
+      color: rgba(255,255,255,.7); font-size: 1.05rem; line-height: 1.5;
+      max-width: 480px;
+    }
+    .hero-stats {
+      display: flex; gap: 32px; margin-top: 24px;
+      padding-top: 24px; border-top: 1px solid rgba(255,255,255,.1);
+    }
+    .hero-stat-num { font-size: 1.5rem; font-weight: 800; color: var(--accent); }
+    .hero-stat-label { font-size: .78rem; color: rgba(255,255,255,.55); margin-top: 2px; }
+
+    /* ── Nav ── */
+    .site-nav { background: #fff; border-bottom: 1px solid var(--grey-200); position: sticky; top: 0; z-index: 50; }
+    .nav-inner { display: flex; gap: 0; max-width: 960px; margin: 0 auto; padding: 0 24px; }
     .nav-link {
-      padding: 12px 20px; font-size: .88rem; font-weight: 600; color: var(--grey-600);
+      padding: 14px 20px; font-size: .85rem; font-weight: 600; color: var(--grey-600);
       text-decoration: none; border-bottom: 2px solid transparent; transition: all .15s;
     }
-    .nav-link:hover { color: var(--accent); }
-    .nav-link.active { color: var(--accent); border-bottom-color: var(--accent); }
-    /* Search */
-    .search-section { padding: 32px 0 16px; }
-    .search-section h2 { font-size: 1.15rem; margin-bottom: 12px; }
+    .nav-link:hover { color: var(--accent-dark); }
+    .nav-link.active { color: var(--accent-dark); border-bottom-color: var(--accent); }
+
+    /* ── Search ── */
+    .search-section { padding: 36px 0 20px; }
+    .search-section h2 { font-size: 1.2rem; margin-bottom: 14px; font-weight: 700; }
     .search-wrap { position: relative; max-width: 560px; }
     .search-wrap svg {
       position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
@@ -64,15 +112,17 @@
     }
     .search-input {
       width: 100%; padding: 14px 16px 14px 48px; border: 2px solid var(--grey-200);
-      border-radius: var(--radius); font-size: 1.05rem; background: #fff;
-      transition: border-color .2s; outline: none;
+      border-radius: var(--radius-sm); font-size: 1rem; background: #fff;
+      transition: border-color .2s, box-shadow .2s; outline: none;
+      font-family: inherit;
     }
-    .search-input:focus { border-color: var(--accent); }
+    .search-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(0,180,160,.12); }
     .search-input::placeholder { color: var(--grey-400); }
-    /* Autocomplete */
+
+    /* ── Autocomplete ── */
     .autocomplete {
       position: absolute; top: calc(100% + 4px); left: 0; right: 0;
-      background: #fff; border: 1px solid var(--grey-200); border-radius: var(--radius);
+      background: #fff; border: 1px solid var(--grey-200); border-radius: var(--radius-sm);
       box-shadow: var(--shadow-lg); max-height: 280px; overflow-y: auto; z-index: 100; display: none;
     }
     .autocomplete.open { display: block; }
@@ -82,149 +132,275 @@
     }
     .ac-item:hover, .ac-item.highlighted { background: var(--accent-light); }
     .ac-flag { font-size: 1.3rem; }
-    /* Popular pills */
-    .popular { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
-    .popular-label { font-size: .8rem; color: var(--grey-600); text-transform: uppercase; font-weight: 600; letter-spacing: .03em; margin-bottom: 4px; width: 100%; }
+
+    /* ── Popular pills ── */
+    .popular { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+    .popular-label { font-size: .75rem; color: var(--grey-400); text-transform: uppercase; font-weight: 700; letter-spacing: .06em; margin-bottom: 4px; width: 100%; }
     .pill {
-      display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px;
+      display: inline-flex; align-items: center; gap: 6px; padding: 7px 16px;
       background: #fff; border: 1px solid var(--grey-200); border-radius: 999px;
-      font-size: .85rem; cursor: pointer; transition: all .15s; color: var(--grey-800);
+      font-size: .85rem; cursor: pointer; transition: all .2s; color: var(--grey-800);
+      font-weight: 500; font-family: inherit;
     }
-    .pill:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
-    /* How it works */
-    .how-it-works { padding: 32px 0 16px; }
-    .how-it-works h2 { font-size: 1.15rem; margin-bottom: 16px; }
+    .pill:hover { border-color: var(--accent); color: var(--accent-dark); background: var(--accent-light); transform: translateY(-1px); box-shadow: var(--shadow); }
+
+    /* ── How it works ── */
+    .how-it-works { padding: 36px 0 20px; }
+    .how-it-works h2 { font-size: 1.2rem; margin-bottom: 18px; font-weight: 700; }
     .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
     .step {
       background: #fff; border: 1px solid var(--grey-200); border-radius: var(--radius);
-      padding: 20px; text-align: center;
+      padding: 24px 20px; text-align: center; transition: transform .2s, box-shadow .2s;
     }
-    .step-num {
-      width: 32px; height: 32px; border-radius: 50%; background: var(--accent);
-      color: #fff; display: inline-flex; align-items: center; justify-content: center;
-      font-weight: 700; font-size: .9rem; margin-bottom: 10px;
+    .step:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+    .step-icon {
+      width: 52px; height: 52px; border-radius: 14px; background: var(--accent-light);
+      color: var(--accent-dark); display: inline-flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; margin-bottom: 14px;
     }
-    .step h3 { font-size: .95rem; margin-bottom: 6px; color: var(--primary); }
-    .step p { font-size: .83rem; color: var(--grey-600); }
-    /* Compatibility note */
+    .step h3 { font-size: .95rem; margin-bottom: 6px; color: var(--primary); font-weight: 700; }
+    .step p { font-size: .82rem; color: var(--grey-600); line-height: 1.5; }
+
+    /* ── Compatibility note ── */
     .compat-note {
-      background: var(--warn-bg); border: 1px solid #fdd; border-radius: var(--radius);
-      padding: 12px 16px; font-size: .83rem; color: var(--warn); margin-top: 16px;
-      display: flex; align-items: flex-start; gap: 8px;
+      background: var(--warn-bg); border: 1px solid #f0d4b8; border-radius: var(--radius-sm);
+      padding: 14px 18px; font-size: .82rem; color: #8a4500; margin-top: 18px;
+      display: flex; align-items: flex-start; gap: 10px; line-height: 1.5;
     }
     .compat-note strong { white-space: nowrap; }
-    /* Packages */
-    .packages-section { padding: 16px 0 32px; display: none; }
+
+    /* ── Packages ── */
+    .packages-section { padding: 20px 0 36px; display: none; }
     .packages-section.visible { display: block; }
-    .packages-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
-    .packages-header h2 { font-size: 1.15rem; }
+    .packages-header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+    .packages-header h2 { font-size: 1.2rem; font-weight: 700; }
     .packages-header .flag { font-size: 1.5rem; }
-    /* Filter bar */
-    .filter-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; align-items: center; }
-    .filter-bar label { font-size: .82rem; font-weight: 600; color: var(--grey-600); }
+
+    /* ── Filter bar ── */
+    .filter-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; align-items: center; }
+    .filter-bar label { font-size: .8rem; font-weight: 700; color: var(--grey-400); text-transform: uppercase; letter-spacing: .04em; }
     .filter-bar select {
-      padding: 6px 10px; border: 1px solid var(--grey-200); border-radius: 6px;
-      font-size: .85rem; background: #fff; cursor: pointer;
+      padding: 7px 12px; border: 1px solid var(--grey-200); border-radius: 8px;
+      font-size: .85rem; background: #fff; cursor: pointer; font-family: inherit;
+      transition: border-color .2s;
     }
-    .pkg-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+    .filter-bar select:focus { border-color: var(--accent); outline: none; }
+
+    /* ── Package cards ── */
+    .pkg-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(275px, 1fr)); gap: 16px; }
     .pkg-card {
       background: #fff; border: 2px solid var(--grey-200); border-radius: var(--radius);
-      padding: 20px; transition: all .2s; cursor: pointer;
+      padding: 22px; transition: all .2s; cursor: pointer; position: relative;
     }
-    .pkg-card:hover { border-color: var(--accent); box-shadow: var(--shadow); }
-    .pkg-card.selected { border-color: var(--accent); background: var(--accent-light); box-shadow: 0 0 0 1px var(--accent); }
-    .pkg-name { font-weight: 700; font-size: 1rem; margin-bottom: 8px; color: var(--primary); }
-    .pkg-details { display: flex; gap: 16px; margin-bottom: 12px; font-size: .85rem; color: var(--grey-600); }
-    .pkg-detail { display: flex; align-items: center; gap: 4px; }
-    .pkg-price { font-size: 1.35rem; font-weight: 700; color: var(--accent); }
-    .pkg-price small { font-size: .75rem; font-weight: 400; color: var(--grey-600); }
+    .pkg-card:hover { border-color: var(--accent); box-shadow: var(--shadow-md); transform: translateY(-2px); }
+    .pkg-card.selected { border-color: var(--accent); background: var(--accent-light); box-shadow: 0 0 0 1px var(--accent), var(--shadow-md); }
+    .pkg-card.best-value { border-color: var(--accent); }
+    .pkg-badge {
+      position: absolute; top: -10px; right: 16px;
+      background: var(--accent); color: #fff; font-size: .7rem; font-weight: 700;
+      padding: 3px 10px; border-radius: 999px; text-transform: uppercase; letter-spacing: .04em;
+    }
+    .pkg-name { font-weight: 700; font-size: .95rem; margin-bottom: 12px; color: var(--primary); }
+    .pkg-details { display: flex; gap: 12px; margin-bottom: 14px; flex-wrap: wrap; }
+    .pkg-detail {
+      display: flex; align-items: center; gap: 6px; font-size: .82rem; color: var(--grey-600);
+      background: var(--grey-50); padding: 5px 10px; border-radius: 6px; font-weight: 500;
+    }
+    .pkg-perday { font-size: .78rem; color: var(--grey-400); font-weight: 500; margin-top: 4px; }
+    .pkg-price { font-size: 1.5rem; font-weight: 800; color: var(--primary); }
+    .pkg-price small { font-size: .7rem; font-weight: 500; color: var(--grey-400); margin-left: 2px; }
+    .pkg-count { font-size: .85rem; color: var(--grey-600); font-weight: 500; }
     .pkg-select-btn {
-      margin-top: 12px; width: 100%; padding: 10px; border: 2px solid var(--accent);
-      border-radius: 8px; background: transparent; color: var(--accent); font-weight: 600;
-      font-size: .9rem; cursor: pointer; transition: all .15s;
+      margin-top: 14px; width: 100%; padding: 11px; border: 2px solid var(--accent);
+      border-radius: 8px; background: transparent; color: var(--accent-dark); font-weight: 700;
+      font-size: .88rem; cursor: pointer; transition: all .2s; font-family: inherit;
     }
     .pkg-select-btn:hover { background: var(--accent); color: #fff; }
     .pkg-card.selected .pkg-select-btn { background: var(--accent); color: #fff; }
-    /* Loading */
-    .loading { text-align: center; padding: 40px; color: var(--grey-600); }
+
+    /* ── Loading ── */
+    .loading { text-align: center; padding: 48px; color: var(--grey-600); }
     .loading-spinner {
-      width: 32px; height: 32px; border: 3px solid var(--grey-200);
+      width: 36px; height: 36px; border: 3px solid var(--grey-200);
       border-top-color: var(--accent); border-radius: 50%; animation: spin .8s linear infinite;
-      margin: 0 auto 12px;
+      margin: 0 auto 14px;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
-    .no-packages { text-align: center; padding: 40px; color: var(--grey-600); }
-    /* Checkout form */
-    .checkout-section { padding: 0 0 40px; display: none; }
+    .no-packages { text-align: center; padding: 48px; color: var(--grey-600); font-size: .95rem; }
+
+    /* ── Checkout form ── */
+    .checkout-section { padding: 0 0 44px; display: none; }
     .checkout-section.visible { display: block; }
     .checkout-card {
       background: #fff; border: 1px solid var(--grey-200); border-radius: var(--radius);
-      padding: 24px; box-shadow: var(--shadow);
+      padding: 28px; box-shadow: var(--shadow);
     }
-    .checkout-card h2 { font-size: 1.15rem; margin-bottom: 16px; }
-    .form-row { margin-bottom: 16px; }
-    .form-row label { display: block; font-size: .85rem; font-weight: 600; margin-bottom: 4px; color: var(--grey-600); }
+    .checkout-card h2 { font-size: 1.15rem; margin-bottom: 20px; font-weight: 700; }
+    .form-row { margin-bottom: 18px; }
+    .form-row label { display: block; font-size: .82rem; font-weight: 600; margin-bottom: 6px; color: var(--grey-600); }
     .form-row input {
       width: 100%; padding: 12px 14px; border: 2px solid var(--grey-200);
-      border-radius: 8px; font-size: .95rem; outline: none; transition: border-color .2s;
+      border-radius: 8px; font-size: .95rem; outline: none; transition: border-color .2s, box-shadow .2s;
+      font-family: inherit;
     }
-    .form-row input:focus { border-color: var(--accent); }
+    .form-row input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(0,180,160,.12); }
+    .form-hint { font-size: .78rem; color: var(--grey-400); margin-top: 4px; display: flex; align-items: center; gap: 4px; }
     .hp-field { position: absolute; left: -9999px; opacity: 0; height: 0; width: 0; }
+
+    /* ── Order summary ── */
     .order-summary {
       background: var(--grey-50); border: 1px solid var(--grey-200);
-      border-radius: 8px; padding: 16px; margin: 20px 0;
+      border-radius: var(--radius-sm); padding: 18px; margin: 24px 0;
     }
-    .order-summary h3 { font-size: .9rem; text-transform: uppercase; color: var(--grey-600); margin-bottom: 8px; letter-spacing: .03em; }
-    .summary-row { display: flex; justify-content: space-between; font-size: .9rem; margin-bottom: 4px; }
-    .summary-row.total { font-weight: 700; font-size: 1.05rem; border-top: 1px solid var(--grey-200); padding-top: 8px; margin-top: 8px; }
+    .order-summary h3 { font-size: .78rem; text-transform: uppercase; color: var(--grey-400); margin-bottom: 10px; letter-spacing: .06em; font-weight: 700; }
+    .summary-row { display: flex; justify-content: space-between; font-size: .9rem; margin-bottom: 6px; }
+    .summary-row.total { font-weight: 800; font-size: 1.1rem; border-top: 2px solid var(--grey-200); padding-top: 10px; margin-top: 10px; color: var(--primary); }
+
+    /* ── Pay button ── */
     .pay-btn {
-      width: 100%; padding: 14px; background: var(--accent); color: #fff; border: none;
-      border-radius: 8px; font-size: 1.05rem; font-weight: 700; cursor: pointer;
-      transition: background .15s;
+      width: 100%; padding: 15px; background: var(--accent); color: #fff; border: none;
+      border-radius: var(--radius-sm); font-size: 1.05rem; font-weight: 700; cursor: pointer;
+      transition: all .2s; font-family: inherit; letter-spacing: -.01em;
     }
-    .pay-btn:hover { background: #0052a3; }
-    .pay-btn:disabled { opacity: .6; cursor: not-allowed; }
-    .form-error { color: var(--danger); font-size: .85rem; margin-top: 8px; }
-    /* Success state */
-    .success-section {
-      display: none; text-align: center; padding: 60px 20px;
+    .pay-btn:hover { background: var(--accent-dark); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0,180,160,.3); }
+    .pay-btn:disabled { opacity: .5; cursor: not-allowed; transform: none; box-shadow: none; }
+    .pay-trust {
+      display: flex; align-items: center; justify-content: center; gap: 12px;
+      margin-top: 12px; font-size: .75rem; color: var(--grey-400);
     }
+    .pay-trust svg { opacity: .5; }
+    .pay-cards { display: flex; gap: 6px; align-items: center; }
+    .pay-cards span {
+      display: inline-block; padding: 2px 6px; border: 1px solid var(--grey-200);
+      border-radius: 4px; font-size: .68rem; font-weight: 700; color: var(--grey-600);
+      background: #fff; line-height: 1.3;
+    }
+    .form-error { color: var(--danger); font-size: .85rem; margin-top: 10px; }
+
+    /* ── FAQ ── */
+    .faq-section { padding: 36px 0 20px; }
+    .faq-section h2 { font-size: 1.2rem; margin-bottom: 18px; font-weight: 700; }
+    .faq-item {
+      background: #fff; border: 1px solid var(--grey-200); border-radius: var(--radius-sm);
+      margin-bottom: 8px; overflow: hidden; transition: box-shadow .2s;
+    }
+    .faq-item:hover { box-shadow: var(--shadow); }
+    .faq-q {
+      padding: 16px 20px; cursor: pointer; display: flex; justify-content: space-between;
+      align-items: center; font-weight: 600; font-size: .92rem; color: var(--primary);
+      user-select: none;
+    }
+    .faq-q svg { transition: transform .2s; flex-shrink: 0; color: var(--grey-400); }
+    .faq-item.open .faq-q svg { transform: rotate(180deg); }
+    .faq-a {
+      max-height: 0; overflow: hidden; transition: max-height .3s ease, padding .3s ease;
+      padding: 0 20px; font-size: .88rem; color: var(--grey-600); line-height: 1.6;
+    }
+    .faq-item.open .faq-a { max-height: 200px; padding: 0 20px 16px; }
+
+    /* ── Savings callout ── */
+    .savings-callout {
+      background: linear-gradient(135deg, var(--accent-light), #e8f2ff);
+      border: 1px solid #c5ece8; border-radius: var(--radius);
+      padding: 18px 24px; display: flex; align-items: center; gap: 14px;
+      margin-top: 20px;
+    }
+    .savings-icon {
+      width: 44px; height: 44px; border-radius: 12px; background: #fff;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      box-shadow: var(--shadow);
+    }
+    .savings-text { font-size: .88rem; color: var(--primary); }
+    .savings-text strong { color: var(--accent-dark); }
+
+    /* ── Fade-in animation ── */
+    .fade-up {
+      opacity: 0; transform: translateY(20px);
+      transition: opacity .5s ease, transform .5s ease;
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── Success ── */
+    .success-section { display: none; text-align: center; padding: 72px 20px; }
     .success-section.visible { display: block; }
-    .success-icon { font-size: 3rem; margin-bottom: 16px; }
-    .success-section h2 { font-size: 1.5rem; color: var(--success); margin-bottom: 8px; }
-    .success-section p { color: var(--grey-600); font-size: 1rem; max-width: 500px; margin: 0 auto 20px; }
-    .success-link {
-      display: inline-block; padding: 12px 24px; background: var(--accent); color: #fff;
-      border-radius: 8px; text-decoration: none; font-weight: 600;
+    .success-icon-wrap {
+      width: 72px; height: 72px; border-radius: 50%; background: var(--success-bg);
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 2rem; margin-bottom: 20px;
     }
-    /* Cancelled state */
-    .cancelled-section { display: none; text-align: center; padding: 60px 20px; }
+    .success-section h2 { font-size: 1.6rem; color: var(--success); margin-bottom: 10px; font-weight: 800; }
+    .success-section p { color: var(--grey-600); font-size: 1rem; max-width: 500px; margin: 0 auto 20px; line-height: 1.6; }
+    .success-link {
+      display: inline-block; padding: 13px 28px; background: var(--accent); color: #fff;
+      border-radius: var(--radius-sm); text-decoration: none; font-weight: 700; transition: all .2s;
+    }
+    .success-link:hover { background: var(--accent-dark); transform: translateY(-1px); }
+
+    /* ── Cancelled ── */
+    .cancelled-section { display: none; text-align: center; padding: 72px 20px; }
     .cancelled-section.visible { display: block; }
-    .cancelled-section h2 { font-size: 1.5rem; color: var(--warn); margin-bottom: 8px; }
+    .cancelled-section h2 { font-size: 1.5rem; color: var(--warn); margin-bottom: 10px; font-weight: 800; }
     .cancelled-section p { color: var(--grey-600); max-width: 500px; margin: 0 auto 20px; }
-    /* Footer */
-    .footer { background: #fff; border-top: 1px solid var(--grey-200); padding: 24px 0; margin-top: 40px; }
-    .footer-inner { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; font-size: .82rem; color: var(--grey-600); }
-    .trust-signals { display: flex; gap: 16px; flex-wrap: wrap; }
-    .trust-signal { display: flex; align-items: center; gap: 4px; }
-    /* Responsive */
-    @media (max-width: 600px) {
-      .header h1 { font-size: 1.35rem; }
+
+    /* ── Footer ── */
+    .footer { background: var(--primary); color: rgba(255,255,255,.7); padding: 32px 0; margin-top: 48px; }
+    .footer-inner { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; font-size: .82rem; }
+    .footer-logo { height: 36px; opacity: .7; }
+    .trust-signals { display: flex; gap: 20px; flex-wrap: wrap; }
+    .trust-signal { display: flex; align-items: center; gap: 6px; font-weight: 500; }
+    .footer-support a { color: var(--accent); text-decoration: none; font-weight: 600; }
+    .footer-support a:hover { text-decoration: underline; }
+    .footer-bottom { margin-top: 20px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,.1); font-size: .78rem; color: rgba(255,255,255,.4); }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      .hero h1 { font-size: 1.6rem; }
+      .hero-content { padding: 20px 0 36px; }
+      .hero-stats { gap: 20px; }
+      .hero-stat-num { font-size: 1.2rem; }
       .pkg-grid { grid-template-columns: 1fr; }
       .steps { grid-template-columns: 1fr; }
       .nav-link { padding: 12px 14px; font-size: .82rem; }
       .footer-inner { flex-direction: column; text-align: center; }
+      .trust-signals { justify-content: center; }
+      .hero-badge { display: none; }
     }
   </style>
 </head>
 <body>
-<div class="header">
+
+<!-- HERO -->
+<div class="hero">
   <div class="container">
-    <h1>Travel eSIM — Buy Instant Data for Your Trip</h1>
-    <p>Choose your destination, pick a data package and get connected in minutes</p>
+    <div class="hero-top">
+      <img src="ctn-logo.png" alt="Compare The Networks" class="logo">
+      <span class="hero-badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Secure Checkout
+      </span>
+    </div>
+    <div class="hero-content">
+      <h1>Travel eSIM — Instant Data <span>Anywhere</span></h1>
+      <p>Pick your destination, choose a data plan, and get connected in minutes. No SIM swapping, no roaming surprises, no contracts.</p>
+      <div class="hero-stats">
+        <div>
+          <div class="hero-stat-num">150+</div>
+          <div class="hero-stat-label">Countries covered</div>
+        </div>
+        <div>
+          <div class="hero-stat-num">5 min</div>
+          <div class="hero-stat-label">Average setup time</div>
+        </div>
+        <div>
+          <div class="hero-stat-num">From &pound;2.99</div>
+          <div class="hero-stat-label">Starting price</div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
+<!-- NAV -->
 <div class="site-nav">
   <div class="nav-inner">
     <a href="/" class="nav-link">Roaming Checker</a>
@@ -244,42 +420,54 @@
     </div>
     <div class="popular">
       <div class="popular-label">Popular destinations</div>
-      <button class="pill" data-country="Spain" data-iso="ES" data-flag="🇪🇸">🇪🇸 Spain</button>
-      <button class="pill" data-country="France" data-iso="FR" data-flag="🇫🇷">🇫🇷 France</button>
-      <button class="pill" data-country="United States" data-iso="US" data-flag="🇺🇸">🇺🇸 USA</button>
-      <button class="pill" data-country="Turkey" data-iso="TR" data-flag="🇹🇷">🇹🇷 Turkey</button>
-      <button class="pill" data-country="Thailand" data-iso="TH" data-flag="🇹🇭">🇹🇭 Thailand</button>
-      <button class="pill" data-country="Greece" data-iso="GR" data-flag="🇬🇷">🇬🇷 Greece</button>
-      <button class="pill" data-country="Italy" data-iso="IT" data-flag="🇮🇹">🇮🇹 Italy</button>
-      <button class="pill" data-country="Portugal" data-iso="PT" data-flag="🇵🇹">🇵🇹 Portugal</button>
-      <button class="pill" data-country="Australia" data-iso="AU" data-flag="🇦🇺">🇦🇺 Australia</button>
-      <button class="pill" data-country="Japan" data-iso="JP" data-flag="🇯🇵">🇯🇵 Japan</button>
+      <button class="pill" data-country="Spain" data-iso="ES" data-flag="&#x1F1EA;&#x1F1F8;">&#x1F1EA;&#x1F1F8; Spain</button>
+      <button class="pill" data-country="France" data-iso="FR" data-flag="&#x1F1EB;&#x1F1F7;">&#x1F1EB;&#x1F1F7; France</button>
+      <button class="pill" data-country="United States" data-iso="US" data-flag="&#x1F1FA;&#x1F1F8;">&#x1F1FA;&#x1F1F8; USA</button>
+      <button class="pill" data-country="Turkey" data-iso="TR" data-flag="&#x1F1F9;&#x1F1F7;">&#x1F1F9;&#x1F1F7; Turkey</button>
+      <button class="pill" data-country="Thailand" data-iso="TH" data-flag="&#x1F1F9;&#x1F1ED;">&#x1F1F9;&#x1F1ED; Thailand</button>
+      <button class="pill" data-country="Greece" data-iso="GR" data-flag="&#x1F1EC;&#x1F1F7;">&#x1F1EC;&#x1F1F7; Greece</button>
+      <button class="pill" data-country="Italy" data-iso="IT" data-flag="&#x1F1EE;&#x1F1F9;">&#x1F1EE;&#x1F1F9; Italy</button>
+      <button class="pill" data-country="Portugal" data-iso="PT" data-flag="&#x1F1F5;&#x1F1F9;">&#x1F1F5;&#x1F1F9; Portugal</button>
+      <button class="pill" data-country="Australia" data-iso="AU" data-flag="&#x1F1E6;&#x1F1FA;">&#x1F1E6;&#x1F1FA; Australia</button>
+      <button class="pill" data-country="Japan" data-iso="JP" data-flag="&#x1F1EF;&#x1F1F5;">&#x1F1EF;&#x1F1F5; Japan</button>
     </div>
   </div>
 
   <!-- HOW IT WORKS -->
-  <div class="how-it-works" id="howItWorks">
+  <div class="how-it-works fade-up" id="howItWorks">
     <h2>How It Works</h2>
     <div class="steps">
       <div class="step">
-        <div class="step-num">1</div>
+        <div class="step-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+        </div>
         <h3>Choose a Package</h3>
-        <p>Search your destination and pick a data plan that suits your trip.</p>
+        <p>Search your destination and pick a data plan that suits your trip length and usage.</p>
       </div>
       <div class="step">
-        <div class="step-num">2</div>
+        <div class="step-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg>
+        </div>
         <h3>Pay Securely</h3>
-        <p>Complete checkout via Stripe. Your payment is protected with 3D Secure.</p>
+        <p>Checkout via Stripe with 3D Secure protection. Your payment details are never stored.</p>
       </div>
       <div class="step">
-        <div class="step-num">3</div>
+        <div class="step-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>
+        </div>
         <h3>Scan &amp; Connect</h3>
-        <p>Receive your eSIM QR code by email within minutes. Scan it and you're online.</p>
+        <p>Receive your eSIM QR code by email within minutes. Scan it and you're online instantly.</p>
       </div>
     </div>
     <div class="compat-note">
       <span>&#9888;&#65039;</span>
-      <span><strong>eSIM compatible device required.</strong> Most iPhones (XS and newer), Samsung Galaxy S20+, Google Pixel 3+ and other recent smartphones support eSIM. Check your device settings for "Add eSIM" or "Add Cellular Plan" before purchasing.</span>
+      <span><strong>eSIM compatible device required.</strong> Most iPhones (XS and newer), Samsung Galaxy S20+, Google Pixel 3+ and other recent smartphones support eSIM. Check your device settings before purchasing.</span>
+    </div>
+    <div class="savings-callout fade-up">
+      <div class="savings-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent-dark)" stroke-width="2"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+      </div>
+      <div class="savings-text"><strong>Save up to 90% vs carrier roaming charges.</strong> A typical UK network charges &pound;6-8/day for roaming. With a travel eSIM, you could pay as little as &pound;2.99 for your entire trip.</div>
     </div>
   </div>
 
@@ -294,6 +482,7 @@
     <div class="packages-header">
       <span class="flag" id="pkgFlag"></span>
       <h2 id="pkgTitle">Packages</h2>
+      <span class="pkg-count" id="pkgCount"></span>
     </div>
     <div class="filter-bar" id="filterBar" style="display:none;">
       <label>Filter:</label>
@@ -332,6 +521,10 @@
         <div class="form-row">
           <label for="custEmail">Email Address</label>
           <input type="email" id="custEmail" required placeholder="john@example.com">
+          <div class="form-hint">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            Your eSIM QR code will be delivered to this email
+          </div>
         </div>
         <!-- Honeypot -->
         <div class="hp-field" aria-hidden="true">
@@ -347,11 +540,21 @@
           <div class="summary-row total"><span>Total</span><span id="sumTotal">-</span></div>
         </div>
 
-        <div style="margin-bottom:16px;">
+        <div style="margin-bottom:18px;">
           <div class="cf-turnstile" data-sitekey="0x4AAAAAACaE00A0y-V8x0Wz" data-callback="onTurnstileSuccess" data-expired-callback="onTurnstileExpired"></div>
         </div>
 
-        <button type="submit" class="pay-btn" id="payBtn" disabled>Pay Now</button>
+        <button type="submit" class="pay-btn" id="payBtn" disabled>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="vertical-align:-2px;margin-right:6px;"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>Pay Now
+        </button>
+        <div class="pay-trust">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Secured by Stripe
+          <span style="color:var(--grey-200);">|</span>
+          <div class="pay-cards">
+            <span>VISA</span><span>MC</span><span>AMEX</span>
+          </div>
+        </div>
         <div class="form-error" id="formError" style="display:none;"></div>
       </form>
     </div>
@@ -359,21 +562,46 @@
 
   <!-- SUCCESS -->
   <div class="success-section" id="successSection">
-    <div class="success-icon">✅</div>
+    <div class="success-icon-wrap">&#x2705;</div>
     <h2>Payment Successful!</h2>
     <p>Your eSIM is being activated. You'll receive an email with your QR code and setup instructions within a few minutes.</p>
-    <p style="font-size:.9rem;color:var(--grey-600);margin-bottom:20px;">If you don't receive an email within 10 minutes, check your spam folder or contact <a href="mailto:support@comparethenetworks.com" style="color:var(--accent);">support@comparethenetworks.com</a></p>
+    <p style="font-size:.88rem;color:var(--grey-600);margin-bottom:24px;">If you don't receive an email within 10 minutes, check your spam folder or contact <a href="mailto:support@comparethenetworks.com" style="color:var(--accent);font-weight:600;">support@comparethenetworks.com</a></p>
     <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
       <a href="esim" class="success-link">Buy Another eSIM</a>
     </div>
   </div>
 
+  <!-- FAQ -->
+  <div class="faq-section fade-up" id="faqSection">
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-item">
+      <div class="faq-q">What is an eSIM and how does it work?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+      <div class="faq-a">An eSIM is a digital SIM that lets you activate a mobile data plan without a physical SIM card. After purchase, you'll receive a QR code by email. Simply scan it with your phone's camera and you'll be connected to a local network at your destination.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Is my phone eSIM compatible?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+      <div class="faq-a">Most modern smartphones support eSIM, including iPhone XS and newer, Samsung Galaxy S20 and newer, Google Pixel 3 and newer, and many other recent devices. Check your phone's settings for "Add eSIM" or "Add Cellular Plan" to confirm.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">When should I activate my eSIM?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+      <div class="faq-a">You can install the eSIM as soon as you receive the QR code (you'll need a WiFi connection). The data plan typically activates when you first connect to a network at your destination, so your validity period starts from arrival, not from installation.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Will I keep my normal phone number?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+      <div class="faq-a">Yes! The eSIM adds a second data line to your phone. Your regular SIM stays active for calls and texts on your existing number. The eSIM handles your mobile data so you avoid expensive roaming charges.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What happens if I run out of data?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+      <div class="faq-a">If you use all your data, simply come back and purchase another eSIM package. You can also buy a larger package before you travel if you expect heavy usage. There are no automatic top-ups or surprise charges.</div>
+    </div>
+  </div>
+
   <!-- CANCELLED -->
   <div class="cancelled-section" id="cancelledSection">
-    <div class="success-icon">↩️</div>
+    <div class="success-icon-wrap" style="background:var(--warn-bg);">&#x21A9;&#xFE0F;</div>
     <h2>Payment Cancelled</h2>
     <p>No worries — your payment was not processed. You can try again whenever you're ready.</p>
-    <a href="esim" class="success-link" style="background: var(--accent);">Try Again</a>
+    <a href="esim" class="success-link">Try Again</a>
   </div>
 </div>
 
@@ -381,12 +609,24 @@
 <div class="footer">
   <div class="container">
     <div class="footer-inner">
+      <img src="ctn-logo.png" alt="Compare The Networks" class="footer-logo">
       <div class="trust-signals">
-        <span class="trust-signal">🔒 Secure checkout via Stripe</span>
-        <span class="trust-signal">⚡ Instant delivery by email</span>
-        <span class="trust-signal">🌍 150+ countries supported</span>
+        <span class="trust-signal">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+          Secure checkout via Stripe
+        </span>
+        <span class="trust-signal">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          Instant delivery by email
+        </span>
+        <span class="trust-signal">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+          150+ countries supported
+        </span>
       </div>
-      <div>Need help? <a href="mailto:support@comparethenetworks.com" style="color:var(--accent);text-decoration:none;">support@comparethenetworks.com</a></div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-support">Need help? <a href="mailto:support@comparethenetworks.com">support@comparethenetworks.com</a></span>
     </div>
   </div>
 </div>
@@ -396,37 +636,37 @@ const API_BASE = 'https://ctn-dash.pages.dev/api';
 
 // ── Country list with ISO2 + flags ──
 const COUNTRIES = [
-  {name:'Afghanistan',iso:'AF',flag:'🇦🇫'},{name:'Albania',iso:'AL',flag:'🇦🇱'},{name:'Algeria',iso:'DZ',flag:'🇩🇿'},
-  {name:'Argentina',iso:'AR',flag:'🇦🇷'},{name:'Australia',iso:'AU',flag:'🇦🇺'},{name:'Austria',iso:'AT',flag:'🇦🇹'},
-  {name:'Bahrain',iso:'BH',flag:'🇧🇭'},{name:'Bangladesh',iso:'BD',flag:'🇧🇩'},{name:'Belgium',iso:'BE',flag:'🇧🇪'},
-  {name:'Bosnia',iso:'BA',flag:'🇧🇦'},{name:'Brazil',iso:'BR',flag:'🇧🇷'},{name:'Bulgaria',iso:'BG',flag:'🇧🇬'},
-  {name:'Cambodia',iso:'KH',flag:'🇰🇭'},{name:'Canada',iso:'CA',flag:'🇨🇦'},{name:'Chile',iso:'CL',flag:'🇨🇱'},
-  {name:'China',iso:'CN',flag:'🇨🇳'},{name:'Colombia',iso:'CO',flag:'🇨🇴'},{name:'Costa Rica',iso:'CR',flag:'🇨🇷'},
-  {name:'Croatia',iso:'HR',flag:'🇭🇷'},{name:'Cuba',iso:'CU',flag:'🇨🇺'},{name:'Cyprus',iso:'CY',flag:'🇨🇾'},
-  {name:'Czech Republic',iso:'CZ',flag:'🇨🇿'},{name:'Denmark',iso:'DK',flag:'🇩🇰'},{name:'Dominican Republic',iso:'DO',flag:'🇩🇴'},
-  {name:'Egypt',iso:'EG',flag:'🇪🇬'},{name:'Estonia',iso:'EE',flag:'🇪🇪'},{name:'Finland',iso:'FI',flag:'🇫🇮'},
-  {name:'France',iso:'FR',flag:'🇫🇷'},{name:'Germany',iso:'DE',flag:'🇩🇪'},{name:'Greece',iso:'GR',flag:'🇬🇷'},
-  {name:'Hong Kong',iso:'HK',flag:'🇭🇰'},{name:'Hungary',iso:'HU',flag:'🇭🇺'},{name:'Iceland',iso:'IS',flag:'🇮🇸'},
-  {name:'India',iso:'IN',flag:'🇮🇳'},{name:'Indonesia',iso:'ID',flag:'🇮🇩'},{name:'Ireland',iso:'IE',flag:'🇮🇪'},
-  {name:'Israel',iso:'IL',flag:'🇮🇱'},{name:'Italy',iso:'IT',flag:'🇮🇹'},{name:'Jamaica',iso:'JM',flag:'🇯🇲'},
-  {name:'Japan',iso:'JP',flag:'🇯🇵'},{name:'Jordan',iso:'JO',flag:'🇯🇴'},{name:'Kenya',iso:'KE',flag:'🇰🇪'},
-  {name:'Kuwait',iso:'KW',flag:'🇰🇼'},{name:'Laos',iso:'LA',flag:'🇱🇦'},{name:'Latvia',iso:'LV',flag:'🇱🇻'},
-  {name:'Lebanon',iso:'LB',flag:'🇱🇧'},{name:'Lithuania',iso:'LT',flag:'🇱🇹'},{name:'Luxembourg',iso:'LU',flag:'🇱🇺'},
-  {name:'Macao',iso:'MO',flag:'🇲🇴'},{name:'Malaysia',iso:'MY',flag:'🇲🇾'},{name:'Malta',iso:'MT',flag:'🇲🇹'},
-  {name:'Mexico',iso:'MX',flag:'🇲🇽'},{name:'Monaco',iso:'MC',flag:'🇲🇨'},{name:'Montenegro',iso:'ME',flag:'🇲🇪'},
-  {name:'Morocco',iso:'MA',flag:'🇲🇦'},{name:'Myanmar',iso:'MM',flag:'🇲🇲'},{name:'Nepal',iso:'NP',flag:'🇳🇵'},
-  {name:'Netherlands',iso:'NL',flag:'🇳🇱'},{name:'New Zealand',iso:'NZ',flag:'🇳🇿'},{name:'Nigeria',iso:'NG',flag:'🇳🇬'},
-  {name:'North Macedonia',iso:'MK',flag:'🇲🇰'},{name:'Norway',iso:'NO',flag:'🇳🇴'},{name:'Oman',iso:'OM',flag:'🇴🇲'},
-  {name:'Pakistan',iso:'PK',flag:'🇵🇰'},{name:'Panama',iso:'PA',flag:'🇵🇦'},{name:'Peru',iso:'PE',flag:'🇵🇪'},
-  {name:'Philippines',iso:'PH',flag:'🇵🇭'},{name:'Poland',iso:'PL',flag:'🇵🇱'},{name:'Portugal',iso:'PT',flag:'🇵🇹'},
-  {name:'Puerto Rico',iso:'PR',flag:'🇵🇷'},{name:'Qatar',iso:'QA',flag:'🇶🇦'},{name:'Romania',iso:'RO',flag:'🇷🇴'},
-  {name:'Russia',iso:'RU',flag:'🇷🇺'},{name:'Saudi Arabia',iso:'SA',flag:'🇸🇦'},{name:'Serbia',iso:'RS',flag:'🇷🇸'},
-  {name:'Singapore',iso:'SG',flag:'🇸🇬'},{name:'Slovakia',iso:'SK',flag:'🇸🇰'},{name:'Slovenia',iso:'SI',flag:'🇸🇮'},
-  {name:'South Africa',iso:'ZA',flag:'🇿🇦'},{name:'South Korea',iso:'KR',flag:'🇰🇷'},{name:'Spain',iso:'ES',flag:'🇪🇸'},
-  {name:'Sri Lanka',iso:'LK',flag:'🇱🇰'},{name:'Sweden',iso:'SE',flag:'🇸🇪'},{name:'Switzerland',iso:'CH',flag:'🇨🇭'},
-  {name:'Taiwan',iso:'TW',flag:'🇹🇼'},{name:'Thailand',iso:'TH',flag:'🇹🇭'},{name:'Turkey',iso:'TR',flag:'🇹🇷'},
-  {name:'UAE',iso:'AE',flag:'🇦🇪'},{name:'Ukraine',iso:'UA',flag:'🇺🇦'},{name:'United Kingdom',iso:'GB',flag:'🇬🇧'},
-  {name:'United States',iso:'US',flag:'🇺🇸'},{name:'Vietnam',iso:'VN',flag:'🇻🇳'},
+  {name:'Afghanistan',iso:'AF',flag:'\u{1F1E6}\u{1F1EB}'},{name:'Albania',iso:'AL',flag:'\u{1F1E6}\u{1F1F1}'},{name:'Algeria',iso:'DZ',flag:'\u{1F1E9}\u{1F1FF}'},
+  {name:'Argentina',iso:'AR',flag:'\u{1F1E6}\u{1F1F7}'},{name:'Australia',iso:'AU',flag:'\u{1F1E6}\u{1F1FA}'},{name:'Austria',iso:'AT',flag:'\u{1F1E6}\u{1F1F9}'},
+  {name:'Bahrain',iso:'BH',flag:'\u{1F1E7}\u{1F1ED}'},{name:'Bangladesh',iso:'BD',flag:'\u{1F1E7}\u{1F1E9}'},{name:'Belgium',iso:'BE',flag:'\u{1F1E7}\u{1F1EA}'},
+  {name:'Bosnia',iso:'BA',flag:'\u{1F1E7}\u{1F1E6}'},{name:'Brazil',iso:'BR',flag:'\u{1F1E7}\u{1F1F7}'},{name:'Bulgaria',iso:'BG',flag:'\u{1F1E7}\u{1F1EC}'},
+  {name:'Cambodia',iso:'KH',flag:'\u{1F1F0}\u{1F1ED}'},{name:'Canada',iso:'CA',flag:'\u{1F1E8}\u{1F1E6}'},{name:'Chile',iso:'CL',flag:'\u{1F1E8}\u{1F1F1}'},
+  {name:'China',iso:'CN',flag:'\u{1F1E8}\u{1F1F3}'},{name:'Colombia',iso:'CO',flag:'\u{1F1E8}\u{1F1F4}'},{name:'Costa Rica',iso:'CR',flag:'\u{1F1E8}\u{1F1F7}'},
+  {name:'Croatia',iso:'HR',flag:'\u{1F1ED}\u{1F1F7}'},{name:'Cuba',iso:'CU',flag:'\u{1F1E8}\u{1F1FA}'},{name:'Cyprus',iso:'CY',flag:'\u{1F1E8}\u{1F1FE}'},
+  {name:'Czech Republic',iso:'CZ',flag:'\u{1F1E8}\u{1F1FF}'},{name:'Denmark',iso:'DK',flag:'\u{1F1E9}\u{1F1F0}'},{name:'Dominican Republic',iso:'DO',flag:'\u{1F1E9}\u{1F1F4}'},
+  {name:'Egypt',iso:'EG',flag:'\u{1F1EA}\u{1F1EC}'},{name:'Estonia',iso:'EE',flag:'\u{1F1EA}\u{1F1EA}'},{name:'Finland',iso:'FI',flag:'\u{1F1EB}\u{1F1EE}'},
+  {name:'France',iso:'FR',flag:'\u{1F1EB}\u{1F1F7}'},{name:'Germany',iso:'DE',flag:'\u{1F1E9}\u{1F1EA}'},{name:'Greece',iso:'GR',flag:'\u{1F1EC}\u{1F1F7}'},
+  {name:'Hong Kong',iso:'HK',flag:'\u{1F1ED}\u{1F1F0}'},{name:'Hungary',iso:'HU',flag:'\u{1F1ED}\u{1F1FA}'},{name:'Iceland',iso:'IS',flag:'\u{1F1EE}\u{1F1F8}'},
+  {name:'India',iso:'IN',flag:'\u{1F1EE}\u{1F1F3}'},{name:'Indonesia',iso:'ID',flag:'\u{1F1EE}\u{1F1E9}'},{name:'Ireland',iso:'IE',flag:'\u{1F1EE}\u{1F1EA}'},
+  {name:'Israel',iso:'IL',flag:'\u{1F1EE}\u{1F1F1}'},{name:'Italy',iso:'IT',flag:'\u{1F1EE}\u{1F1F9}'},{name:'Jamaica',iso:'JM',flag:'\u{1F1EF}\u{1F1F2}'},
+  {name:'Japan',iso:'JP',flag:'\u{1F1EF}\u{1F1F5}'},{name:'Jordan',iso:'JO',flag:'\u{1F1EF}\u{1F1F4}'},{name:'Kenya',iso:'KE',flag:'\u{1F1F0}\u{1F1EA}'},
+  {name:'Kuwait',iso:'KW',flag:'\u{1F1F0}\u{1F1FC}'},{name:'Laos',iso:'LA',flag:'\u{1F1F1}\u{1F1E6}'},{name:'Latvia',iso:'LV',flag:'\u{1F1F1}\u{1F1FB}'},
+  {name:'Lebanon',iso:'LB',flag:'\u{1F1F1}\u{1F1E7}'},{name:'Lithuania',iso:'LT',flag:'\u{1F1F1}\u{1F1F9}'},{name:'Luxembourg',iso:'LU',flag:'\u{1F1F1}\u{1F1FA}'},
+  {name:'Macao',iso:'MO',flag:'\u{1F1F2}\u{1F1F4}'},{name:'Malaysia',iso:'MY',flag:'\u{1F1F2}\u{1F1FE}'},{name:'Malta',iso:'MT',flag:'\u{1F1F2}\u{1F1F9}'},
+  {name:'Mexico',iso:'MX',flag:'\u{1F1F2}\u{1F1FD}'},{name:'Monaco',iso:'MC',flag:'\u{1F1F2}\u{1F1E8}'},{name:'Montenegro',iso:'ME',flag:'\u{1F1F2}\u{1F1EA}'},
+  {name:'Morocco',iso:'MA',flag:'\u{1F1F2}\u{1F1E6}'},{name:'Myanmar',iso:'MM',flag:'\u{1F1F2}\u{1F1F2}'},{name:'Nepal',iso:'NP',flag:'\u{1F1F3}\u{1F1F5}'},
+  {name:'Netherlands',iso:'NL',flag:'\u{1F1F3}\u{1F1F1}'},{name:'New Zealand',iso:'NZ',flag:'\u{1F1F3}\u{1F1FF}'},{name:'Nigeria',iso:'NG',flag:'\u{1F1F3}\u{1F1EC}'},
+  {name:'North Macedonia',iso:'MK',flag:'\u{1F1F2}\u{1F1F0}'},{name:'Norway',iso:'NO',flag:'\u{1F1F3}\u{1F1F4}'},{name:'Oman',iso:'OM',flag:'\u{1F1F4}\u{1F1F2}'},
+  {name:'Pakistan',iso:'PK',flag:'\u{1F1F5}\u{1F1F0}'},{name:'Panama',iso:'PA',flag:'\u{1F1F5}\u{1F1E6}'},{name:'Peru',iso:'PE',flag:'\u{1F1F5}\u{1F1EA}'},
+  {name:'Philippines',iso:'PH',flag:'\u{1F1F5}\u{1F1ED}'},{name:'Poland',iso:'PL',flag:'\u{1F1F5}\u{1F1F1}'},{name:'Portugal',iso:'PT',flag:'\u{1F1F5}\u{1F1F9}'},
+  {name:'Puerto Rico',iso:'PR',flag:'\u{1F1F5}\u{1F1F7}'},{name:'Qatar',iso:'QA',flag:'\u{1F1F6}\u{1F1E6}'},{name:'Romania',iso:'RO',flag:'\u{1F1F7}\u{1F1F4}'},
+  {name:'Russia',iso:'RU',flag:'\u{1F1F7}\u{1F1FA}'},{name:'Saudi Arabia',iso:'SA',flag:'\u{1F1F8}\u{1F1E6}'},{name:'Serbia',iso:'RS',flag:'\u{1F1F7}\u{1F1F8}'},
+  {name:'Singapore',iso:'SG',flag:'\u{1F1F8}\u{1F1EC}'},{name:'Slovakia',iso:'SK',flag:'\u{1F1F8}\u{1F1F0}'},{name:'Slovenia',iso:'SI',flag:'\u{1F1F8}\u{1F1EE}'},
+  {name:'South Africa',iso:'ZA',flag:'\u{1F1FF}\u{1F1E6}'},{name:'South Korea',iso:'KR',flag:'\u{1F1F0}\u{1F1F7}'},{name:'Spain',iso:'ES',flag:'\u{1F1EA}\u{1F1F8}'},
+  {name:'Sri Lanka',iso:'LK',flag:'\u{1F1F1}\u{1F1F0}'},{name:'Sweden',iso:'SE',flag:'\u{1F1F8}\u{1F1EA}'},{name:'Switzerland',iso:'CH',flag:'\u{1F1E8}\u{1F1ED}'},
+  {name:'Taiwan',iso:'TW',flag:'\u{1F1F9}\u{1F1FC}'},{name:'Thailand',iso:'TH',flag:'\u{1F1F9}\u{1F1ED}'},{name:'Turkey',iso:'TR',flag:'\u{1F1F9}\u{1F1F7}'},
+  {name:'UAE',iso:'AE',flag:'\u{1F1E6}\u{1F1EA}'},{name:'Ukraine',iso:'UA',flag:'\u{1F1FA}\u{1F1E6}'},{name:'United Kingdom',iso:'GB',flag:'\u{1F1EC}\u{1F1E7}'},
+  {name:'United States',iso:'US',flag:'\u{1F1FA}\u{1F1F8}'},{name:'Vietnam',iso:'VN',flag:'\u{1F1FB}\u{1F1F3}'},
 ];
 
 // ── State ──
@@ -588,20 +828,43 @@ function renderPackages() {
 
   if (filtered.length === 0) {
     pkgGrid.innerHTML = '<div class="no-packages">No packages match your filters. Try adjusting them.</div>';
+    document.getElementById('pkgCount').textContent = '';
     return;
   }
 
-  pkgGrid.innerHTML = filtered.map(p => {
+  document.getElementById('pkgCount').textContent = `\u2014 ${filtered.length} package${filtered.length !== 1 ? 's' : ''} found`;
+
+  // Find best value (highest GB per pound, excluding unlimited)
+  let bestValueIdx = -1;
+  let bestRatio = 0;
+  filtered.forEach((p, i) => {
+    if (!isUnlimitedPkg(p) && p.priceGbp > 0) {
+      const ratio = p.dataGb / p.priceGbp;
+      if (ratio > bestRatio) { bestRatio = ratio; bestValueIdx = i; }
+    }
+  });
+
+  pkgGrid.innerHTML = filtered.map((p, i) => {
     const origIdx = packages.indexOf(p);
     const sel = selectedPackage === p ? ' selected' : '';
-    return `<div class="pkg-card${sel}" data-idx="${origIdx}">
+    const isBest = i === bestValueIdx && filtered.length > 3 ? ' best-value' : '';
+    const perDay = p.durationDays > 0 ? (p.priceGbp / p.durationDays).toFixed(2) : null;
+    return `<div class="pkg-card${sel}${isBest}" data-idx="${origIdx}">
+      ${isBest ? '<div class="pkg-badge">Best Value</div>' : ''}
       <div class="pkg-name">${esc(p.name)}</div>
       <div class="pkg-details">
-        <span class="pkg-detail">📶 ${isUnlimitedPkg(p) ? 'Unlimited' : p.dataGb + 'GB'}</span>
-        <span class="pkg-detail">📅 ${p.durationDays} days</span>
+        <span class="pkg-detail">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6v16l7-4 8 4 7-4V2l-7 4-8-4-7 4z"/><path d="M8 2v16M16 6v16"/></svg>
+          ${isUnlimitedPkg(p) ? 'Unlimited' : p.dataGb + 'GB'}
+        </span>
+        <span class="pkg-detail">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+          ${p.durationDays} days
+        </span>
       </div>
-      <div class="pkg-price">£${p.priceGbp.toFixed(2)} <small>GBP</small></div>
-      <button class="pkg-select-btn" type="button">${sel ? 'Selected' : 'Select'}</button>
+      <div class="pkg-price">&pound;${p.priceGbp.toFixed(2)} <small>GBP</small></div>
+      ${perDay ? `<div class="pkg-perday">&pound;${perDay}/day</div>` : ''}
+      <button class="pkg-select-btn" type="button">${sel ? 'Selected' : 'Select Package'}</button>
     </div>`;
   }).join('');
 
@@ -625,9 +888,9 @@ function selectPackage(idx) {
   document.getElementById('sumDest').textContent = selectedCountry.name;
   document.getElementById('sumData').textContent = isUnlimitedPkg(selectedPackage) ? 'Unlimited' : selectedPackage.dataGb + 'GB';
   document.getElementById('sumDuration').textContent = selectedPackage.durationDays + ' days';
-  document.getElementById('sumTotal').textContent = '£' + selectedPackage.priceGbp.toFixed(2);
+  document.getElementById('sumTotal').textContent = '\u00A3' + selectedPackage.priceGbp.toFixed(2);
 
-  payBtn.textContent = `Pay Now — £${selectedPackage.priceGbp.toFixed(2)}`;
+  payBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="vertical-align:-2px;margin-right:6px;"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>Pay Now \u2014 \u00A3${selectedPackage.priceGbp.toFixed(2)}`;
   checkoutSection.classList.add('visible');
   updatePayBtn();
 
@@ -687,7 +950,7 @@ checkoutForm.addEventListener('submit', async function(e) {
     if (!res.ok || !data.success) {
       showError(data.error || 'Something went wrong. Please try again.');
       resetTurnstile();
-      payBtn.textContent = `Pay Now — £${selectedPackage.priceGbp.toFixed(2)}`;
+      payBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="vertical-align:-2px;margin-right:6px;"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>Pay Now \u2014 \u00A3${selectedPackage.priceGbp.toFixed(2)}`;
       return;
     }
 
@@ -698,7 +961,7 @@ checkoutForm.addEventListener('submit', async function(e) {
   } catch (err) {
     showError('Network error. Please check your connection and try again.');
     resetTurnstile();
-    payBtn.textContent = `Pay Now — £${selectedPackage.priceGbp.toFixed(2)}`;
+    payBtn.textContent = `Pay Now \u2014 \u00A3${selectedPackage.priceGbp.toFixed(2)}`;
   }
 });
 
@@ -725,6 +988,28 @@ function resetTurnstile() {
   }
   updatePayBtn();
 }
+
+// ── FAQ accordion ──
+document.querySelectorAll('.faq-q').forEach(q => {
+  q.addEventListener('click', () => {
+    const item = q.parentElement;
+    document.querySelectorAll('.faq-item').forEach(other => {
+      if (other !== item) other.classList.remove('open');
+    });
+    item.classList.toggle('open');
+  });
+});
+
+// ── Scroll fade-in ──
+const fadeObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      fadeObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.15 });
+document.querySelectorAll('.fade-up').forEach(el => fadeObserver.observe(el));
 </script>
 </body>
 </html>
