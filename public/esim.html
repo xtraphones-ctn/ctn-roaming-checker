@@ -902,7 +902,7 @@ function selectPackage(idx) {
 function updatePayBtn() {
   const name = document.getElementById('custName').value.trim();
   const email = document.getElementById('custEmail').value.trim();
-  payBtn.disabled = !(selectedPackage && name && email && turnstileToken);
+  payBtn.disabled = !(selectedPackage && name && email);
 }
 
 document.getElementById('custName').addEventListener('input', updatePayBtn);
