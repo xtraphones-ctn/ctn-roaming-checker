@@ -1341,11 +1341,12 @@ const acList = document.getElementById("autocomplete");
 const resultSection = document.getElementById("resultSection");
 const popularRow = document.getElementById("popularRow");
 let activeIdx = -1;
-let currentNet = 'o2';
+const NET_NAMES = {o2:'O2', vf:'Vodafone', ee:'EE', plan:'plan.com', three:'Three Business'};
+const urlNet = new URLSearchParams(window.location.search).get('net');
+let currentNet = (urlNet && NET_NAMES[urlNet]) ? urlNet : 'o2';
 let lastCountry = null;
 
 // Network toggle
-const NET_NAMES = {o2:'O2', vf:'Vodafone', ee:'EE', plan:'plan.com', three:'Three Business'};
 const NET_CLS = {o2:'selected-o2', vf:'selected-vf', ee:'selected-ee', plan:'selected-plan', three:'selected-three'};
 function updateNetworkUI() {
   document.querySelectorAll('.net-card').forEach(c => {
@@ -1452,6 +1453,9 @@ document.querySelectorAll('.net-card').forEach(card => {
     if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); card.click(); }
   });
 });
+
+// Apply initial network from ?net= param
+updateNetworkUI();
 
 // Build popular buttons
 POPULAR.forEach(iso => {
