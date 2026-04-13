@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Business Mobile Bolt-Ons & Rates | Compare The Networks</title>
-  <meta name="description" content="Browse bolt-ons, data top-ups, international calling packs, roaming add-ons and out-of-bundle rates for O2 and Vodafone business mobile. All prices exclude VAT.">
+  <meta name="description" content="Browse bolt-ons, data top-ups, international calling packs, roaming add-ons and out-of-bundle rates for O2, Vodafone and plan.com business mobile. All prices exclude VAT.">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -69,12 +69,17 @@
       background: #fce8e8; border-color: #e60000;
       box-shadow: 0 0 0 1px #e60000, 0 4px 16px rgba(230,0,0,.15);
     }
+    .net-card.selected-plan {
+      background: rgba(0,200,120,.12); border-color: #00c878;
+      box-shadow: 0 0 0 1px #00c878, 0 4px 16px rgba(0,200,120,.15);
+    }
     .net-card-logo { height: 28px; opacity: .4; transition: all .25s; }
     .net-card.selected-o2 .net-card-logo,
     .net-card.selected-vf .net-card-logo { opacity: 1; }
     .net-card-label { font-size: 1.1rem; font-weight: 700; color: var(--grey-400); transition: color .25s; }
     .net-card.selected-o2 .net-card-label { color: #00a0e1; }
     .net-card.selected-vf .net-card-label { color: #e60000; }
+    .net-card.selected-plan .net-card-label { color: #00c878; }
     .net-card-check {
       position: absolute; top: 8px; right: 10px; width: 22px; height: 22px;
       border-radius: 50%; display: flex; align-items: center; justify-content: center;
@@ -82,12 +87,15 @@
     }
     .net-card.selected-o2 .net-card-check { opacity: 1; background: #00a0e1; color: #fff; }
     .net-card.selected-vf .net-card-check { opacity: 1; background: #e60000; color: #fff; }
+    .net-card.selected-plan .net-card-check { opacity: 1; background: #00c878; color: #fff; }
     .net-active-banner {
       margin-top: 10px; margin-bottom: 4px; padding: 8px 16px; border-radius: 8px; font-size: .9rem;
       font-weight: 600; display: inline-flex; align-items: center; gap: 8px; transition: all .3s;
     }
     .net-active-banner.o2 { background: #00a0e1; color: #fff; }
     .net-active-banner.vf { background: #e60000; color: #fff; }
+    .net-active-banner.plan { background: #00c878; color: #fff; }
+    .network-dot.plan { background: #00c878; }
     @media (max-width: 600px) {
       .net-selector { gap: 8px; }
       .net-card { padding: 10px 12px; gap: 10px; }
@@ -172,6 +180,17 @@
 </head>
 <body>
 
+<!-- Back to Compare The Networks top bar -->
+<div style="background:#0c1636;color:#fff;padding:11px 0;border-bottom:1px solid rgba(255,255,255,0.08);font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;">
+  <div style="max-width:960px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+    <a href="https://comparethenetworks.com/" style="color:#fff;text-decoration:none;display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:500;opacity:.9;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Back to Compare The Networks
+    </a>
+    <span style="opacity:.55;font-size:12.5px;letter-spacing:.02em;">By Compare The Networks · OFCOM regulated</span>
+  </div>
+</div>
+
 <div class="header">
   <div class="container">
     <h1 id="pageTitle">O2 Bolt-Ons, Top-Ups & Pricing</h1>
@@ -182,7 +201,7 @@
 
 <div class="site-nav">
   <div class="nav-inner">
-    <a href="https://comparethenetworks.com" class="nav-link" style="color:#0066cc;">← Homepage</a>
+    <a href="https://comparethenetworks.com" class="nav-link" style="color:#0066cc;">&larr; Homepage</a>
     <a href="index.html" class="nav-link">Roaming Checker</a>
     <a href="bolt-ons.html" class="nav-link active">Bolt-Ons &amp; Rates</a>
     <a href="esim.html" class="nav-link">Travel eSIM</a>
@@ -193,13 +212,17 @@
 
   <div class="net-selector">
     <div class="net-card selected-o2" data-net="o2" role="button" tabindex="0" aria-label="Select O2 network">
-      <img src="card_o2.png" alt="O2" class="net-card-logo">
+      <img src="https://ctn-roaming-checker.pages.dev/card_o2.png" alt="O2" class="net-card-logo">
       <span class="net-card-label">O2</span>
       <span class="net-card-check" aria-hidden="true">&#10003;</span>
     </div>
     <div class="net-card" data-net="vf" role="button" tabindex="0" aria-label="Select Vodafone network">
-      <img src="card_vodafone.png" alt="Vodafone" class="net-card-logo">
+      <img src="https://ctn-roaming-checker.pages.dev/card_vodafone.png" alt="Vodafone" class="net-card-logo">
       <span class="net-card-label">Vodafone</span>
+      <span class="net-card-check" aria-hidden="true">&#10003;</span>
+    </div>
+    <div class="net-card" data-net="plan" role="button" tabindex="0" aria-label="Select plan.com network">
+      <span class="net-card-label" style="font-size:1.1rem">plan.com</span>
       <span class="net-card-check" aria-hidden="true">&#10003;</span>
     </div>
   </div>
@@ -257,6 +280,38 @@
             <div><div class="bolton-name">Data Top Up 20GB</div><div class="bolton-desc">Best value top-up for heavy data users.</div></div>
             <div class="bolton-allowance">20GB data</div>
             <div class="bolton-price">&pound;15.00<small>ex VAT / month</small></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- plan.com Data Boosts -->
+      <div class="net-content" data-network="plan">
+        <div class="section-intro">One-off monthly data boosts to avoid out-of-bundle charges. Compatible with Essential, Gold and Platinum tariffs. Unused data does not roll over. Multiple boosts can be added but you cannot duplicate the same size twice in one month.</div>
+        <div class="bolton-grid">
+          <div class="bolton-row">
+            <div><div class="bolton-name">Data Boost 1GB</div><div class="bolton-desc">Light top-up for occasional extra usage.</div></div>
+            <div class="bolton-allowance">1GB data</div>
+            <div class="bolton-price">&pound;8.33<small>ex VAT / month</small></div>
+          </div>
+          <div class="bolton-row">
+            <div><div class="bolton-name">Data Boost 2GB</div><div class="bolton-desc">Extra UK data if you regularly exceed your allowance.</div></div>
+            <div class="bolton-allowance">2GB data</div>
+            <div class="bolton-price">&pound;12.50<small>ex VAT / month</small></div>
+          </div>
+          <div class="bolton-row">
+            <div><div class="bolton-name">Data Boost 5GB</div><div class="bolton-desc">Mid-range boost for moderate data overage.</div></div>
+            <div class="bolton-allowance">5GB data</div>
+            <div class="bolton-price">&pound;19.50<small>ex VAT / month</small></div>
+          </div>
+          <div class="bolton-row">
+            <div><div class="bolton-name">Data Boost 8GB</div><div class="bolton-desc">Higher data boost for heavier monthly usage.</div></div>
+            <div class="bolton-allowance">8GB data</div>
+            <div class="bolton-price">&pound;25.00<small>ex VAT / month</small></div>
+          </div>
+          <div class="bolton-row">
+            <div><div class="bolton-name">Data Boost 12GB</div><div class="bolton-desc">Best value data boost for the heaviest users.</div></div>
+            <div class="bolton-allowance">12GB data</div>
+            <div class="bolton-price">&pound;30.00<small>ex VAT / month</small></div>
           </div>
         </div>
       </div>
@@ -444,6 +499,85 @@
           </div>
         </div>
       </div>
+
+      <!-- plan.com International -->
+      <div class="net-content" data-network="plan">
+        <div class="bolton-grid">
+          <h3 style="font-size:.95rem;margin:4px 0 8px;color:var(--primary)">International Minutes &amp; Texts (Global &mdash; all countries)</h3>
+          <div class="bolton-row">
+            <div><div class="bolton-name">International 60</div><div class="bolton-desc">60 minutes + 50 texts to all international destinations from the UK.</div></div>
+            <div class="bolton-allowance">60 mins + 50 texts</div>
+            <div class="bolton-price">&pound;5.00<small>ex VAT / month</small></div>
+          </div>
+          <div class="bolton-row">
+            <div><div class="bolton-name">International 250</div><div class="bolton-desc">250 minutes + 200 texts to all international destinations from the UK.</div></div>
+            <div class="bolton-allowance">250 mins + 200 texts</div>
+            <div class="bolton-price">&pound;15.00<small>ex VAT / month</small></div>
+          </div>
+          <div class="bolton-row">
+            <div><div class="bolton-name">International 350</div><div class="bolton-desc">350 minutes + 300 texts to all international destinations from the UK.</div></div>
+            <div class="bolton-allowance">350 mins + 300 texts</div>
+            <div class="bolton-price">&pound;20.50<small>ex VAT / month</small></div>
+          </div>
+          <div class="bolton-row">
+            <div><div class="bolton-name">International 500</div><div class="bolton-desc">500 minutes + 400 texts to all international destinations from the UK.</div></div>
+            <div class="bolton-allowance">500 mins + 400 texts</div>
+            <div class="bolton-price">&pound;28.50<small>ex VAT / month</small></div>
+          </div>
+
+          <h3 style="font-size:.95rem;margin:20px 0 8px;color:var(--primary)">International Minutes (Europe only &mdash; UK to Europe Zone)</h3>
+          <div class="bolton-row has-countries">
+            <div><div class="bolton-name">Int. Minutes Europe 100</div><div class="bolton-desc">100 inclusive minutes calling from the UK to European destinations.</div></div>
+            <div class="bolton-allowance">100 minutes</div>
+            <div class="bolton-price">&pound;4.00<small>ex VAT / month</small></div>
+            <div class="bolton-countries-wrap">
+              <span class="bolton-countries-toggle" onclick="this.nextElementSibling.classList.toggle('open');this.textContent=this.nextElementSibling.classList.contains('open')?'Hide countries \u25B2':'View included countries \u25BC'">View included countries &#x25BC;</span>
+              <div class="bolton-countries-list">
+                Austria, Belgium, Bulgaria, Canary Islands, Croatia, Cyprus, Czech Republic, Denmark, Estonia, Finland, France, French Guiana, Germany, Gibraltar, Greece, Guadeloupe, Guernsey, Hungary, Iceland, Ireland, Isle of Man, Italy, Jersey, Latvia, Liechtenstein, Lithuania, Luxembourg, Malta, Martinique, Monaco, Netherlands, Norway, Poland, Portugal, Reunion, Romania, Saint Barth&eacute;lemy, Saint Martin, San Marino, Slovakia, Slovenia, Spain, Sweden, Switzerland, Vatican City
+              </div>
+            </div>
+          </div>
+          <div class="bolton-row has-countries">
+            <div><div class="bolton-name">Int. Minutes Europe 250</div><div class="bolton-desc">250 inclusive minutes calling from the UK to European destinations.</div></div>
+            <div class="bolton-allowance">250 minutes</div>
+            <div class="bolton-price">&pound;8.50<small>ex VAT / month</small></div>
+            <div class="bolton-countries-wrap">
+              <span class="bolton-countries-toggle" onclick="this.nextElementSibling.classList.toggle('open');this.textContent=this.nextElementSibling.classList.contains('open')?'Hide countries \u25B2':'View included countries \u25BC'">View included countries &#x25BC;</span>
+              <div class="bolton-countries-list">
+                Austria, Belgium, Bulgaria, Canary Islands, Croatia, Cyprus, Czech Republic, Denmark, Estonia, Finland, France, French Guiana, Germany, Gibraltar, Greece, Guadeloupe, Guernsey, Hungary, Iceland, Ireland, Isle of Man, Italy, Jersey, Latvia, Liechtenstein, Lithuania, Luxembourg, Malta, Martinique, Monaco, Netherlands, Norway, Poland, Portugal, Reunion, Romania, Saint Barth&eacute;lemy, Saint Martin, San Marino, Slovakia, Slovenia, Spain, Sweden, Switzerland, Vatican City
+              </div>
+            </div>
+          </div>
+          <div class="bolton-row has-countries">
+            <div><div class="bolton-name">Int. Minutes Europe 500</div><div class="bolton-desc">500 inclusive minutes calling from the UK to European destinations.</div></div>
+            <div class="bolton-allowance">500 minutes</div>
+            <div class="bolton-price">&pound;15.00<small>ex VAT / month</small></div>
+            <div class="bolton-countries-wrap">
+              <span class="bolton-countries-toggle" onclick="this.nextElementSibling.classList.toggle('open');this.textContent=this.nextElementSibling.classList.contains('open')?'Hide countries \u25B2':'View included countries \u25BC'">View included countries &#x25BC;</span>
+              <div class="bolton-countries-list">
+                Austria, Belgium, Bulgaria, Canary Islands, Croatia, Cyprus, Czech Republic, Denmark, Estonia, Finland, France, French Guiana, Germany, Gibraltar, Greece, Guadeloupe, Guernsey, Hungary, Iceland, Ireland, Isle of Man, Italy, Jersey, Latvia, Liechtenstein, Lithuania, Luxembourg, Malta, Martinique, Monaco, Netherlands, Norway, Poland, Portugal, Reunion, Romania, Saint Barth&eacute;lemy, Saint Martin, San Marino, Slovakia, Slovenia, Spain, Sweden, Switzerland, Vatican City
+              </div>
+            </div>
+          </div>
+
+          <h3 style="font-size:.95rem;margin:20px 0 8px;color:var(--primary)">International Minutes (Global &mdash; UK to worldwide)</h3>
+          <div class="bolton-row">
+            <div><div class="bolton-name">Int. Minutes Global 100</div><div class="bolton-desc">100 inclusive minutes calling from the UK to worldwide destinations.</div></div>
+            <div class="bolton-allowance">100 minutes</div>
+            <div class="bolton-price">&pound;7.00<small>ex VAT / month</small></div>
+          </div>
+          <div class="bolton-row">
+            <div><div class="bolton-name">Int. Minutes Global 250</div><div class="bolton-desc">250 inclusive minutes calling from the UK to worldwide destinations.</div></div>
+            <div class="bolton-allowance">250 minutes</div>
+            <div class="bolton-price">&pound;13.00<small>ex VAT / month</small></div>
+          </div>
+          <div class="bolton-row">
+            <div><div class="bolton-name">Int. Minutes Global 500</div><div class="bolton-desc">500 inclusive minutes calling from the UK to worldwide destinations.</div></div>
+            <div class="bolton-allowance">500 minutes</div>
+            <div class="bolton-price">&pound;22.50<small>ex VAT / month</small></div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -498,6 +632,110 @@
                 <strong>Rest of World (WTS daily charge applies):</strong> Afghanistan, Andorra, Argentina, Armenia, Bahrain, Bangladesh, Brazil, Cambodia, Chile, China, Colombia, Costa Rica, Dominican Republic, Ecuador, Egypt, El Salvador, Fiji, Georgia, Guatemala, Honduras, Hong Kong, India, Indonesia, Israel, Japan, Jordan, Kazakhstan, Kuwait, Laos, Macau, Malaysia, Mongolia, Montenegro, Morocco, Myanmar, Nicaragua, North Macedonia, Oman, Pakistan, Panama, Papua New Guinea, Paraguay, Peru, Philippines, Puerto Rico, Qatar, Russia, Saudi Arabia, Serbia, Singapore, South Korea, Sri Lanka, Taiwan, Tanzania, Thailand, Tonga, UAE, Ukraine, Uruguay, Uzbekistan, Vanuatu, Vietnam, Samoa
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- plan.com Roaming -->
+      <div class="net-content" data-network="plan">
+        <div class="section-intro">
+          <strong>Europe Zone roaming is included</strong> on all plan.com tariffs &mdash; use your UK data, minutes and texts across 44 European destinations at no extra cost (fair use: 25GB data, 3,000 mins, 3,000 texts per month).
+          <br><br>
+          For destinations outside Europe, plan.com offers daily roaming products and monthly allowance packs.
+        </div>
+        <div class="bolton-grid">
+          <h3 style="font-size:.95rem;margin:4px 0 8px;color:var(--primary)">Daily Traveller (115+ destinations)</h3>
+          <div class="bolton-row has-countries">
+            <div><div class="bolton-name">Daily Traveller &mdash; Essential</div><div class="bolton-desc">100 mins, 50 texts, 500MB data per day. Auto-activates on first use abroad.</div></div>
+            <div class="bolton-allowance">Per day used</div>
+            <div class="bolton-price">&pound;7.00<small>ex VAT / day</small></div>
+            <div class="bolton-countries-wrap">
+              <span class="bolton-countries-toggle" onclick="this.nextElementSibling.classList.toggle('open');this.textContent=this.nextElementSibling.classList.contains('open')?'Hide destinations \u25B2':'View 115+ destinations \u25BC'">View 115+ destinations &#x25BC;</span>
+              <div class="bolton-countries-list">
+                Albania, Argentina, Australia, Bahrain, Bangladesh, Bosnia and Herzegovina, Brazil, Cambodia, Canada, Chile, China, Colombia, Costa Rica, Dominican Republic, Ecuador, Egypt, El Salvador, Fiji, Georgia, Ghana, Guatemala, Honduras, Hong Kong, India, Indonesia, Israel, Jamaica, Japan, Jordan, Kazakhstan, Kenya, Kuwait, Macau, Malaysia, Mexico, Mongolia, Montenegro, Morocco, Myanmar, New Zealand, Nicaragua, North Macedonia, Oman, Pakistan, Panama, Paraguay, Peru, Philippines, Puerto Rico, Qatar, Russia, Saudi Arabia, Serbia, Singapore, South Africa, South Korea, Sri Lanka, Taiwan, Tanzania, Thailand, Trinidad and Tobago, Turkey, UAE, Ukraine, USA, Uruguay, Uzbekistan, Vietnam and more
+              </div>
+            </div>
+          </div>
+          <div class="bolton-row">
+            <div><div class="bolton-name">Daily Traveller &mdash; Gold</div><div class="bolton-desc">100 mins, 50 texts, 500MB data per day. Auto-activates on first use abroad.</div></div>
+            <div class="bolton-allowance">Per day used</div>
+            <div class="bolton-price">&pound;6.00<small>ex VAT / day</small></div>
+          </div>
+          <div class="bolton-row">
+            <div><div class="bolton-name">Daily Traveller &mdash; Platinum</div><div class="bolton-desc">100 mins, 50 texts, 500MB data per day. Auto-activates on first use abroad.</div></div>
+            <div class="bolton-allowance">Per day used</div>
+            <div class="bolton-price">&pound;5.00<small>ex VAT / day</small></div>
+          </div>
+
+          <h3 style="font-size:.95rem;margin:20px 0 8px;color:var(--primary)">Daily Traveller Plus (115+ destinations)</h3>
+          <div class="bolton-row">
+            <div><div class="bolton-name">Daily Traveller Plus &mdash; Essential</div><div class="bolton-desc">500 mins, 200 texts, 1GB data per day. For heavier daily roaming use.</div></div>
+            <div class="bolton-allowance">Per day used</div>
+            <div class="bolton-price">&pound;10.00<small>ex VAT / day</small></div>
+          </div>
+          <div class="bolton-row">
+            <div><div class="bolton-name">Daily Traveller Plus &mdash; Gold</div><div class="bolton-desc">500 mins, 200 texts, 1GB data per day. For heavier daily roaming use.</div></div>
+            <div class="bolton-allowance">Per day used</div>
+            <div class="bolton-price">&pound;9.00<small>ex VAT / day</small></div>
+          </div>
+          <div class="bolton-row">
+            <div><div class="bolton-name">Daily Traveller Plus &mdash; Platinum</div><div class="bolton-desc">500 mins, 200 texts, 1GB data per day. For heavier daily roaming use.</div></div>
+            <div class="bolton-allowance">Per day used</div>
+            <div class="bolton-price">&pound;8.00<small>ex VAT / day</small></div>
+          </div>
+
+          <h3 style="font-size:.95rem;margin:20px 0 8px;color:var(--primary)">Global Data (monthly &mdash; all countries outside Europe)</h3>
+          <div class="bolton-row">
+            <div><div class="bolton-name">Global Data 500MB</div><div class="bolton-desc">Monthly data allowance for roaming outside Europe.</div></div>
+            <div class="bolton-allowance">500MB data</div>
+            <div class="bolton-price">&pound;30.00<small>ex VAT / month</small></div>
+          </div>
+          <div class="bolton-row">
+            <div><div class="bolton-name">Global Data 1GB</div><div class="bolton-desc">Monthly data allowance for roaming outside Europe.</div></div>
+            <div class="bolton-allowance">1GB data</div>
+            <div class="bolton-price">&pound;50.00<small>ex VAT / month</small></div>
+          </div>
+          <div class="bolton-row">
+            <div><div class="bolton-name">Global Data 2GB</div><div class="bolton-desc">Monthly data allowance for roaming outside Europe.</div></div>
+            <div class="bolton-allowance">2GB data</div>
+            <div class="bolton-price">&pound;90.00<small>ex VAT / month</small></div>
+          </div>
+          <div class="bolton-row">
+            <div><div class="bolton-name">Global Data 3GB</div><div class="bolton-desc">Monthly data allowance for roaming outside Europe. Gold &amp; Platinum tariffs only.</div></div>
+            <div class="bolton-allowance">3GB data</div>
+            <div class="bolton-price">&pound;120.00<small>ex VAT / month</small></div>
+          </div>
+          <div class="bolton-row">
+            <div><div class="bolton-name">Global Data 4GB</div><div class="bolton-desc">Monthly data allowance for roaming outside Europe. Platinum tariffs only.</div></div>
+            <div class="bolton-allowance">4GB data</div>
+            <div class="bolton-price">&pound;140.00<small>ex VAT / month</small></div>
+          </div>
+
+          <h3 style="font-size:.95rem;margin:20px 0 8px;color:var(--primary)">Global Minutes (monthly &mdash; all countries outside Europe)</h3>
+          <div class="bolton-row">
+            <div><div class="bolton-name">Global Minutes 100</div><div class="bolton-desc">Monthly minutes for calls made or received while roaming outside Europe.</div></div>
+            <div class="bolton-allowance">100 minutes</div>
+            <div class="bolton-price">&pound;35.00<small>ex VAT / month</small></div>
+          </div>
+          <div class="bolton-row">
+            <div><div class="bolton-name">Global Minutes 200</div><div class="bolton-desc">Monthly minutes for calls made or received while roaming outside Europe.</div></div>
+            <div class="bolton-allowance">200 minutes</div>
+            <div class="bolton-price">&pound;60.00<small>ex VAT / month</small></div>
+          </div>
+          <div class="bolton-row">
+            <div><div class="bolton-name">Global Minutes 300</div><div class="bolton-desc">Monthly minutes for calls made or received while roaming outside Europe.</div></div>
+            <div class="bolton-allowance">300 minutes</div>
+            <div class="bolton-price">&pound;85.00<small>ex VAT / month</small></div>
+          </div>
+          <div class="bolton-row">
+            <div><div class="bolton-name">Global Minutes 500</div><div class="bolton-desc">Monthly minutes for roaming outside Europe. Gold &amp; Platinum tariffs only.</div></div>
+            <div class="bolton-allowance">500 minutes</div>
+            <div class="bolton-price">&pound;120.00<small>ex VAT / month</small></div>
+          </div>
+          <div class="bolton-row">
+            <div><div class="bolton-name">Global Minutes 750</div><div class="bolton-desc">Monthly minutes for roaming outside Europe. Platinum tariffs only.</div></div>
+            <div class="bolton-allowance">750 minutes</div>
+            <div class="bolton-price">&pound;160.00<small>ex VAT / month</small></div>
           </div>
         </div>
       </div>
@@ -571,109 +809,159 @@
       <div class="net-content" data-network="vf">
         <div class="section-intro">No additional specialist bolt-ons are currently available for Vodafone. Contact us if you need a bespoke solution.</div>
       </div>
+
+      <!-- plan.com Other -->
+      <div class="net-content" data-network="plan">
+        <div class="section-intro">
+          <strong>Europe Zone roaming is included</strong> at no extra cost on all plan.com tariffs. Use your UK minutes, texts and data across 44 European destinations with fair use limits of 25GB data, 3,000 minutes and 3,000 texts per month.
+        </div>
+        <div class="bolton-grid">
+          <div class="bolton-row has-countries">
+            <div><div class="bolton-name">Europe Zone Roaming (Included)</div><div class="bolton-desc">Use your UK allowance across 44 European destinations at no extra cost. Out-of-bundle data just 4p/MB.</div></div>
+            <div class="bolton-allowance">Included</div>
+            <div class="bolton-price">Free<small>on all tariffs</small></div>
+            <div class="bolton-countries-wrap">
+              <span class="bolton-countries-toggle" onclick="this.nextElementSibling.classList.toggle('open');this.textContent=this.nextElementSibling.classList.contains('open')?'Hide countries \u25B2':'View 44 Europe Zone countries \u25BC'">View 44 Europe Zone countries &#x25BC;</span>
+              <div class="bolton-countries-list">
+                Austria, Belgium, Bulgaria, Canary Islands, Croatia, Cyprus, Czech Republic, Denmark, Estonia, Finland, France, French Guiana, Germany, Gibraltar, Greece, Guadeloupe, Guernsey, Hungary, Iceland, Ireland, Isle of Man, Italy, Jersey, Latvia, Liechtenstein, Lithuania, Luxembourg, Malta, Martinique, Monaco, Netherlands, Norway, Poland, Portugal, Reunion, Romania, Saint Barth&eacute;lemy, Saint Martin, San Marino, Slovakia, Slovenia, Spain, Sweden, Switzerland, Vatican City
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- OUT-OF-BUNDLE RATES (same for both networks) -->
+  <!-- OUT-OF-BUNDLE RATES -->
   <div class="tab-content" id="tab-oob">
     <div class="tab-panel">
-      <div class="section-intro">These charges apply when you use services not included in your plan allowance, or when you exceed your allowance. Adding a bolt-on can significantly reduce these costs. All prices exclude VAT. Rates apply to both O2 and Vodafone plans.</div>
 
-      <h3 style="font-size:.95rem;margin-bottom:12px;color:var(--primary)">UK Usage (Out of Bundle)</h3>
-      <table class="oob-table" style="margin-bottom:28px">
-        <thead>
-          <tr><th>Charge type</th><th>Price (ex VAT)</th><th>Notes</th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>UK calls (exceeding minutes allowance)</td>
-            <td class="oob-price">&pound;0.65 per minute</td>
-            <td>Applies to plans with capped minutes only. Unlimited plans are not affected.</td>
-          </tr>
-          <tr>
-            <td>Data (exceeding plan allowance)</td>
-            <td class="oob-price">&pound;0.026 per MB</td>
-            <td>Approx &pound;26.62 per GB. Consider a Data Top-Up bolt-on instead.</td>
-          </tr>
-          <tr>
-            <td>Picture / Video message (MMS)</td>
-            <td class="oob-price">&pound;0.66 per message</td>
-            <td>UK picture and video messages sent.</td>
-          </tr>
-          <tr>
-            <td>Voicemail</td>
-            <td class="oob-price">Free to listen</td>
-            <td>Standard voicemail included on all plans.</td>
-          </tr>
-          <tr>
-            <td>Freephone 0800 / 0808</td>
-            <td class="oob-price">Free</td>
-            <td>Free from mobile.</td>
-          </tr>
-        </tbody>
-      </table>
+      <!-- O2/VF OOB -->
+      <div class="net-content active" data-network="o2">
+        <div class="section-intro">These charges apply when you use services not included in your plan allowance, or when you exceed your allowance. Adding a bolt-on can significantly reduce these costs. All prices exclude VAT.</div>
 
-      <h3 style="font-size:.95rem;margin-bottom:12px;color:var(--primary)">Non-Geographic &amp; Premium Numbers</h3>
-      <table class="oob-table" style="margin-bottom:28px">
-        <thead>
-          <tr><th>Number range</th><th>Access charge (ex VAT)</th><th>Notes</th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>084 / 087 / 09 / 118 numbers</td>
-            <td class="oob-price">&pound;0.79 per minute</td>
-            <td>Access charge only &mdash; plus a service charge set by the organisation you're calling.</td>
-          </tr>
-          <tr>
-            <td>Premium rate (09xx)</td>
-            <td class="oob-price">&pound;0.79 per minute</td>
-            <td>Access charge &mdash; service charge varies. Consider a Non-Geo bolt-on to reduce costs.</td>
-          </tr>
-        </tbody>
-      </table>
+        <h3 style="font-size:.95rem;margin-bottom:12px;color:var(--primary)">UK Usage (Out of Bundle)</h3>
+        <table class="oob-table" style="margin-bottom:28px">
+          <thead><tr><th>Charge type</th><th>Price (ex VAT)</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>UK calls (exceeding minutes allowance)</td><td class="oob-price">&pound;0.65 per minute</td><td>Applies to plans with capped minutes only.</td></tr>
+            <tr><td>Data (exceeding plan allowance)</td><td class="oob-price">&pound;0.026 per MB</td><td>Approx &pound;26.62 per GB. Consider a Data Top-Up bolt-on.</td></tr>
+            <tr><td>Picture / Video message (MMS)</td><td class="oob-price">&pound;0.66 per message</td><td>UK picture and video messages sent.</td></tr>
+            <tr><td>Voicemail</td><td class="oob-price">Free to listen</td><td>Standard voicemail included on all plans.</td></tr>
+            <tr><td>Freephone 0800 / 0808</td><td class="oob-price">Free</td><td>Free from mobile.</td></tr>
+          </tbody>
+        </table>
 
-      <h3 style="font-size:.95rem;margin-bottom:12px;color:var(--primary)">International Calls (from UK, without a pack)</h3>
-      <table class="oob-table" style="margin-bottom:28px">
-        <thead>
-          <tr><th>Destination</th><th>Price (ex VAT)</th><th>Notes</th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Europe, USA, Canada, Australia (Group 1)</td>
-            <td class="oob-price">&pound;1.25 per minute</td>
-            <td>Major destinations. Consider an International calling pack to reduce costs.</td>
-          </tr>
-          <tr>
-            <td>Rest of World (Group 2+)</td>
-            <td class="oob-price">&pound;2.50 per minute</td>
-            <td>All other destinations. Consider an International calling pack.</td>
-          </tr>
-          <tr>
-            <td>International SMS</td>
-            <td class="oob-price">&pound;0.15 per text</td>
-            <td>Text messages sent to international numbers from the UK.</td>
-          </tr>
-        </tbody>
-      </table>
+        <h3 style="font-size:.95rem;margin-bottom:12px;color:var(--primary)">Non-Geographic &amp; Premium Numbers</h3>
+        <table class="oob-table" style="margin-bottom:28px">
+          <thead><tr><th>Number range</th><th>Access charge (ex VAT)</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>084 / 087 / 09 / 118 numbers</td><td class="oob-price">&pound;0.79 per minute</td><td>Access charge only &mdash; plus a service charge set by the organisation you're calling.</td></tr>
+            <tr><td>Premium rate (09xx)</td><td class="oob-price">&pound;0.79 per minute</td><td>Access charge &mdash; service charge varies.</td></tr>
+          </tbody>
+        </table>
 
-      <h3 style="font-size:.95rem;margin-bottom:12px;color:var(--primary)">Roaming (using your phone abroad)</h3>
-      <table class="oob-table">
-        <thead>
-          <tr><th>Zone</th><th>Price (ex VAT)</th><th>Notes</th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Europe (EU / EEA)</td>
-            <td class="oob-price">Included</td>
-            <td>Use your UK allowance at no extra cost. <strong>Fair use: 25GB data/month limit</strong>. Prolonged or permanent roaming may be restricted.</td>
-          </tr>
-          <tr>
-            <td>Worldwide (all other countries)</td>
-            <td class="oob-price">&pound;5.00 per day</td>
-            <td>Daily charge on days you use your phone. Use your UK allowance. <a href="index.html" style="color:var(--accent)">Check your destination &rarr;</a></td>
-          </tr>
-        </tbody>
-      </table>
+        <h3 style="font-size:.95rem;margin-bottom:12px;color:var(--primary)">International Calls (from UK, without a pack)</h3>
+        <table class="oob-table" style="margin-bottom:28px">
+          <thead><tr><th>Destination</th><th>Price (ex VAT)</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>Europe, USA, Canada, Australia (Group 1)</td><td class="oob-price">&pound;1.25 per minute</td><td>Major destinations. Consider an International calling pack.</td></tr>
+            <tr><td>Rest of World (Group 2+)</td><td class="oob-price">&pound;2.50 per minute</td><td>All other destinations.</td></tr>
+            <tr><td>International SMS</td><td class="oob-price">&pound;0.15 per text</td><td>Texts sent to international numbers from the UK.</td></tr>
+          </tbody>
+        </table>
+
+        <h3 style="font-size:.95rem;margin-bottom:12px;color:var(--primary)">Roaming (using your phone abroad)</h3>
+        <table class="oob-table">
+          <thead><tr><th>Zone</th><th>Price (ex VAT)</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>Europe (EU / EEA)</td><td class="oob-price">Included</td><td>Use your UK allowance at no extra cost. <strong>Fair use: 25GB data/month</strong>.</td></tr>
+            <tr><td>Worldwide (all other countries)</td><td class="oob-price">&pound;5.00 per day</td><td>Daily charge on days you use your phone. <a href="https://comparethenetworks.com/roaming/" style="color:var(--accent)">Check your destination &rarr;</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- VF OOB (same rates as O2 for CTN wholesale) -->
+      <div class="net-content" data-network="vf">
+        <div class="section-intro">These charges apply when you use services not included in your plan allowance, or when you exceed your allowance. Adding a bolt-on can significantly reduce these costs. All prices exclude VAT.</div>
+
+        <h3 style="font-size:.95rem;margin-bottom:12px;color:var(--primary)">UK Usage (Out of Bundle)</h3>
+        <table class="oob-table" style="margin-bottom:28px">
+          <thead><tr><th>Charge type</th><th>Price (ex VAT)</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>UK calls (exceeding minutes allowance)</td><td class="oob-price">&pound;0.65 per minute</td><td>Applies to plans with capped minutes only.</td></tr>
+            <tr><td>Data (exceeding plan allowance)</td><td class="oob-price">&pound;0.026 per MB</td><td>Approx &pound;26.62 per GB. Consider a Data Top-Up bolt-on.</td></tr>
+            <tr><td>Picture / Video message (MMS)</td><td class="oob-price">&pound;0.66 per message</td><td>UK picture and video messages sent.</td></tr>
+            <tr><td>Voicemail</td><td class="oob-price">Free to listen</td><td>Standard voicemail included on all plans.</td></tr>
+            <tr><td>Freephone 0800 / 0808</td><td class="oob-price">Free</td><td>Free from mobile.</td></tr>
+          </tbody>
+        </table>
+
+        <h3 style="font-size:.95rem;margin-bottom:12px;color:var(--primary)">Non-Geographic &amp; Premium Numbers</h3>
+        <table class="oob-table" style="margin-bottom:28px">
+          <thead><tr><th>Number range</th><th>Access charge (ex VAT)</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>084 / 087 / 09 / 118 numbers</td><td class="oob-price">&pound;0.79 per minute</td><td>Access charge only &mdash; plus a service charge set by the organisation you're calling.</td></tr>
+            <tr><td>Premium rate (09xx)</td><td class="oob-price">&pound;0.79 per minute</td><td>Access charge &mdash; service charge varies.</td></tr>
+          </tbody>
+        </table>
+
+        <h3 style="font-size:.95rem;margin-bottom:12px;color:var(--primary)">International Calls (from UK, without a pack)</h3>
+        <table class="oob-table" style="margin-bottom:28px">
+          <thead><tr><th>Destination</th><th>Price (ex VAT)</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>Europe, USA, Canada, Australia (Group 1)</td><td class="oob-price">&pound;1.25 per minute</td><td>Major destinations. Consider an International calling pack.</td></tr>
+            <tr><td>Rest of World (Group 2+)</td><td class="oob-price">&pound;2.50 per minute</td><td>All other destinations.</td></tr>
+            <tr><td>International SMS</td><td class="oob-price">&pound;0.15 per text</td><td>Texts sent to international numbers from the UK.</td></tr>
+          </tbody>
+        </table>
+
+        <h3 style="font-size:.95rem;margin-bottom:12px;color:var(--primary)">Roaming (using your phone abroad)</h3>
+        <table class="oob-table">
+          <thead><tr><th>Zone</th><th>Price (ex VAT)</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>Europe (EU / EEA)</td><td class="oob-price">Included</td><td>Use your UK allowance at no extra cost. <strong>Fair use: 25GB data/month</strong>.</td></tr>
+            <tr><td>Worldwide (all other countries)</td><td class="oob-price">&pound;5.00 per day</td><td>Daily charge on days you use your phone. <a href="https://comparethenetworks.com/roaming/" style="color:var(--accent)">Check your destination &rarr;</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- plan.com OOB -->
+      <div class="net-content" data-network="plan">
+        <div class="section-intro">These charges apply when you use services outside your plan.com allowance. Bolt-ons can significantly reduce these costs. All prices exclude VAT.</div>
+
+        <h3 style="font-size:.95rem;margin-bottom:12px;color:var(--primary)">UK Usage (Out of Bundle)</h3>
+        <table class="oob-table" style="margin-bottom:28px">
+          <thead><tr><th>Charge type</th><th>Price (ex VAT)</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>UK calls (exceeding minutes allowance)</td><td class="oob-price">&pound;0.55 per minute</td><td>Applies to plans with capped minutes only.</td></tr>
+            <tr><td>UK data (exceeding plan allowance)</td><td class="oob-price">&pound;0.026 per MB</td><td>Approx &pound;26.62 per GB. Consider a Data Boost bolt-on.</td></tr>
+            <tr><td>UK SMS (exceeding allowance)</td><td class="oob-price">&pound;0.10 per text</td><td>Only applies if you exceed your included texts.</td></tr>
+            <tr><td>Picture / Video message (MMS)</td><td class="oob-price">&pound;0.45 per message</td><td>UK picture and video messages sent.</td></tr>
+            <tr><td>Voicemail</td><td class="oob-price">Free to listen</td><td>Standard voicemail included on all tariffs.</td></tr>
+          </tbody>
+        </table>
+
+        <h3 style="font-size:.95rem;margin-bottom:12px;color:var(--primary)">International Calls (from UK, without a bolt-on)</h3>
+        <table class="oob-table" style="margin-bottom:28px">
+          <thead><tr><th>Destination</th><th>Price (ex VAT)</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>Europe Zone (44 countries)</td><td class="oob-price">&pound;1.00 per minute</td><td>Consider an International Minutes Europe bolt-on.</td></tr>
+            <tr><td>Rest of World</td><td class="oob-price">&pound;2.00 per minute</td><td>Consider an International Minutes Global bolt-on.</td></tr>
+            <tr><td>International SMS</td><td class="oob-price">&pound;0.15 per text</td><td>Texts sent to international numbers from the UK.</td></tr>
+          </tbody>
+        </table>
+
+        <h3 style="font-size:.95rem;margin-bottom:12px;color:var(--primary)">Roaming (using your phone abroad)</h3>
+        <table class="oob-table">
+          <thead><tr><th>Zone</th><th>Price (ex VAT)</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>Europe Zone (44 countries)</td><td class="oob-price">Included</td><td>Use your UK allowance at no extra cost. Fair use: 25GB data, 3,000 mins, 3,000 texts/month. OOB data: 4p/MB.</td></tr>
+            <tr><td>Daily Traveller destinations (115+)</td><td class="oob-price">&pound;5.00&ndash;&pound;7.00/day</td><td>Price varies by tariff tier. Auto-activates on first use. <a href="https://comparethenetworks.com/roaming/" style="color:var(--accent)">Check your destination &rarr;</a></td></tr>
+            <tr><td>Standard destinations (no Daily Traveller)</td><td class="oob-price">Per-use rates</td><td>Calls: &pound;1.40/min &bull; Data: &pound;6.00/MB &bull; SMS: 40p. A Global Data or Global Minutes bolt-on is strongly recommended.</td></tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 
@@ -699,31 +987,32 @@
 </div>
 
 <script>
-  let currentNet = 'o2';
+  const NET_NAMES = { o2: 'O2', vf: 'Vodafone', plan: 'plan.com' };
+  const NET_TITLES = { o2: 'O2 Bolt-Ons, Top-Ups & Pricing', vf: 'Vodafone Bolt-Ons, Top-Ups & Pricing', plan: 'plan.com Bolt-Ons, Top-Ups & Pricing' };
+  const NET_LABELS = { o2: 'O2 Network', vf: 'Vodafone Network', plan: 'plan.com Network' };
 
-  // Network toggle
+  // Read ?net= from URL if present
+  const urlNet = new URLSearchParams(window.location.search).get('net');
+  let currentNet = (urlNet && NET_NAMES[urlNet]) ? urlNet : 'o2';
+
   function updateNetworkUI() {
     document.querySelectorAll('.net-card').forEach(c => {
-      c.className = 'net-card' + (c.dataset.net === currentNet ? (currentNet === 'o2' ? ' selected-o2' : ' selected-vf') : '');
+      c.className = 'net-card' + (c.dataset.net === currentNet ? ' selected-' + currentNet : '');
     });
     const banner = document.getElementById('netBanner');
-    const name = currentNet === 'o2' ? 'O2' : 'Vodafone';
     banner.className = 'net-active-banner ' + currentNet;
-    banner.innerHTML = 'Viewing rates for <strong>' + name + '</strong>';
+    banner.innerHTML = 'Viewing rates for <strong>' + NET_NAMES[currentNet] + '</strong>';
 
-    // Update header
-    document.getElementById('pageTitle').textContent = currentNet === 'o2'
-      ? 'O2 Bolt-Ons, Top-Ups & Pricing'
-      : 'Vodafone Bolt-Ons, Top-Ups & Pricing';
-    document.getElementById('netLabel').textContent = currentNet === 'o2' ? 'O2 Network' : 'Vodafone Network';
-    const dot = document.getElementById('netDot');
-    dot.className = 'network-dot ' + currentNet;
+    document.getElementById('pageTitle').textContent = NET_TITLES[currentNet];
+    document.getElementById('netLabel').textContent = NET_LABELS[currentNet];
+    document.getElementById('netDot').className = 'network-dot ' + currentNet;
 
     // Switch network-specific content
     document.querySelectorAll('.net-content').forEach(el => {
       el.classList.toggle('active', el.dataset.network === currentNet);
     });
   }
+
   document.querySelectorAll('.net-card').forEach(card => {
     card.addEventListener('click', () => {
       currentNet = card.dataset.net;
@@ -743,6 +1032,9 @@
       document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
     });
   });
+
+  // Apply initial network state (handles ?net= param)
+  updateNetworkUI();
 </script>
 
 </body>
