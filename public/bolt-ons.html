@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Business Mobile Bolt-Ons & Rates | Compare The Networks</title>
-  <meta name="description" content="Browse bolt-ons, data top-ups, international calling packs, roaming add-ons and out-of-bundle rates for O2, Vodafone and plan.com business mobile. All prices exclude VAT.">
+  <meta name="description" content="Browse bolt-ons, data top-ups, international calling packs, roaming add-ons and out-of-bundle rates for O2, Vodafone, EE and plan.com business mobile. All prices exclude VAT.">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -41,6 +41,7 @@
     .network-dot { width: 8px; height: 8px; border-radius: 50%; }
     .network-dot.o2 { background: #00a0e1; }
     .network-dot.vf { background: #e60000; }
+    .network-dot.ee { background: #00b388; }
     /* Site nav */
     .site-nav { background: #fff; border-bottom: 1px solid var(--grey-200); }
     .nav-inner { display: flex; gap: 0; max-width: 900px; margin: 0 auto; padding: 0 20px; }
@@ -73,6 +74,10 @@
       background: rgba(0,200,120,.12); border-color: #00c878;
       box-shadow: 0 0 0 1px #00c878, 0 4px 16px rgba(0,200,120,.15);
     }
+    .net-card.selected-ee {
+      background: rgba(0,179,136,.12); border-color: #00b388;
+      box-shadow: 0 0 0 1px #00b388, 0 4px 16px rgba(0,179,136,.15);
+    }
     .net-card-logo { height: 28px; opacity: .4; transition: all .25s; }
     .net-card.selected-o2 .net-card-logo,
     .net-card.selected-vf .net-card-logo { opacity: 1; }
@@ -80,6 +85,7 @@
     .net-card.selected-o2 .net-card-label { color: #00a0e1; }
     .net-card.selected-vf .net-card-label { color: #e60000; }
     .net-card.selected-plan .net-card-label { color: #00c878; }
+    .net-card.selected-ee .net-card-label { color: #00b388; }
     .net-card-check {
       position: absolute; top: 8px; right: 10px; width: 22px; height: 22px;
       border-radius: 50%; display: flex; align-items: center; justify-content: center;
@@ -88,6 +94,7 @@
     .net-card.selected-o2 .net-card-check { opacity: 1; background: #00a0e1; color: #fff; }
     .net-card.selected-vf .net-card-check { opacity: 1; background: #e60000; color: #fff; }
     .net-card.selected-plan .net-card-check { opacity: 1; background: #00c878; color: #fff; }
+    .net-card.selected-ee .net-card-check { opacity: 1; background: #00b388; color: #fff; }
     .net-active-banner {
       margin-top: 10px; margin-bottom: 4px; padding: 8px 16px; border-radius: 8px; font-size: .9rem;
       font-weight: 600; display: inline-flex; align-items: center; gap: 8px; transition: all .3s;
@@ -95,6 +102,7 @@
     .net-active-banner.o2 { background: #00a0e1; color: #fff; }
     .net-active-banner.vf { background: #e60000; color: #fff; }
     .net-active-banner.plan { background: #00c878; color: #fff; }
+    .net-active-banner.ee { background: #00b388; color: #fff; }
     .network-dot.plan { background: #00c878; }
     @media (max-width: 600px) {
       .net-selector { gap: 8px; }
@@ -221,6 +229,10 @@
       <span class="net-card-label">Vodafone</span>
       <span class="net-card-check" aria-hidden="true">&#10003;</span>
     </div>
+    <div class="net-card" data-net="ee" role="button" tabindex="0" aria-label="Select EE network">
+      <span class="net-card-label">EE</span>
+      <span class="net-card-check" aria-hidden="true">&#10003;</span>
+    </div>
     <div class="net-card" data-net="plan" role="button" tabindex="0" aria-label="Select plan.com network">
       <span class="net-card-label" style="font-size:1.1rem">plan.com</span>
       <span class="net-card-check" aria-hidden="true">&#10003;</span>
@@ -280,6 +292,28 @@
             <div><div class="bolton-name">Data Top Up 20GB</div><div class="bolton-desc">Best value top-up for heavy data users.</div></div>
             <div class="bolton-allowance">20GB data</div>
             <div class="bolton-price">&pound;15.00<small>ex VAT / month</small></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EE Data Top-Ups -->
+      <div class="net-content" data-network="ee">
+        <div class="section-intro">Add extra data to your EE Everyway monthly allowance. Top-ups apply to your UK data and remain available while roaming in qualifying zones. Codes correspond to Giacom EEETU bolt-ons.</div>
+        <div class="bolton-grid">
+          <div class="bolton-row">
+            <div><div class="bolton-name">Data Top Up 6GB</div><div class="bolton-desc">Extra UK data if you exceed your plan allowance.</div></div>
+            <div class="bolton-allowance">6GB data</div>
+            <div class="bolton-price">&pound;9.50<small>ex VAT / month</small></div>
+          </div>
+          <div class="bolton-row">
+            <div><div class="bolton-name">Data Top Up 10GB</div><div class="bolton-desc">Extra UK data for higher monthly usage.</div></div>
+            <div class="bolton-allowance">10GB data</div>
+            <div class="bolton-price">&pound;12.50<small>ex VAT / month</small></div>
+          </div>
+          <div class="bolton-row">
+            <div><div class="bolton-name">Data Top Up 20GB</div><div class="bolton-desc">Best value top-up for heavy data users.</div></div>
+            <div class="bolton-allowance">20GB data</div>
+            <div class="bolton-price">&pound;16.50<small>ex VAT / month</small></div>
           </div>
         </div>
       </div>
@@ -500,6 +534,40 @@
         </div>
       </div>
 
+      <!-- EE International -->
+      <div class="net-content" data-network="ee">
+        <div class="bolton-grid">
+          <div class="bolton-row">
+            <div><div class="bolton-name">International Calls 100 mins</div><div class="bolton-desc">100 inclusive minutes calling from the UK to international destinations.</div></div>
+            <div class="bolton-allowance">100 minutes</div>
+            <div class="bolton-price">&pound;4.50<small>ex VAT / month</small></div>
+          </div>
+          <div class="bolton-row">
+            <div><div class="bolton-name">International Calls 250 mins</div><div class="bolton-desc">250 inclusive minutes calling from the UK to international destinations.</div></div>
+            <div class="bolton-allowance">250 minutes</div>
+            <div class="bolton-price">&pound;7.50<small>ex VAT / month</small></div>
+          </div>
+          <div class="bolton-row">
+            <div><div class="bolton-name">International Calls 500 mins</div><div class="bolton-desc">500 inclusive minutes calling from the UK to international destinations &mdash; best value for regular international callers.</div></div>
+            <div class="bolton-allowance">500 minutes</div>
+            <div class="bolton-price">&pound;14.50<small>ex VAT / month</small></div>
+          </div>
+          <div class="bolton-row">
+            <div><div class="bolton-name">Ireland International</div><div class="bolton-desc">Reduced rates for calls and texts from the UK to the Republic of Ireland.</div></div>
+            <div class="bolton-allowance">Ireland calls &amp; SMS</div>
+            <div class="bolton-price">&pound;2.50<small>ex VAT / month</small></div>
+          </div>
+          <div class="bolton-row">
+            <div><div class="bolton-name">Ireland Extra (inclusive roaming)</div><div class="bolton-desc">Use your UK allowance while roaming in Ireland at no extra daily charge.</div></div>
+            <div class="bolton-allowance">Inclusive Ireland roam</div>
+            <div class="bolton-price">&pound;5.50<small>ex VAT / month</small></div>
+          </div>
+        </div>
+        <div style="margin-top:14px;padding:10px 14px;background:rgba(0,179,136,.07);border-left:3px solid #00b388;border-radius:6px;font-size:.85rem;color:var(--grey-600);">
+          International call bundles cover destinations within EE's Europe, Business and World roaming zones. Out-of-bundle international calling is charged at the rates shown in the "Out-of-Bundle Rates" tab.
+        </div>
+      </div>
+
       <!-- plan.com International -->
       <div class="net-content" data-network="plan">
         <div class="bolton-grid">
@@ -690,6 +758,45 @@
         </div>
       </div>
 
+      <!-- EE Roaming -->
+      <div class="net-content" data-network="ee">
+        <div class="section-intro">
+          EE Everyway uses <strong>daily roaming</strong> &mdash; you only pay on days you actually use your phone abroad. Three zones: Europe, World (covered destinations), and excluded countries (per-use rates apply &mdash; see Out-of-Bundle).
+        </div>
+        <div class="bolton-grid">
+          <div class="bolton-row has-countries">
+            <div><div class="bolton-name">Europe Daily Roam</div><div class="bolton-desc">Use your UK allowance in Europe &mdash; pay only on days you use your phone.</div></div>
+            <div class="bolton-allowance">Per day used</div>
+            <div class="bolton-price">&pound;2.00<small>ex VAT / day</small></div>
+            <div class="bolton-countries-wrap">
+              <span class="bolton-countries-toggle" onclick="this.nextElementSibling.classList.toggle('open');this.textContent=this.nextElementSibling.classList.contains('open')?'Hide countries ▲':'View Europe Zone countries ▼'">View Europe Zone countries &#x25BC;</span>
+              <div class="bolton-countries-list">
+                Austria, Belgium, Bulgaria, Croatia, Cyprus, Czech Republic, Denmark, Estonia, Finland, France, Germany, Greece, Hungary, Iceland, Ireland, Italy, Latvia, Liechtenstein, Lithuania, Luxembourg, Malta, Netherlands, Norway, Poland, Portugal, Romania, San Marino, Slovakia, Slovenia, Spain, Sweden
+              </div>
+            </div>
+          </div>
+          <div class="bolton-row has-countries">
+            <div><div class="bolton-name">World Daily Roam (covered destinations)</div><div class="bolton-desc">Use your UK allowance in EE's covered World Zone &mdash; pay only on days you use your phone.</div></div>
+            <div class="bolton-allowance">Per day used</div>
+            <div class="bolton-price">&pound;6.85<small>ex VAT / day</small></div>
+            <div class="bolton-countries-wrap">
+              <span class="bolton-countries-toggle" onclick="this.nextElementSibling.classList.toggle('open');this.textContent=this.nextElementSibling.classList.contains('open')?'Hide countries ▲':'View covered World Zone countries ▼'">View covered World Zone countries &#x25BC;</span>
+              <div class="bolton-countries-list">
+                Albania, Australia, Bangladesh, Canada, China, Faroe Islands, Gibraltar, Guadeloupe, Guernsey, India, Indonesia, Isle of Man, Israel, Jersey, Kuwait, Malaysia, Moldova, Montenegro, New Zealand, Nigeria, Oman, Puerto Rico, Qatar, R&eacute;union, Serbia, Singapore, South Africa, South Korea, Switzerland, Taiwan, Thailand, Turkey, United Arab Emirates, United States, Vietnam
+              </div>
+            </div>
+          </div>
+          <div class="bolton-row">
+            <div><div class="bolton-name">Excluded destinations</div><div class="bolton-desc">For countries outside the Europe and World Zones, no daily roaming is offered &mdash; per-use rates apply (see Out-of-Bundle Rates).</div></div>
+            <div class="bolton-allowance">Per-use only</div>
+            <div class="bolton-price" style="font-size:.9rem;color:var(--grey-600)">See OOB</div>
+          </div>
+        </div>
+        <div style="margin-top:14px;padding:10px 14px;background:rgba(0,179,136,.07);border-left:3px solid #00b388;border-radius:6px;font-size:.85rem;color:var(--grey-600);">
+          Daily roaming auto-activates the first time you use your phone abroad in a covered destination. No opt-in required. A 1MB trigger threshold applies. All UK Unlimited plans are subject to a 25GB/month fair use cap on roaming data.
+        </div>
+      </div>
+
       <!-- plan.com Roaming -->
       <div class="net-content" data-network="plan">
         <div class="section-intro">
@@ -864,6 +971,18 @@
         <div class="section-intro">No additional specialist bolt-ons are currently available for Vodafone. Contact us if you need a bespoke solution.</div>
       </div>
 
+      <!-- EE Other -->
+      <div class="net-content" data-network="ee">
+        <div class="section-intro">EE Everyway specialist bolt-ons. Data Optimiser is available exclusively on the 2GB Standard tariff.</div>
+        <div class="bolton-grid">
+          <div class="bolton-row">
+            <div><div class="bolton-name">Data Optimiser</div><div class="bolton-desc">Auto-bumps your 2GB Standard tariff to the next data tier on overrun. Avoids unexpected per-MB OOB charges &mdash; you stay on a clean monthly rental and only ever pay for the data you actually use.</div></div>
+            <div class="bolton-allowance">2GB Std only</div>
+            <div class="bolton-price">&pound;2.50<small>ex VAT / month</small></div>
+          </div>
+        </div>
+      </div>
+
       <!-- plan.com Other -->
       <div class="net-content" data-network="plan">
         <div class="section-intro">
@@ -980,6 +1099,61 @@
         </table>
       </div>
 
+      <!-- EE OOB -->
+      <div class="net-content" data-network="ee">
+        <div class="section-intro">These charges apply when you use services outside your EE Everyway allowance. Adding a Data Top-Up, International Calling pack or Daily Roaming bolt-on significantly reduces these costs. All prices exclude VAT.</div>
+
+        <h3 style="font-size:.95rem;margin-bottom:12px;color:var(--primary)">UK Usage (Out of Bundle)</h3>
+        <table class="oob-table" style="margin-bottom:28px">
+          <thead><tr><th>Charge type</th><th>Price (ex VAT)</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>UK calls (exceeding minutes allowance)</td><td class="oob-price">&pound;0.65 per minute</td><td>Applies to plans with capped minutes only.</td></tr>
+            <tr><td>Data (exceeding plan allowance)</td><td class="oob-price">&pound;0.026 per MB</td><td>Approx &pound;26.62 per GB. Add Data Optimiser or a Data Top-Up to avoid this.</td></tr>
+            <tr><td>SMS (exceeding allowance)</td><td class="oob-price">&pound;0.30 per text</td><td>UK SMS charged when over allowance.</td></tr>
+            <tr><td>Picture / Video message (MMS)</td><td class="oob-price">&pound;0.66 per message</td><td>UK picture and video messages sent.</td></tr>
+            <tr><td>Calls to 055 (UK VoIP)</td><td class="oob-price">&pound;0.15 per minute</td><td>UK VoIP non-geographic calls.</td></tr>
+            <tr><td>Calls to 056</td><td class="oob-price">&pound;0.18 per minute</td><td>UK personal numbering.</td></tr>
+            <tr><td>Calls to 070 (personal numbers)</td><td class="oob-price">&pound;0.08 per minute</td><td>Personal number forwarding services.</td></tr>
+            <tr><td>Forwarding services</td><td class="oob-price">&pound;1.00 per minute</td><td>Calls forwarded via redirection services.</td></tr>
+            <tr><td>Voicemail</td><td class="oob-price">Free to listen</td><td>Standard voicemail included on all plans.</td></tr>
+            <tr><td>Freephone 0800 / 0808 / 116</td><td class="oob-price">Free</td><td>Free from mobile.</td></tr>
+            <tr><td>Charity helplines</td><td class="oob-price">Free</td><td>UK charity helplines are free.</td></tr>
+          </tbody>
+        </table>
+
+        <h3 style="font-size:.95rem;margin-bottom:12px;color:var(--primary)">Non-Geographic &amp; Premium Numbers</h3>
+        <table class="oob-table" style="margin-bottom:28px">
+          <thead><tr><th>Number range</th><th>Access charge (ex VAT)</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>084 / 087 numbers</td><td class="oob-price">&pound;0.79 per minute</td><td>Access charge only &mdash; plus a service charge set by the organisation you're calling.</td></tr>
+            <tr><td>09 / 118 / Premium rate</td><td class="oob-price">&pound;0.79 per minute</td><td>Access charge &mdash; service charge varies by band (see below).</td></tr>
+            <tr><td>Premium SMS</td><td class="oob-price">&pound;1.50 per text</td><td>Charged per premium SMS sent.</td></tr>
+            <tr><td>Satellite calls</td><td class="oob-price">&pound;2.50 per minute</td><td>Calls to satellite phone networks.</td></tr>
+          </tbody>
+        </table>
+
+        <h3 style="font-size:.95rem;margin-bottom:12px;color:var(--primary)">International Calls (from UK, without a pack)</h3>
+        <table class="oob-table" style="margin-bottom:28px">
+          <thead><tr><th>Destination zone</th><th>Price (ex VAT)</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>Europe, USA, Canada, Australia (Group 1)</td><td class="oob-price">&pound;1.25 per minute</td><td>Major destinations &mdash; consider an International calling pack.</td></tr>
+            <tr><td>Rest of World (Group 2+)</td><td class="oob-price">&pound;2.50 per minute</td><td>Other international destinations.</td></tr>
+            <tr><td>International SMS</td><td class="oob-price">&pound;0.15 per text</td><td>Texts sent to international numbers from the UK.</td></tr>
+          </tbody>
+        </table>
+
+        <h3 style="font-size:.95rem;margin-bottom:12px;color:var(--primary)">Roaming (using your phone abroad)</h3>
+        <table class="oob-table">
+          <thead><tr><th>Zone</th><th>Price (ex VAT)</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>Europe Zone</td><td class="oob-price">&pound;2.00 per day</td><td>Daily charge on days you use your phone in Europe. Use your UK allowance.</td></tr>
+            <tr><td>World Zone (covered destinations)</td><td class="oob-price">&pound;6.85 per day</td><td>Daily charge in EE's covered World Zone destinations. <a href="https://comparethenetworks.com/roaming/" style="color:var(--accent)">Check your destination &rarr;</a></td></tr>
+            <tr><td>Excluded destinations &mdash; voice</td><td class="oob-price">&pound;1.20&ndash;&pound;3.00 per minute</td><td>Per-use rate when no daily roaming covers the country.</td></tr>
+            <tr><td>Excluded destinations &mdash; data</td><td class="oob-price">&pound;10.00 per GB</td><td>Per-use roaming data outside EE Europe / covered World zones.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
       <!-- plan.com OOB -->
       <div class="net-content" data-network="plan">
         <div class="section-intro">These charges apply when you use services outside your plan.com allowance. Bolt-ons can significantly reduce these costs. All prices exclude VAT.</div>
@@ -1041,9 +1215,9 @@
 </div>
 
 <script>
-  const NET_NAMES = { o2: 'O2', vf: 'Vodafone', plan: 'plan.com' };
-  const NET_TITLES = { o2: 'O2 Bolt-Ons, Top-Ups & Pricing', vf: 'Vodafone Bolt-Ons, Top-Ups & Pricing', plan: 'plan.com Bolt-Ons, Top-Ups & Pricing' };
-  const NET_LABELS = { o2: 'O2 Network', vf: 'Vodafone Network', plan: 'plan.com Network' };
+  const NET_NAMES = { o2: 'O2', vf: 'Vodafone', ee: 'EE', plan: 'plan.com' };
+  const NET_TITLES = { o2: 'O2 Bolt-Ons, Top-Ups & Pricing', vf: 'Vodafone Bolt-Ons, Top-Ups & Pricing', ee: 'EE Bolt-Ons, Top-Ups & Pricing', plan: 'plan.com Bolt-Ons, Top-Ups & Pricing' };
+  const NET_LABELS = { o2: 'O2 Network', vf: 'Vodafone Network', ee: 'EE Network', plan: 'plan.com Network' };
 
   // Read ?net= from URL if present
   const urlNet = new URLSearchParams(window.location.search).get('net');
