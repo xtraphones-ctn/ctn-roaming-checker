@@ -623,7 +623,7 @@
         <tr><td>084 / 087 / 09 numbers</td><td>&pound;0.79/min access charge</td></tr>
         <tr><td>EU roaming</td><td><span class="included">Included</span></td></tr>
         <tr><td>International roaming (80+ countries)</td><td>&pound;5.00 per day</td></tr>
-        <tr><td>Annual price increase (from <span class="rpi-date"></span>)</td><td><span class="rpi-pct"></span> (CPI <span class="rpi-cpi"></span> + 3.9%)</td></tr>
+        <tr><td>Annual price increase (from <span class="rpi-date"></span>)</td><td><span class="rpi-pct"></span> per month, each April</td></tr>
       </table>
     </div>
   </div>
@@ -738,7 +738,7 @@
       </details>
       <details class="faq-item">
         <summary>What does the annual price increase mean?</summary>
-        <p>All UK mobile networks apply an annual price adjustment each April, calculated as CPI (Consumer Price Index) + 3.9%. This is an industry-standard practice. We show the exact increased price on each plan so there are no surprises.</p>
+        <p>From your first bill after 1 April each year, your monthly charge increases by a fixed £2.50 + VAT per line. This is set out in clause 12 of your contract and replaces the old CPI-linked model. We show the post-uplift price on each plan so there are no surprises.</p>
       </details>
       <details class="faq-item">
         <summary>Is EU roaming really included?</summary>
@@ -851,7 +851,7 @@
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
       Compare The Networks
     </div>
-    <p>All prices exclude VAT. Plans are subject to annual price adjustments (CPI + 3.9%). Fair use policies apply to unlimited allowances. EU roaming included on all plans. International roaming available in 80+ countries at &pound;5.00/day (ex VAT) on days you use your phone abroad outside Europe. Coverage varies by destination.</p>
+    <p>All prices exclude VAT. Plans are subject to a fixed annual price increase of &pound;2.50 + VAT per month, applied each April (first uplift April 2027). Fair use policies apply to unlimited allowances. EU roaming included on all plans. International roaming available in 80+ countries at &pound;5.00/day (ex VAT) on days you use your phone abroad outside Europe. Coverage varies by destination.</p>
     <div class="footer-meta">
       <span>Effective from: 20 February 2026</span>
       <span>Version: CTN-RETAIL-20260220-v3</span>
@@ -908,15 +908,14 @@ const SUPABASE_URL = 'https://lltkqyrqjbafirtntpru.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxsdGtxeXJxamJhZmlydG50cHJ1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc5ODQzMzAsImV4cCI6MjA4MzU2MDMzMH0.sonTwk_UbixdABX0wNFTvThixECYjQhfYlkckJZ807k';
 
 // ── Annual price increase config ──
-// Update CPI_RATE each year when the January CPI figure is published
-// Total increase = CPI_RATE + 3.9% (fixed)
-const CPI_RATE = 3.0;           // January 2026 CPI estimate (update annually)
-const FIXED_MARKUP = 3.9;
-const TOTAL_INCREASE = CPI_RATE + FIXED_MARKUP; // 6.9%
+// CTN-2026-03 contract clause 12: fixed £2.50 + VAT/month each April
+// (replaces the old CPI+3.9% model after OFCOM banned CPI/RPI-linked
+// increases for new contracts from January 2025).
+const ANNUAL_INCREASE_GBP = 2.50; // ex VAT
 const INCREASE_DATE = 'April 2027';
 
 function calcIncreasedPrice(price) {
-  return (parseFloat(price) * (1 + TOTAL_INCREASE / 100)).toFixed(2);
+  return (parseFloat(price) + ANNUAL_INCREASE_GBP).toFixed(2);
 }
 
 let currentTerm = 24;
@@ -973,7 +972,7 @@ function render() {
       </ul>
       <div class="plan-divider"></div>
       <div class="plan-price">&pound;${price}<small>per month (ex VAT) &middot; ${currentTerm}m</small></div>
-      <div class="plan-rpi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg> From ${INCREASE_DATE}: <strong>&pound;${calcIncreasedPrice(price)}/mo</strong> (CPI ${CPI_RATE}% + 3.9%)</div>
+      <div class="plan-rpi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg> From ${INCREASE_DATE}: <strong>&pound;${calcIncreasedPrice(price)}/mo</strong> (fixed &pound;2.50 + VAT each April)</div>
       <button class="plan-cta" onclick="selectPlan('${planDesc.replace(/'/g, "\\'")}')">Get a quote &rarr;</button>
     </div>`;
   }).join('');
@@ -995,15 +994,15 @@ function render() {
       </ul>
       <div class="plan-divider"></div>
       <div class="plan-price">&pound;${price}<small>per month (ex VAT) &middot; ${currentTerm}m</small></div>
-      <div class="plan-rpi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg> From ${INCREASE_DATE}: <strong>&pound;${calcIncreasedPrice(price)}/mo</strong> (CPI ${CPI_RATE}% + 3.9%)</div>
+      <div class="plan-rpi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg> From ${INCREASE_DATE}: <strong>&pound;${calcIncreasedPrice(price)}/mo</strong> (fixed &pound;2.50 + VAT each April)</div>
       <button class="plan-cta" onclick="selectPlan('${planDesc.replace(/'/g, "\\'")}')">Get a quote &rarr;</button>
     </div>`;
   }).join('');
 
   // Populate RPI info in OOB table
   document.querySelectorAll('.rpi-date').forEach(el => el.textContent = INCREASE_DATE);
-  document.querySelectorAll('.rpi-pct').forEach(el => el.textContent = TOTAL_INCREASE.toFixed(1) + '%');
-  document.querySelectorAll('.rpi-cpi').forEach(el => el.textContent = CPI_RATE + '%');
+  document.querySelectorAll('.rpi-pct').forEach(el => el.textContent = '£' + ANNUAL_INCREASE_GBP.toFixed(2) + ' + VAT');
+  document.querySelectorAll('.rpi-cpi').forEach(el => el.textContent = '');
 }
 
 // Network toggle
